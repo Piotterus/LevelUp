@@ -133,7 +133,7 @@ export default class LoginScreen extends React.Component {
                                 onChangeText = {(text) => this.updateValue(text,'password')}
                             />
                             <View style={styles.remindMeView}>
-                                <Text style={styles.remindMeText}>Nie pamiętasz hasła?</Text>
+                                <Text  onPress={() => this.props.navigation.navigate("RemindPassword")} style={styles.remindMeText}>Nie pamiętasz hasła?</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Text style={styles.remindMeText}>Zapamiętaj mnie</Text>
                                     <Switch/>
@@ -142,7 +142,7 @@ export default class LoginScreen extends React.Component {
                             <TouchableOpacity onPress={() => this.props.login()} style={styles.loginButton}>
                                 <Text style={styles.loginText}>ZALOGUJ SIĘ</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.signinButton}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate("Register1")} style={styles.signinButton}>
                                 <Text style={styles.signinText}>DOŁĄCZ DO GRY </Text>
                                 <Image width="23" height="23" source={require('../icons/add.png')} />
                             </TouchableOpacity>

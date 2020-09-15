@@ -29,6 +29,10 @@ import AboutLevelsScreen from './screens/AboutLevelsScreen';
 import AboutPointsScreen from './screens/AboutPointsScreen';
 import CustomDrawer from './components/CustomDrawer';
 import createDrawerNavigator from '@react-navigation/drawer/src/navigators/createDrawerNavigator';
+import Register1Screen from './screens/Register1Screen';
+import Register2Screen from './screens/Register2Screen';
+import Register3Screen from './screens/Register3Screen';
+import RemindPasswordScreen from './screens/RemindPasswordScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -96,18 +100,23 @@ export default class App extends  React.Component {
                             <Drawer.Screen name="AboutPoints" component={AboutPointsScreen}/>
                         </>
                     ) : (
-                        <Drawer.Screen name="Login"
-
-                                       options={{
-                                          title: 'Login',
-                                          headerStyle: {
-                                              backgroundColor: 'transparent',
-                                          },
-                                          gestureEnabled: false,
-                                       }}
-                        >
-                            {props => <LoginScreen {...props} login={this.login.bind(this)} />}
-                        </Drawer.Screen>
+                        <>
+                            <Drawer.Screen name="Login"
+                                           options={{
+                                              title: 'Login',
+                                              headerStyle: {
+                                                  backgroundColor: 'transparent',
+                                              },
+                                              gestureEnabled: false,
+                                           }}
+                            >
+                                {props => <LoginScreen {...props} login={this.login.bind(this)} />}
+                            </Drawer.Screen>
+                            <Drawer.Screen name="Register1" component={Register1Screen}/>
+                            <Drawer.Screen name="Register2" component={Register2Screen}/>
+                            <Drawer.Screen name="Register3" component={Register3Screen}/>
+                            <Drawer.Screen name="RemindPassword" component={RemindPasswordScreen}/>
+                        </>
                     )}
                 </Drawer.Navigator>
             </NavigationContainer>
