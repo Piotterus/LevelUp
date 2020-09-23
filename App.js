@@ -33,6 +33,10 @@ import Register1Screen from './screens/Register1Screen';
 import Register2Screen from './screens/Register2Screen';
 import Register3Screen from './screens/Register3Screen';
 import RemindPasswordScreen from './screens/RemindPasswordScreen';
+import MyAccountScreen from './screens/MyAccountScreen';
+import MyConsentScreen from './screens/MyConsentScreen';
+import QuestionScreen from './screens/QuestionScreen';
+import TestSummaryScreen from './screens/TestSummaryScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -98,6 +102,10 @@ export default class App extends  React.Component {
                             <Drawer.Screen name="AboutQuestions" component={AboutQuestionsScreen}/>
                             <Drawer.Screen name="AboutLevels" component={AboutLevelsScreen}/>
                             <Drawer.Screen name="AboutPoints" component={AboutPointsScreen}/>
+                            <Drawer.Screen name="MyAccount" component={MyAccountScreen}/>
+                            <Drawer.Screen name="MyConsent" component={MyConsentScreen}/>
+                            <Drawer.Screen name="Question" component={QuestionScreen}/>
+                            <Drawer.Screen name="TestSummary" component={TestSummaryScreen}/>
                         </>
                     ) : (
                         <>

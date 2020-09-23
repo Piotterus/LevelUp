@@ -19,7 +19,7 @@ export default class EnterQuestionsScreen extends React.Component {
                     <View style={[styles.shadow, styles.questionMain]}>
                         <View style={styles.questionOne}>
                             <Text style={{color: '#0A3251', fontSize: 18, fontWeight: 'bold'}}>Nazwa pierwszej wiedzy</Text>
-                            <TouchableOpacity style={[styles.buttonBase, {backgroundColor: '#E20000', marginTop: 15}, styles.shadow]}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Question')} style={[styles.buttonBase, {backgroundColor: '#E20000', marginTop: 15}, styles.shadow]}>
                                 <Text style={{color: '#FFFFFF', fontSize: 13}}>PYTANIE 1</Text>
                             </TouchableOpacity>
                         </View>

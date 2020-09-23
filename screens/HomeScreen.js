@@ -72,7 +72,7 @@ export default class HomeScreen extends  React.Component {
         return keyValuePairs.join('&');
     }
 
-    componentDidMount() {
+    /*componentDidMount() {
 
         const queryString = this.objToQueryString({
             key: '5cac17d3c3729f4ffd74fa949a212cd0758f5d79',
@@ -102,7 +102,7 @@ export default class HomeScreen extends  React.Component {
             .catch((error) => {
                 console.error(error);
             });
-    }
+    }*/
 
     render() {
         return(
@@ -346,6 +346,11 @@ export default class HomeScreen extends  React.Component {
                                     </Text>
                                 </View>
                             </View>
+                        </View>
+                        <View style={styles.knowledgeView}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Ranking')} style={[styles.buttonBase, {backgroundColor: '#2592E6'}, styles.shadow]}>
+                                <Text style={{color: '#FFFFFF', fontSize: 13}}>MAPA GRY</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>

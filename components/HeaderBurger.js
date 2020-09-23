@@ -13,7 +13,9 @@ export default class HeaderBurger extends React.Component {
                 </TouchableOpacity>
                 {/*<Image style={{marginLeft: 20, marginBottom: 9}} source={require('../icons/user.png')} />*/}
                 <Image source={require('../icons/logo_white_PNG.png')}/>
-                <Image style={{marginRight: 23, marginBottom: 9}} source={require('../icons/user.png')} />
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('MyAccount')}>
+                    <Image style={{marginRight: 23, marginBottom: 9}} source={require('../icons/user.png')} />
+                </TouchableOpacity>
             </View>
         )
     }

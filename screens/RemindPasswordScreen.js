@@ -16,8 +16,17 @@ export default class RemindPasswordScreen extends React.Component {
                     <Text style={styles.headerText}>Nie pamiętasz hasła? To nie problem.</Text>
                     <Text style={styles.normalText}>Wpisz poniżej swój adres poczty elektronicznej podany podczas rejestracji i kliknij przycisk „Wyślij”. Otrzymasz wiadomość e-mail z przypomnieniem danych do logowania.</Text>
                 </View>
+                <View style={styles.emailView}>
+                    <TextInput
+                        placeholder="ADRES E-MAIL"
+                        placeholderTextColor="#FFFFFF33"
+                        textAlign='center'
+                        style={styles.textInput}
+                        //onChangeText = {(text) => this.updateValue(text,'login')}
+                    />
+                </View>
                 <View style={styles.bottomView}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Register2")} style={styles.nextButton}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Login")} style={styles.nextButton}>
                         <Text style={{color: '#FFFFFF', fontSize: 16}}>WYŚLIJ</Text>
                     </TouchableOpacity>
                 </View>
@@ -68,7 +77,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '100%',
-        marginTop: 50,
+        marginTop: 100,
     },
     backButton: {
         backgroundColor: '#FFFFFF',
@@ -85,5 +94,8 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    emailView: {
+        marginTop: 50,
     }
 })
