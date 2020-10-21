@@ -5,12 +5,26 @@ import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackgr
 import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
+import ErrorModal from '../components/ErrorModal';
 
 export default class MainKnowledgeScreen extends React.Component {
 
+    constructor() {
+        super();
+        this.state = {
+            modalErrorVisible: false,
+            error: '',
+        }
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
-            <ScrollView style={{backgroundColor: '#FFFFFF'}}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{backgroundColor: '#FFFFFF'}}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger/>
                 <View style={styles.knowledgeNavHeader}>
                     <Text style={{color: '#0A3251', fontSize: 30, marginTop: 11, fontWeight: 'bold'}}>WIEDZA</Text>
@@ -20,7 +34,7 @@ export default class MainKnowledgeScreen extends React.Component {
                         <Image source={require('../icons/back_back-1.png')}/>
                     </View>
                 </View>
-                <View style={styles.knowledgeMain}>
+                <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <View style={[styles.shadow, {width: '90%', alignItems: 'center', borderRadius: 9, paddingBottom: 26, marginTop: 20}]}>
                         <View style={[styles.knowledgeOne, styles.knowledgeRead]}>
                             <Text style={[styles.knowledgeTextRead,{fontSize: 14}]}>PONIEDZIAŁEK - 30.06.2020</Text>
@@ -57,7 +71,7 @@ export default class MainKnowledgeScreen extends React.Component {
                         </View>
                     </View>
                 </View>
-                <Footer navigation={this.props.navigation}/>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"KNOWLEDGE"}/>
             </ScrollView>
         )
     }
@@ -94,12 +108,14 @@ const styles = StyleSheet.create({
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     buttonBase: {
         width: 305,

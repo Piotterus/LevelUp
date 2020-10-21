@@ -1,23 +1,24 @@
-import React from 'react'
+import React from 'react';
 
 import {
-    Text,
-    View,
-    Button,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    ImageBackground,
-    ScrollView,
-    Dimensions,
     Image,
-    Switch,
-    TouchableWithoutFeedback, TouchableHighlight,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native';
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import Info from '../components/Info';
 import Modal from 'react-native-modal';
+import ErrorModal from '../components/ErrorModal';
+import Moment from 'react-moment';
+import moment from 'moment/moment.js';
+import countdown from 'countdown';
+import 'moment-countdown';
 
 export default class HomeScreen extends  React.Component {
 
@@ -36,6 +37,10 @@ export default class HomeScreen extends  React.Component {
             knowledgeCount: 0,
             testCount: 0,
             level: "",
+            date2Go: "",
+            modalErrorVisible: false,
+            error: '',
+            countdown: '',
         }
 
     }
@@ -72,41 +77,87 @@ export default class HomeScreen extends  React.Component {
         return keyValuePairs.join('&');
     }
 
-    /*componentDidMount() {
+    componentDidMount() {
 
-        const queryString = this.objToQueryString({
-            key: '5cac17d3c3729f4ffd74fa949a212cd0758f5d79',
-            token: '4523d400add1288fb4e0ac94ce60e31e4f93a8ca',
-        });
+        this.listenerFocus = this.props.navigation.addListener('focus', () => {
 
-        let url = `http://good-game.mgnetworks-vps.ogicom.pl/api/user/userAccount?${queryString}`;
-
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': "application/json",
-            },
-        })
-            .then(response => response.json())
-            .then(responseJson => {
-                this.setState({
-                    ranking: responseJson.userData.rank.position,
-                    points: responseJson.userData.rank.points,
-                    week: responseJson.userData.round,
-                    knowledgeCount: responseJson.userData.knowledgeCount,
-                    testCount: responseJson.userData.testCount,
-                    level: responseJson.userData.rank.level,
-
-                })
-            })
-            .catch((error) => {
-                console.error(error);
+            const queryString = this.objToQueryString({
+                key: this.props.keyApp,
+                token: this.props.token,
             });
-    }*/
+
+            let url = `https://levelup.verbum.com.pl/api/user/dashboard?${queryString}`;
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+            })
+                .then(response => response.json())
+                .then(responseJson => {
+                    this.setState({
+                        ranking: responseJson.dashboard.position,
+                        points: responseJson.dashboard.points,
+                        week: responseJson.dashboard.round,
+                        knowledgeCount: responseJson.dashboard.knowledgeCount,
+                        testCount: responseJson.dashboard.testCount,
+                        level: responseJson.dashboard.level,
+                        date2Go: responseJson.dashboard.clock.date2Go,
+                    }, () => this.props.updateFooter(this.state.knowledgeCount, this.state.testCount))
+                })
+                .catch((error) => {
+                    //console.error(error);
+                });
+
+            url = `https://levelup.verbum.com.pl/api/user/userData?${queryString}`;
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+            })
+                .then(response => response.json())
+                .then(responseJson => {
+                    this.props.updateDrawer(responseJson.user.firstname, responseJson.user.lastname)
+                })
+                .catch((error) => {
+                    //console.error(error);
+                });
+        });
+        this.listenerBlur = this.props.navigation.addListener('blur', () => {
+
+        });
+        this.interval = setInterval(() => this.setCountDown(), 1000);
+    }
+
+    componentWillUnmount() {
+        this.listenerFocus();
+        this.listenerBlur();
+        clearInterval(this.interval);
+    }
+
+    setCountDown() {
+        if (this.state.date2Go !== undefined) {
+            this.setState({
+                countdown: moment().countdown(this.state.date2Go)
+            })
+        } else {
+            this.setState({
+                countdown: moment().countdown()
+            })
+        }
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    };
 
     render() {
         return(
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
                 <Info/>
                 <Modal isVisible={this.state.modalVisible}>
@@ -114,7 +165,7 @@ export default class HomeScreen extends  React.Component {
                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                             <View style={{backgroundColor: '#FFFFFF', height: 400, width: '90%', padding: 25, justifyContent: 'space-between'}}>
                                 <View>
-                                    <Text style={{color: '#0E395A', fontSize: 18, marginTop: 5, marginBottom: 5}}>{this.state.modalHeader}</Text>
+                                    <Text style={{color: '#0E395A', fontSize: 18, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalHeader}</Text>
                                     <View
                                         style={{
                                             borderBottomColor: '#0E395A',
@@ -124,19 +175,19 @@ export default class HomeScreen extends  React.Component {
                                     />
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                         <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Odpowiedź POPRAWNA</Text>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>{this.state.modalAnswerOK} pkt</Text>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerOK} pkt</Text>
                                     </View>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                         <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Odpowiedź NIEPOPRAWNA</Text>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>{this.state.modalAnswerWrong} pkt</Text>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerWrong} pkt</Text>
                                     </View>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                         <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>BRAK Odpowiedzi</Text>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>{this.state.modalAnswerNO} pkt</Text>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerNO} pkt</Text>
                                     </View>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                         <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Maksymalna ilość pkt</Text>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>{this.state.modalMaxPoints} pkt</Text>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalMaxPoints} pkt</Text>
                                     </View>
                                 </View>
                                 <View>
@@ -148,19 +199,26 @@ export default class HomeScreen extends  React.Component {
                                         }}
                                     />
                                     <TouchableOpacity style={{alignSelf: 'center', marginTop: 15}} onPress={() => this.setModalVisible(false)}>
-                                        <Text style={{color: '#2592E6'}}>OK</Text>
+                                        <Text style={{color: '#2592E6', fontSize: 18}}>OK</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
                         </View>
                     </TouchableWithoutFeedback>
                 </Modal>
-                <View style={styles.mainView}>
+                <View style={[styles.mainView, {flex: 1}]}>
                     <Text style={styles.levelText}>AKTUALNY POZIOM</Text>
                     <View style={styles.levelView}>
                         <View style={styles.onelevelView}>
                             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                <Text>STARTER </Text>
+                                <Text onPress={() => {
+                                    this.setModalVisible(true);
+                                    this.setModalHeader("STARTER");
+                                    this.setModalAnswerOK("2");
+                                    this.setModalAnswerWrong("1");
+                                    this.setModalAnswerNO("-1");
+                                    this.setModalMaxPoints("26");
+                                }} style={{color: '#0E395A'}}>STARTER</Text>
                                 <TouchableHighlight
                                                     onPress={() => {
                                                         this.setModalVisible(true);
@@ -192,7 +250,14 @@ export default class HomeScreen extends  React.Component {
                         </View>
                         <View style={styles.onelevelView}>
                             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                <Text>EXPERT </Text>
+                                <Text onPress={() => {
+                                    this.setModalVisible(true);
+                                    this.setModalHeader("EXPERT");
+                                    this.setModalAnswerOK("4");
+                                    this.setModalAnswerWrong("2");
+                                    this.setModalAnswerNO("-2");
+                                    this.setModalMaxPoints("52");
+                                }} style={{color: '#0E395A'}}>EXPERT </Text>
                                 <TouchableHighlight
                                                     onPress={() => {
                                                         this.setModalVisible(true);
@@ -224,16 +289,23 @@ export default class HomeScreen extends  React.Component {
                         </View>
                         <View style={styles.onelevelView}>
                             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                <Text>CHAMPION </Text>
+                                <Text onPress={() => {
+                                    this.setModalVisible(true);
+                                    this.setModalHeader("CHAMPION");
+                                    this.setModalAnswerOK("8");
+                                    this.setModalAnswerWrong("4");
+                                    this.setModalAnswerNO("-4");
+                                    this.setModalMaxPoints("78");
+                                }} style={{color: '#0E395A'}}>CHAMPION </Text>
                                 <TouchableHighlight
-                                                    onPress={() => {
-                                                        this.setModalVisible(true);
-                                                        this.setModalHeader("EXPERT");
-                                                        this.setModalAnswerOK("4");
-                                                        this.setModalAnswerWrong("2");
-                                                        this.setModalAnswerNO("-2");
-                                                        this.setModalMaxPoints("52");
-                                                    }}>
+                                    onPress={() => {
+                                        this.setModalVisible(true);
+                                        this.setModalHeader("CHAMPION");
+                                        this.setModalAnswerOK("8");
+                                        this.setModalAnswerWrong("4");
+                                        this.setModalAnswerNO("-4");
+                                        this.setModalMaxPoints("78");
+                                    }}>
                                     <Image source={require('../icons/info.png')}/>
                                 </TouchableHighlight>
                             </View>
@@ -253,13 +325,13 @@ export default class HomeScreen extends  React.Component {
                             }
                         </View>
                     </View>
-                    <View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10, marginTop: 26}]}>
+                    <View style={[styles.shadow, styles.nextInfoView, {paddingBottom: 10, marginTop: 36, width: '90%'}]}>
                         <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>NASTĘPNY TEST JUŻ ZA:</Text>
                         <View style={styles.timeView}>
                             <Image style={{marginTop: 12}} source={require('../icons/001-wall-clock_time.png')}/>
                             <View style={styles.timeTextView}>
                                 <Text style={styles.timeTopText}>
-                                    12
+                                    {this.state.countdown.days}
                                 </Text>
                                 <Text style={styles.timeBotText}>
                                     DNI
@@ -267,7 +339,7 @@ export default class HomeScreen extends  React.Component {
                             </View>
                             <View style={styles.timeTextView}>
                                 <Text style={styles.timeTopText}>
-                                    22
+                                    {this.state.countdown.hours}
                                 </Text>
                                 <Text style={styles.timeBotText}>
                                     GODZIN
@@ -275,7 +347,7 @@ export default class HomeScreen extends  React.Component {
                             </View>
                             <View style={styles.timeTextView}>
                                 <Text style={styles.timeTopText}>
-                                    04
+                                    {this.state.countdown.minutes}
                                 </Text>
                                 <Text style={styles.timeBotText}>
                                     MINUT
@@ -283,7 +355,7 @@ export default class HomeScreen extends  React.Component {
                             </View>
                             <View style={styles.timeTextView}>
                                 <Text style={styles.timeTopText}>
-                                    56
+                                    {this.state.countdown.seconds}
                                 </Text>
                                 <Text style={styles.timeBotText}>
                                     SEKUND
@@ -291,12 +363,30 @@ export default class HomeScreen extends  React.Component {
                             </View>
                         </View>
                         <View style={styles.knowledgeView}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('ChooseKnowledge')} style={[styles.buttonBase, {borderColor: '#0E395A', borderWidth: 1}]}>
+                            {this.props.knowledgeCount === 0 &&
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('ChooseKnowledge')}
+                                              style={[styles.buttonBase, {borderColor: '#0E395A', borderWidth: 1}]}>
                                 <Text style={{color: '#0E395A', fontSize: 13}}>ZDOBĄDŹ WIEDZĘ</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')} style={[styles.buttonBase, {backgroundColor: '#E20000'}, styles.shadow]}>
+                            }
+                            {this.props.knowledgeCount > 0 &&
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('ChooseKnowledge')}
+                                              style={[styles.buttonBase, styles.shadow, {backgroundColor: '#E20000'}]}>
+                                <Text style={{color: '#FFFFFF', fontSize: 13}}>ZDOBĄDŹ WIEDZĘ</Text>
+                            </TouchableOpacity>
+                            }
+                            {this.props.testCount === 0 &&
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')}
+                                              style={[styles.buttonBase, {borderColor: '#0E395A', borderWidth: 1}]}>
+                                <Text style={{color: '#0E395A', fontSize: 13}}>TESTUJ WIEDZĘ</Text>
+                            </TouchableOpacity>
+                            }
+                            {this.props.testCount > 0 &&
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')}
+                                              style={[styles.buttonBase, styles.shadow, {backgroundColor: '#E20000'}]}>
                                 <Text style={{color: '#FFFFFF', fontSize: 13}}>TESTUJ WIEDZĘ</Text>
                             </TouchableOpacity>
+                            }
                         </View>
                     </View>
                     <View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
@@ -325,7 +415,7 @@ export default class HomeScreen extends  React.Component {
                             </View>
                         </View>
                         <View style={styles.knowledgeView}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Ranking')} style={[styles.buttonBase, {backgroundColor: '#2592E6'}, styles.shadow]}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Ranking')} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6'}]}>
                                 <Text style={{color: '#FFFFFF', fontSize: 13}}>ZOBACZ RANKING</Text>
                             </TouchableOpacity>
                         </View>
@@ -348,13 +438,13 @@ export default class HomeScreen extends  React.Component {
                             </View>
                         </View>
                         <View style={styles.knowledgeView}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Ranking')} style={[styles.buttonBase, {backgroundColor: '#2592E6'}, styles.shadow]}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Results')} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6'}]}>
                                 <Text style={{color: '#FFFFFF', fontSize: 13}}>MAPA GRY</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
-                <Footer knowledgeCount={this.state.knowledgeCount} testCount={this.state.testCount} navigation={this.props.navigation}/>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
             </ScrollView>
         )
     }
@@ -423,18 +513,21 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     nextInfoView: {
-        marginTop: 10,
+        borderRadius: 16,
         width: '90%',
-        borderRadius: 9,
+        backgroundColor: '#FFFFFF',
+        marginTop: 10
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     timeView: {
         flexDirection: 'row',

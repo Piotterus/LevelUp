@@ -5,13 +5,52 @@ import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackgr
 import HeaderBurger from '../components/HeaderBurger';
 
 import Icon from 'react-native-vector-icons/Feather';
+import HeaderNoLogin from '../components/HeaderNoLogin';
+import ErrorModal from '../components/ErrorModal';
 
 export default class Register1Screen extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            firstname: '',
+            lastname: '',
+            phone: '',
+            email: '',
+            modalErrorVisible: false,
+            error: '',
+        }
+    }
+
+    updateValue(text,field) {
+        if (field === 'firstname') {
+            this.setState({
+                firstname: text,
+            })
+        } else if (field === 'lastname' ){
+            this.setState( {
+                lastname: text,
+            })
+        } else if (field === 'phone' ){
+            this.setState( {
+                phone: text,
+            })
+        } else if (field === 'email' ){
+            this.setState( {
+                email: text,
+            })
+        }
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
-            <ScrollView contentContainerStyle={styles.backgroundContent} style={styles.background}>
-                <HeaderBurger/>
+            <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                <HeaderNoLogin/>
                 <View style={styles.textView}>
                     <Text style={styles.headerText}>Chcesz dołączyć do LEVEL UP?</Text>
                     <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej LEVEL UP.</Text>
@@ -24,28 +63,28 @@ export default class Register1Screen extends React.Component {
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        //onChangeText = {(text) => this.updateValue(text,'login')}
+                        onChangeText = {(text) => this.updateValue(text,'firstname')}
                     />
                     <TextInput
                         placeholder="NAZWISKO"
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        //onChangeText = {(text) => this.updateValue(text,'login')}
+                        onChangeText = {(text) => this.updateValue(text,'lastname')}
                     />
                     <TextInput
                         placeholder="TELEFON"
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        //onChangeText = {(text) => this.updateValue(text,'login')}
+                        onChangeText = {(text) => this.updateValue(text,'phone')}
                     />
                     <TextInput
                         placeholder="EMAIL"
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        //onChangeText = {(text) => this.updateValue(text,'login')}
+                        onChangeText = {(text) => this.updateValue(text,'email')}
                     />
                 </View>
                 <View style={styles.bottomView}>
@@ -54,7 +93,12 @@ export default class Register1Screen extends React.Component {
                             <Icon name="chevron-left" size={50} color="#2592E6" />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Register2")} style={styles.nextButton}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Register2", {
+                        firstname: this.state.firstname,
+                        lastname: this.state.lastname,
+                        phone: this.state.phone,
+                        email: this.state.email
+                    })} style={styles.nextButton}>
                         <Text style={{color: '#FFFFFF', fontSize: 16}}>DALEJ >>></Text>
                     </TouchableOpacity>
                 </View>

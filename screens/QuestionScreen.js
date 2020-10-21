@@ -8,50 +8,294 @@ import Footer from '../components/Footer';
 import Info from '../components/Info';
 import { CheckBox } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Feather';
+import HTML from "react-native-render-html";
+import QuestionListItem from '../components/QuestionListItem';
+import Question from '../components/Question';
+import Answer from '../components/Answer';
+import ErrorModal from '../components/ErrorModal';
 
 export default class QuestionScreen extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            status: '',
+            model: '',
+            id: '',
+            question: '',
+            questionCount: 1,
+            questionNumber: 1,
+            poll: {
+                id: '',
+                modelId: '',
+                poll: [],
+            },
+            isLoading: true,
+            questionsLoaded: false,
+            questionList: [],
+            modalErrorVisible: false,
+            error: '',
+        };
+        this.selectAnswer = this.selectAnswer.bind(this)
+    }
+
+    objToQueryString(obj) {
+        const keyValuePairs = [];
+        for (const key in obj) {
+            keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+        }
+        return keyValuePairs.join('&');
+    }
+
+    componentDidMount() {
+
+        const queryString = this.objToQueryString({
+            key: this.props.keyApp,
+            token: this.props.token,
+        });
+        console.log("COMPONENT DID MOUNT-" + this.state.questionNumber)
+        this.listenerFocus = this.props.navigation.addListener('focus', () => {
+            //console.log("PARAM FOCUS");
+            //console.log(this.props.route.params.id);
+            //console.log("END PARAM FOCUS");
+            let url = `https://levelup.verbum.com.pl/api/challenge/actionId/${this.props.route.params.model}/${this.props.route.params.id}?${queryString}`;
+            //console.log(url);
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+            })
+                .then(response => response.json())
+                .then(responseJson => {
+                    this.setState({
+                        model: responseJson.poll.modelId,
+                        id: responseJson.poll.id,
+                        status: responseJson.poll.status,
+                        question: responseJson.poll.poll,
+                        questionCount: responseJson.poll.poll.length,
+                        poll: {
+                            id: responseJson.poll.id,
+                            modelId: responseJson.poll.modelId,
+                            poll: [],
+                        },
+                        isLoading: false,
+                    }, () => {
+                            console.log("BEFORE CREATEPOLL: " + this.state),
+                            this.createPoll()
+                    })
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        });
+        this.listenerBlur = this.props.navigation.addListener('blur', () => {
+            //console.log("PARAM BLUR");
+            //console.log(this.props.route.params.id);
+            //console.log("END PARAM BLUR");
+            this.setState( {
+                model: '',
+                id: '',
+                status: '',
+                question: '',
+                questionNumber: 1,
+                poll: {
+                    id: '',
+                    modelId: '',
+                    poll: [],
+                },
+                isLoading: true,
+                questionsLoaded: false,
+            })
+        });
+    }
+
+    componentWillUnmount() {
+        this.listenerFocus();
+        this.listenerBlur();
+    }
+
+    sendPoll() {
+        let poll = this.createPoll();
+
+        const queryString = this.objToQueryString({
+            key: this.props.keyApp,
+            token: this.props.token,
+        });
+        let url = `https://levelup.verbum.com.pl/api/challenge/sendAction/${this.props.route.params.model}/${this.props.route.params.id}?${queryString}`;
+        //console.log(url);
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': "application/json",
+            },
+            body: JSON.stringify(poll)
+        })
+            .then(response => response.json())
+            .then(responseJson => {
+                this.props.navigation.push('TestSummary', {
+                    results: responseJson.data.result,
+                    sum: responseJson.data.sum,
+                    model: this.props.route.params.model,
+                    id: this.props.route.params.id,
+                })
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    createPoll() {
+        let questions = [];
+        let answers = [];
+        console.log("createPoll");
+        console.log(this.state.question);
+        for (let i in this.state.question) {
+            console.log(i)
+            for (let j in this.state.question[i].answers) {
+                answers.push({
+                    id: this.state.question[i].answers[j].id,
+                    correct: this.state.question[i].answers[j].correct,
+                    value: this.state.question[i].answers[j].value,
+                })
+            }
+            questions.push({
+                id: this.state.question[i].id,
+                type: this.state.question[i].type,
+                answers: answers,
+            });
+        }
+        let poll = {
+            poll: {
+                id: this.state.id,
+                modelId: this.state.model,
+                poll: questions
+            }
+        }
+        console.log("FINAL POLL: " + JSON.stringify(poll))
+        return poll;
+        /*console.log("BEFORE SET POLL.POLL: " + JSON.stringify(questions))
+        this.setState({
+            poll: {
+                poll: questions,
+            },
+            //questionsLoaded: true,
+        })*/
+        //, this.selectAnswer(12,34)
+    }
+
+    createQuestionList() {
+        let number = 0;
+        let questionList = [];
+        console.log("createQuestion");
+        for (let i in this.state.question) {
+            console.log("CREATE QUESTION LIST PUSH: " + JSON.stringify(this.state.question[i].answers))
+            number++;
+            questionList.push(<Question key={i}
+                                        navigation={this.props.navigation}
+                                        id={this.state.question[i].id}
+                                        number={number} text={this.state.question[i].text}
+                                        type={this.state.question[i].type}
+                                        image={this.state.question[i].image}
+                                        questionCount={this.state.question.length}
+                                        answers={this.state.question[i].answers}
+                                        showQuestion={this.state.questionNumber}
+                                        selectAnswer={this.selectAnswer}/>)
+        }
+        return questionList;
+    }
+
+    nextQuestion() {
+        this.setState({
+            questionNumber: this.state.questionNumber + 1,
+        });
+        console.log("NEXT QUESTION-" + this.state.questionNumber);
+    }
+
+    prevQuestion() {
+        this.setState({
+            questionNumber: this.state.questionNumber - 1,
+        });
+        console.log("PREV QUESTION-" + this.state.questionNumber);
+    }
+
+    selectAnswer(idQuestion, idAnswer) {
+        console.log("selectAnswer: " + idQuestion + " " + idAnswer);
+        console.log("this.state.poll:" + JSON.stringify(this.state.question))
+        //let poll = this.state.poll.poll;
+        let poll = this.state.question;
+        console.log(JSON.stringify(poll));
+        for (let i in poll) {
+            console.log("POLL ID: " + poll[i].id);
+            console.log("QUESTION ID: " + idQuestion);
+            console.log("QUESTION TYPE: " + poll[i].type);
+            if (poll[i].id == idQuestion) {
+                if (poll[i].type == "radio") {
+                    for (let j in poll[i].answers) {
+                        console.log("POLL ANSWER ID: " + poll[i].id)
+                        console.log("ANSWER ID: " + idAnswer)
+                        if (poll[i].answers[j].id == idAnswer) {
+                            console.log("VALUE BEFORE: " + poll[i].answers[j].value)
+                            poll[i].answers[j].value = !poll[i].answers[j].value;
+                            console.log("VALUE AFTER: " + poll[i].answers[j].value)
+                        } else {
+                            poll[i].answers[j].value = false;
+                        }
+                    }
+                } else if (poll[i].type == "check") {
+                    for (let j in poll[i].answers) {
+                        console.log("POLL ANSWER ID: " + poll[i].id)
+                        console.log("ANSWER ID: " + idAnswer)
+                        if (poll[i].answers[j].id == idAnswer) {
+                            console.log("VALUE BEFORE: " + poll[i].answers[j].value)
+                            poll[i].answers[j].value = !poll[i].answers[j].value;
+                            console.log("VALUE AFTER: " + poll[i].answers[j].value)
+                        }
+                    }
+                }
+            }
+        }
+        this.setState({
+            question: poll
+        })
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
                 <Info/>
-                <View style={styles.knowledgeMain}>
+                <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>PYTANIA</Text>
                     <View style={[styles.shadow, styles.questionView]}>
-                        <Text style={styles.questionHeaderText}>PYTANIE 2<Text style={{fontSize: 19}}>/4</Text></Text>
-                        <Text style={styles.questionText}>Co wpływa na właściwy dobór opon?</Text>
-                        <Text style={styles.questionHint}>Odpowiedź wielokrotnego wyboru</Text>
-                        <View style={[styles.shadow, styles.answerView]}>
-                            <CheckBox
-                                checkedIcon={<Icon name="check-circle" size={30} color="#00377F" />}
-                                uncheckedIcon={<Icon name="circle" size={30} color="#00377F" />}
-                                checked={false}
-                            />
-                            <Text style={styles.answerText}>To łatwość, z jaką opona toczy się po nawierzchni</Text>
-                        </View>
-                        <View style={[styles.shadow, styles.answerView]}>
-                            <CheckBox
-                                checkedIcon={<Icon name="check-circle" size={30} color="#00377F" />}
-                                uncheckedIcon={<Icon name="circle" size={30} color="#00377F" />}
-                                checked={true}
-                            />
-                            <Text style={styles.answerText}>To łatwość, z jaką opona trzyma się nawierzchni</Text>
-                        </View>
-                        <View style={[styles.shadow, styles.answerView]}>
-                            <CheckBox
-                                checkedIcon={<Icon name="check-circle" size={30} color="#00377F" />}
-                                uncheckedIcon={<Icon name="circle" size={30} color="#00377F" />}
-                                checked={true}
-                            />
-                            <Text style={styles.answerText}>To zachowanie opony podczas hamowania</Text>
-                        </View>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('TestSummary')} style={[styles.buttonBase, styles.buttonConsent, styles.shadow]}>
-                            <Text style={styles.buttonText}>DALEJ</Text>
+                        {this.createQuestionList()}
+
+                        {this.state.questionNumber < this.state.questionCount &&
+                            <TouchableOpacity onPress={() => this.nextQuestion()}
+                                              style={[styles.buttonBase, styles.shadow, styles.buttonConsent]}>
+                                <Text style={styles.buttonText}>DALEJ</Text>
+                            </TouchableOpacity>
+                        }
+                        {this.state.questionNumber > 1 &&
+                        <TouchableOpacity onPress={() => this.prevQuestion()}
+                                          style={[styles.buttonBase, styles.shadow, styles.buttonConsent]}>
+                            <Text style={styles.buttonText}>WRÓĆ</Text>
                         </TouchableOpacity>
+                        }
+                        {this.state.questionNumber >= this.state.questionCount &&
+                            <TouchableOpacity onPress={() => this.sendPoll()}
+                                              style={[styles.buttonBase, styles.shadow, styles.buttonConsent]}>
+                                <Text style={styles.buttonText}>ZAKOŃCZ</Text>
+                            </TouchableOpacity>
+                        }
                     </View>
                 </View>
-                <Footer navigation={this.props.navigation}/>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"QUESTIONS"}/>
             </ScrollView>
         )
     }
@@ -86,12 +330,14 @@ const styles = StyleSheet.create({
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     buttonBase: {
         width: '100%',

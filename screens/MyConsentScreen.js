@@ -7,20 +7,88 @@ import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import Info from '../components/Info';
 import { CheckBox } from 'react-native-elements'
+import ErrorModal from '../components/ErrorModal';
 
 export default class MyConsentScreen extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            agree1: false,
+            agree2: false,
+            agree3: false,
+            agree4: false,
+            modalErrorVisible: false,
+            error: '',
+        }
+
+    }
+
+    objToQueryString(obj) {
+        const keyValuePairs = [];
+        for (const key in obj) {
+            keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+        }
+        return keyValuePairs.join('&');
+    }
+
+    componentDidMount() {
+
+        const queryString = this.objToQueryString({
+            key: this.props.keyApp,
+            token: this.props.token,
+        });
+
+        let url = `https://levelup.verbum.com.pl/api/user/userData/?${queryString}`;
+        console.log(url);
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': "application/json",
+            },
+        })
+            .then(response => response.json())
+            .then(responseJson => {
+                this.setState({
+                    agree1: responseJson.user.agree1,
+                    agree2: responseJson.user.agree2,
+                    agree3: responseJson.user.agree3,
+                    agree4: responseJson.user.agree4,
+                })
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    toggleAgree(agreeNumber) {
+        let agree = this.state.user.agreeNumber;
+        this.setState(
+            {
+                user: {
+                    agreeNumber: !agree
+                }
+            }
+        )
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
                 <Info/>
-                <View style={styles.knowledgeMain}>
+                <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>MOJE ZGODY</Text>
                     <View style={[styles.shadow, styles.myAccount]}>
                         <View style={styles.consentRow}>
                             <CheckBox
-                                checked={true}
+                                checked={this.state.agree1}
+                                onPress={() => this.setState({agree1: !this.state.agree1})}
                             />
                             <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy Regulaminu Konkursu „Gra Szkoleniowa GOOD GAME”. Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
                         </View>
@@ -29,19 +97,22 @@ export default class MyConsentScreen extends React.Component {
                         </View>
                         <View style={styles.consentRow}>
                             <CheckBox
-                                checked={true}
+                                checked={this.state.agree2}
+                                onPress={() => this.setState({agree2: !this.state.agree2})}
                             />
                             <Text style={styles.consentText}>Telefon</Text>
                         </View>
                         <View style={styles.consentRow}>
                             <CheckBox
-                                checked={true}
+                                checked={this.state.agree3}
+                                onPress={() => this.setState({agree3: !this.state.agree3})}
                             />
                             <Text style={styles.consentText}>SMS</Text>
                         </View>
                         <View style={styles.consentRow}>
                             <CheckBox
-                                checked={false}
+                                checked={this.state.agree4}
+                                onPress={() => this.setState({agree4: !this.state.agree4})}
                             />
                             <Text style={styles.consentText}>Poczta elektroniczna</Text>
                         </View>
@@ -50,7 +121,7 @@ export default class MyConsentScreen extends React.Component {
                         </View>
                     </View>
                 </View>
-                <Footer navigation={this.props.navigation}/>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"KNOWLEDGE"}/>
             </ScrollView>
         )
     }
@@ -86,12 +157,14 @@ const styles = StyleSheet.create({
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     buttonBase: {
         width: '100%',

@@ -12,6 +12,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { NavigationContainer } from "@react-navigation/native";
 
+import { Provider } from 'react-redux'
+
 import MainScreen from "./screens/MainScreen";
 import LoginScreen from "./screens/LoginScreen";
 import OtherScreen from "./screens/OtherScreen";
@@ -37,6 +39,8 @@ import MyAccountScreen from './screens/MyAccountScreen';
 import MyConsentScreen from './screens/MyConsentScreen';
 import QuestionScreen from './screens/QuestionScreen';
 import TestSummaryScreen from './screens/TestSummaryScreen';
+import ResultsScreen from './screens/ResultsScreen';
+import QuestionSummaryScreen from './screens/QuestionSummaryScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -48,12 +52,40 @@ export default class App extends  React.Component {
         this.state = {
             isLoggedIn: false,
             isSettingUp: true,
+            key: '128332b62e6205a77578ad7d8fd35c40572c9022',
+            token: '',
+            knowledgeCount: 0,
+            testCount: 0,
+            firstName: '',
+            lastName: '',
         }
     }
 
     componentDidMount() {
-        setTimeout(this.setup.bind(this), 3000)
+        setTimeout(this.setup.bind(this), 1000)
 
+    }
+
+    updateFooter(knowledgeCount,testCount) {
+        this.setState({
+            knowledgeCount: knowledgeCount,
+            testCount: testCount,
+        })
+    }
+
+    updateDrawer(firstname, lastname) {
+        this.setState({
+            firstName: firstname,
+            lastName: lastname,
+        })
+    }
+
+    objToQueryString(obj) {
+        const keyValuePairs = [];
+        for (const key in obj) {
+            keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+        }
+        return keyValuePairs.join('&');
     }
 
     setup() {
@@ -62,8 +94,9 @@ export default class App extends  React.Component {
         }, this.logout.bind(this) )
     }
 
-    login() {
+    login(token) {
         this.setState( {
+            token: token,
             isLoggedIn: true,
         })
     }
@@ -79,55 +112,241 @@ export default class App extends  React.Component {
             return (<SplashScreen/>)
         }
         return (
-            <NavigationContainer>
-                <Drawer.Navigator initialRouteName="Home"
-                    screenOptions={{
-                        headerShown: false,
-                        headerTransparent:true,
-                    }}
-                    drawerContent={(props) => <CustomDrawer logout={this.logout.bind(this)} {...props} />}
-                >
-                    {this.state.isLoggedIn ? (
-                        <>
-                            <Drawer.Screen name="Home" component={HomeScreen}/>
-                            <Drawer.Screen name="Main" component={MainScreen}/>
-                            <Drawer.Screen name="Other" component={OtherScreen}/>
-                            <Drawer.Screen name="EnterKnowledge" component={EnterKnowledgeScreen}/>
-                            <Drawer.Screen name="MainKnowledge" component={MainKnowledgeScreen}/>
-                            <Drawer.Screen name="ChooseKnowledge" component={ChooseKnowledgeScreen}/>
-                            <Drawer.Screen name="OneKnowledge" component={OneKnowledgeScreen}/>
-                            <Drawer.Screen name="EnterQuestions" component={EnterQuestionsScreen}/>
-                            <Drawer.Screen name="Ranking" component={RankingScreen}/>
-                            <Drawer.Screen name="AboutLaps" component={AboutLapsScreen}/>
-                            <Drawer.Screen name="AboutQuestions" component={AboutQuestionsScreen}/>
-                            <Drawer.Screen name="AboutLevels" component={AboutLevelsScreen}/>
-                            <Drawer.Screen name="AboutPoints" component={AboutPointsScreen}/>
-                            <Drawer.Screen name="MyAccount" component={MyAccountScreen}/>
-                            <Drawer.Screen name="MyConsent" component={MyConsentScreen}/>
-                            <Drawer.Screen name="Question" component={QuestionScreen}/>
-                            <Drawer.Screen name="TestSummary" component={TestSummaryScreen}/>
-                        </>
-                    ) : (
-                        <>
-                            <Drawer.Screen name="Login"
-                                           options={{
-                                              title: 'Login',
-                                              headerStyle: {
-                                                  backgroundColor: 'transparent',
-                                              },
-                                              gestureEnabled: false,
-                                           }}
-                            >
-                                {props => <LoginScreen {...props} login={this.login.bind(this)} />}
-                            </Drawer.Screen>
-                            <Drawer.Screen name="Register1" component={Register1Screen}/>
-                            <Drawer.Screen name="Register2" component={Register2Screen}/>
-                            <Drawer.Screen name="Register3" component={Register3Screen}/>
-                            <Drawer.Screen name="RemindPassword" component={RemindPasswordScreen}/>
-                        </>
-                    )}
-                </Drawer.Navigator>
-            </NavigationContainer>
+            //<Provider>
+                <NavigationContainer>
+                    <Drawer.Navigator initialRouteName="Home"
+                        screenOptions={{
+                            headerShown: false,
+                            headerTransparent:true,
+                        }}
+                        drawerContent={(props) => <CustomDrawer logout={this.logout.bind(this)} {...props} firstName={this.state.firstName} lastName={this.state.lastName}/>}
+                    >
+                        {this.state.isLoggedIn ? (
+                            <>
+                                <Drawer.Screen name="Home">
+                                    {props => <HomeScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                        updateFooter={this.updateFooter.bind(this)}
+                                        updateDrawer={this.updateDrawer.bind(this)}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="Main">
+                                    {props => <MainScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="Other">
+                                    {props => <OtherScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="EnterKnowledge">
+                                    {props => <EnterKnowledgeScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="MainKnowledge">
+                                    {props => <MainKnowledgeScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="ChooseKnowledge">
+                                    {props => <ChooseKnowledgeScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="OneKnowledge">
+                                    {props => <OneKnowledgeScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="EnterQuestions">
+                                    {props => <EnterQuestionsScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="Ranking">
+                                    {props => <RankingScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="AboutLaps">
+                                    {props => <AboutLapsScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="AboutQuestions">
+                                    {props => <AboutQuestionsScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="AboutLevels">
+                                    {props => <AboutLevelsScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="AboutPoints">
+                                    {props => <AboutPointsScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="MyAccount">
+                                    {props => <MyAccountScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="MyConsent">
+                                    {props => <MyConsentScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="Question">
+                                    {props => <QuestionScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="TestSummary">
+                                    {props => <TestSummaryScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="Results">
+                                    {props => <ResultsScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="QuestionSummary">
+                                    {props => <QuestionSummaryScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                            </>
+                        ) : (
+                            <>
+                                <Drawer.Screen name="Login"
+                                               options={{
+                                                  title: 'Login',
+                                                  headerStyle: {
+                                                      backgroundColor: 'transparent',
+                                                  },
+                                                  gestureEnabled: false,
+                                               }}
+                                >
+                                    {props => <LoginScreen
+                                        {...props}
+                                        login={this.login.bind(this)}
+                                        keyApp={this.state.key}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="Register1">
+                                    {props => <Register1Screen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="Register2">
+                                    {props => <Register2Screen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="Register3">
+                                    {props => <Register3Screen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="RemindPassword">
+                                    {props => <RemindPasswordScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                    />}
+                                </Drawer.Screen>
+                            </>
+                        )}
+                    </Drawer.Navigator>
+                </NavigationContainer>
+            //</Provider>
         )
     }
 }

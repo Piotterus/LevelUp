@@ -8,17 +8,55 @@ import Footer from '../components/Footer';
 import Info from '../components/Info';
 import { CheckBox } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Feather';
+import TestSummaryItem from '../components/TestSummaryItem';
+import ErrorModal from '../components/ErrorModal';
 
 export default class TestSummaryScreen extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            results : props.route.params.results,
+            sum: props.route.params.sum,
+            model: props.route.params.model,
+            id: props.route.params.id,
+            modalErrorVisible: false,
+            error: '',
+        }
+    }
+
+    createTestSummaryList() {
+        let testSummaryList = []
+        for (let i in this.state.results) {
+            testSummaryList.push(<TestSummaryItem
+                key={i}
+                navigation={this.props.navigation}
+                text={this.state.results[i].text}
+                points={this.state.results[i].points}
+                answer={this.state.results[i].answer}
+                correct={this.state.results[i].correct}
+                number={i}
+                model={this.state.model}
+                id={this.state.id}
+            />)
+        }
+        return testSummaryList;
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
                 <Info/>
-                <View style={styles.knowledgeMain}>
+                <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>PODSUMOWANIE TESTU</Text>
                     <View style={[styles.shadow, styles.summaryView]}>
+                        {this.createTestSummaryList()}
                         {/*<View style={styles.questionRow}>
                             <Text style={styles.answerNumber}>Pytanie 1</Text>
                             <View style={styles.questionRow2}>
@@ -43,7 +81,7 @@ export default class TestSummaryScreen extends React.Component {
                         <View style={styles.questionRow}>
                             <Text style={styles.answerNumber}>Pytanie 4</Text>
                             <View style={styles.questionRow2}>
-                                <Icon name="check" size={20} color="#AAEE00" />
+                                <Icon name="minus" size={20} color="#FF0000" />
                                 <Text>+2</Text>
                             </View>
                         </View>
@@ -71,7 +109,7 @@ export default class TestSummaryScreen extends React.Component {
                         <View style={styles.questionRow}>
                             <Text style={styles.answerNumber}>Pytanie 8</Text>
                             <View style={styles.questionRow2}>
-                                <Icon name="check" size={20} color="#AAEE00" />
+                                <Icon name="minus" size={20} color="#FF0000" />
                                 <Text>+2</Text>
                             </View>
                         </View>
@@ -91,7 +129,7 @@ export default class TestSummaryScreen extends React.Component {
                         </View>*/}
                     </View>
                 </View>
-                <Footer navigation={this.props.navigation}/>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"QUESTIONS"}/>
             </ScrollView>
         )
     }
@@ -126,12 +164,14 @@ const styles = StyleSheet.create({
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     buttonBase: {
         width: '100%',
@@ -164,6 +204,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingLeft: 10,
         //paddingRight: 10,
+        marginTop: 7,
+        marginBottom: 7
     },
     questionRow2: {
         flexDirection: 'row',
@@ -176,6 +218,6 @@ const styles = StyleSheet.create({
         flex: 1,
         color: '#0A3251',
         fontSize: 16,
-        fontWeight: 'light',
+        fontWeight: '100',
     }
 })

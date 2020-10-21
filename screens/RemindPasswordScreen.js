@@ -2,16 +2,88 @@ import React from 'react';
 
 import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
 
-import HeaderBurger from '../components/HeaderBurger';
-
 import Icon from 'react-native-vector-icons/Feather';
+import HeaderNoLogin from '../components/HeaderNoLogin';
+import ErrorModal from '../components/ErrorModal';
 
 export default class RemindPasswordScreen extends React.Component {
 
+    constructor(){
+        super();
+        this.state = {
+            login: '',
+            modalErrorVisible: false,
+            error: '',
+        }
+    }
+
+    objToQueryString(obj) {
+        const keyValuePairs = [];
+        for (const key in obj) {
+            keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+        }
+        return keyValuePairs.join('&');
+    }
+
+
+    remindPassword() {
+        const queryString = this.objToQueryString({
+            key: this.props.keyApp,
+        });
+
+        let body = {
+            login: this.state.login,
+        }
+
+        let url = `https://levelup.verbum.com.pl/api/user/remind?${queryString}`;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': "application/json",
+            },
+            body: JSON.stringify(body)
+        })
+            .then(response => response.json())
+            .then(responseJson => {
+                if (responseJson.error.code == 0) {
+                    let error = {
+                        code: "Przypomnij hasło",
+                        message: "Dane dostępowe zostały wysłane na Twój adres mailowy."
+                    };
+                    this.setState({
+                        error: error,
+                    }, () => this.setModalErrorVisible(true))
+
+                    //this.props.navigation.navigate('Login');
+                } else {
+                    this.setState({
+                        error: responseJson.error,
+                    }, () => this.setModalErrorVisible(true))
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    updateValue(text,field) {
+        if (field === 'login') {
+            this.setState({
+                login: text,
+            })
+        }
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
-            <ScrollView contentContainerStyle={styles.backgroundContent} style={styles.background}>
-                <HeaderBurger/>
+            <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                <HeaderNoLogin/>
                 <View style={styles.textView}>
                     <Text style={styles.headerText}>Nie pamiętasz hasła? To nie problem.</Text>
                     <Text style={styles.normalText}>Wpisz poniżej swój adres poczty elektronicznej podany podczas rejestracji i kliknij przycisk „Wyślij”. Otrzymasz wiadomość e-mail z przypomnieniem danych do logowania.</Text>
@@ -22,11 +94,11 @@ export default class RemindPasswordScreen extends React.Component {
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        //onChangeText = {(text) => this.updateValue(text,'login')}
+                        onChangeText = {(text) => this.updateValue(text,'login')}
                     />
                 </View>
                 <View style={styles.bottomView}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Login")} style={styles.nextButton}>
+                    <TouchableOpacity onPress={() => this.remindPassword()} style={styles.nextButton}>
                         <Text style={{color: '#FFFFFF', fontSize: 16}}>WYŚLIJ</Text>
                     </TouchableOpacity>
                 </View>

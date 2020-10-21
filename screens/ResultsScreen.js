@@ -1,0 +1,474 @@
+import React from 'react'
+
+import {
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    ImageBackground,
+    ScrollView,
+    Dimensions,
+    Image,
+    Switch,
+    TouchableWithoutFeedback, TouchableHighlight,
+} from 'react-native';
+import HeaderBurger from '../components/HeaderBurger';
+import Footer from '../components/Footer';
+import Info from '../components/Info';
+import Modal from 'react-native-modal';
+import ErrorModal from '../components/ErrorModal';
+import Question from '../components/Question';
+import LapRow from '../components/LapRow';
+import MyLevelView from '../components/resultsScreen/MyLevelView';
+import MyRank from '../components/resultsScreen/MyRank';
+import CurrentRound from '../components/resultsScreen/CurrentRound';
+
+export default class ResultsScreen extends  React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalVisible: false,
+            modalHeader: "",
+            modalAnswerOK: "",
+            modalAnswerWrong: "",
+            modalAnswerNO: "",
+            modalMaxPoints: "",
+            ranking: "",
+            points: "",
+            week: "",
+            knowledgeCount: 0,
+            testCount: 0,
+            level: "",
+            modalErrorVisible: false,
+            error: '',
+            rounds: '',
+            points2level: {
+                points: '',
+                name: '',
+            },
+            content: 'ogolne'
+        }
+
+    }
+
+    setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
+    }
+
+    setModalHeader = (text) => {
+        this.setState({ modalHeader: text });
+    }
+
+    setModalAnswerOK = (text) => {
+        this.setState({ modalAnswerOK: text });
+    }
+
+    setModalAnswerWrong = (text) => {
+        this.setState({ modalAnswerWrong: text });
+    }
+
+    setModalAnswerNO = (text) => {
+        this.setState({ modalAnswerNO: text });
+    }
+
+    setModalMaxPoints = (text) => {
+        this.setState({ modalMaxPoints: text });
+    }
+
+    setModal = (visible, header, answerOK, answerWrong, answerNO, maxPoints) => {
+        this.setState({
+            modalVisible: visible,
+            modalHeader: header,
+            modalAnswerOK: answerOK,
+            modalAnswerWrong: answerWrong,
+            modalAnswerNO: answerNO,
+            modalMaxPoints: maxPoints,
+        })
+    }
+
+    objToQueryString(obj) {
+        const keyValuePairs = [];
+        for (const key in obj) {
+            keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+        }
+        return keyValuePairs.join('&');
+    }
+
+    componentDidMount() {
+
+        const queryString = this.objToQueryString({
+            key: this.props.keyApp,
+            token: this.props.token,
+        });
+
+        let url = `https://levelup.verbum.com.pl/api/user/userAccount?${queryString}`;
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': "application/json",
+            },
+        })
+            .then(response => response.json())
+            .then(responseJson => {
+                if (responseJson.error.code == 0) {
+                    this.setState({
+                        ranking: responseJson.userData.rank.position,
+                        points: responseJson.userData.rank.points,
+                        week: responseJson.userData.round,
+                        knowledgeCount: responseJson.userData.knowledgeCount,
+                        testCount: responseJson.userData.testCount,
+                        level: responseJson.userData.rank.level,
+                        rounds: responseJson.userData.rounds,
+                        points2level: responseJson.userData.rank.points2level,
+                    })
+                } else {
+                    this.setState({
+                        error: responseJson.error,
+                    }, () => this.setModalErrorVisible(true))
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    };
+
+    createLapRows() {
+        let number = 0;
+        let lapRows = [];
+        let item1;
+        let item2;
+        let item3;
+        console.log("lapRows");
+        for (let i = 0; i < this.state.rounds.length; i+=3) {
+            console.log(i)
+            if (this.state.rounds[i] !== undefined) {
+                item1 = this.state.rounds[i];
+            } else {
+                item1 = "EMPTY";
+            }
+            if (this.state.rounds[i+1] !== undefined) {
+                item2 = this.state.rounds[i+1];
+            } else {
+                item2 = "EMPTY";
+            }
+            if (this.state.rounds[i+2] !== undefined) {
+                item3 = this.state.rounds[i+2];
+            } else {
+                item3 = "EMPTY";
+            }
+            lapRows.push(<LapRow key={i} item1={item1} item2={item2} item3={item3}/>)
+        }
+        return lapRows
+    }
+
+    changeContent(content) {
+        this.setState({
+            content: content,
+        })
+    }
+
+    render() {
+        return(
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                <HeaderBurger navigation={this.props.navigation}/>
+                <Info/>
+                <Modal isVisible={this.state.modalVisible}>
+                    <TouchableWithoutFeedback onPress={() => this.setModalVisible(false)}>
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                            <View style={{backgroundColor: '#FFFFFF', height: 400, width: '90%', padding: 25, justifyContent: 'space-between'}}>
+                                <View>
+                                    <Text style={{color: '#0E395A', fontSize: 18, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalHeader}</Text>
+                                    <View
+                                        style={{
+                                            borderBottomColor: '#0E395A',
+                                            borderBottomWidth: 1,
+                                            width: '100%'
+                                        }}
+                                    />
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Odpowiedź POPRAWNA</Text>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerOK} pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Odpowiedź NIEPOPRAWNA</Text>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerWrong} pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>BRAK Odpowiedzi</Text>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerNO} pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Maksymalna ilość pkt</Text>
+                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalMaxPoints} pkt</Text>
+                                    </View>
+                                </View>
+                                <View>
+                                    <View
+                                        style={{
+                                            borderBottomColor: '#0E395A',
+                                            borderBottomWidth: 1,
+                                            width: '100%'
+                                        }}
+                                    />
+                                    <TouchableOpacity style={{alignSelf: 'center', marginTop: 15}} onPress={() => this.setModalVisible(false)}>
+                                        <Text style={{color: '#2592E6', fontSize: 18}}>OK</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </Modal>
+                <View style={[styles.mainView, {flex: 1}]}>
+                    <Text style={styles.levelText}>MOJE WYNIKI</Text>
+                    <View style={[styles.chooseContentView]}>
+                        <TouchableOpacity onPress={() => this.changeContent('ogolne')}>
+                            <View style={[styles.chooseContentViewOne, (this.state.content === 'ogolne' ? styles.chooseContentViewActive : styles.chooseContentViewDisactive)]}>
+                                <Text style={[
+                                    styles.chooseContentText,
+                                    (this.state.content === 'ogolne' ? styles.chooseContentTextActive : styles.chooseContentTextDisactive)]}
+                                >OGÓLNE</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.changeContent('ranking')}>
+                            <View style={[styles.chooseContentViewOne, (this.state.content === 'ranking' ? styles.chooseContentViewActive : styles.chooseContentViewDisactive)]}>
+                                <Text style={[
+                                    styles.chooseContentText,
+                                    (this.state.content === 'ranking' ? styles.chooseContentTextActive : styles.chooseContentTextDisactive)]}
+                                >RANKING</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.changeContent('rundy')}>
+                            <View style={[styles.chooseContentViewOne, (this.state.content === 'rundy' ? styles.chooseContentViewActive : styles.chooseContentViewDisactive)]}>
+                                <Text style={[
+                                    styles.chooseContentText,
+                                    (this.state.content === 'rundy' ? styles.chooseContentTextActive : styles.chooseContentTextDisactive)]}
+                                >RUNDY</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    {this.state.content === 'ogolne' &&
+                        <MyLevelView level={this.state.level} points2level={this.state.points2level}
+                             setModal={this.setModal}/>
+                    }
+                    {this.state.content === 'ogolne' &&
+                        <MyRank points={this.state.points} ranking={this.state.ranking}/>
+                    }
+                    {this.state.content === 'ogolne' &&
+                        <CurrentRound week={this.state.week}/>
+                    }
+                    {this.state.content === 'rundy' &&
+                        <View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
+                            {this.createLapRows()}
+                        </View>
+                    }
+                    {/*<View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
+                        <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>OKRĄŻENIA:</Text>
+                        {this.createLapRows()}
+                    </View>*/}
+                </View>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"RESULTS"}/>
+            </ScrollView>
+        )
+    }
+
+}
+
+const styles = StyleSheet.create({
+    headerView: {
+        flexDirection: 'row',
+        backgroundColor: '#0A3251',
+        width: '100%',
+        height: 112,
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        paddingBottom: 26,
+    },
+    infoView: {
+        backgroundColor: '#2592E6',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        height: 55,
+    },
+    infoText: {
+        color: '#FFFFFF',
+        fontSize: 13,
+        marginRight: 10
+    },
+    mainView: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        alignItems: 'center',
+        marginTop: -5,
+        paddingBottom: 10,
+        zIndex: 1,
+    },
+    levelText: {
+        fontSize: 13,
+        color: '#0E395A',
+        marginTop: 15,
+    },
+    levelView: {
+        width: '90%',
+        marginTop: 14,
+        borderRadius: 9,
+    },
+    levelRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    },
+    onelevelView: {
+        justifyContent: 'space-between',
+        height: 50,
+        flex: 1,
+        alignItems: 'center'
+    },
+    rectangleView: {
+        backgroundColor: '#0E395A66',
+        borderRadius: 8,
+        width: 86,
+        height: 16
+    },
+    lineView: {
+        width: 0,
+        borderColor: '#0E395A',
+        height: 47,
+        borderWidth: 0.5,
+        marginTop: 15
+    },
+    nextInfoView: {
+        marginTop: 10,
+        width: '90%',
+        borderRadius: 9,
+    },
+    shadow: {
+        shadowColor: '#00000029',//'#00000080',
+        backgroundColor: '#FFFFFF',
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
+    },
+    timeView: {
+        flexDirection: 'row',
+        marginTop: 3,
+        paddingLeft: 9,
+        paddingRight: 9,
+        justifyContent: 'space-between',
+    },
+    timeTextView: {
+        alignItems: 'center',
+        //backgroundColor: 'blue',
+        justifyContent: 'space-between',
+        alignContent: 'space-around'
+    },
+    timeTopText: {
+        color: '#0E395A',
+        fontSize: 42,
+        //backgroundColor: 'green',
+        alignContent: 'flex-start',
+        paddingTop: -5,
+    },
+    timeBotText: {
+        color: '#0E395A',
+        fontSize: 11,
+        //backgroundColor: 'red'
+    },
+    knowledgeView: {
+        flexDirection: 'row',
+        marginTop: 18,
+        justifyContent: 'space-around',
+
+    },
+    buttonBase: {
+        width: 146,
+        height: 42,
+        borderRadius: 21,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    footerView: {
+        flexDirection: 'row',
+        backgroundColor: '#2592E6',
+        height: 89,
+        marginTop: -5,
+        zIndex: 0,
+        justifyContent: 'space-around'
+    },
+    footerInfo: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    levelInfoView: {
+        alignItems: 'center'
+    },
+    slides: {
+        paddingLeft: 30,
+        paddingBottom: 30,
+    },
+    lapsRow: {
+        flexDirection: 'row',
+        paddingLeft: 15,
+        paddingRight: 15,
+        justifyContent: 'space-between'
+    },
+    lapView: {
+        alignItems: 'center',
+        flex: 1,
+    },
+    lapText: {
+        color: '#0A3251',
+        fontSize: 12,
+    },
+    points2levelView: {
+        flexDirection: 'row',
+        paddingLeft: 15,
+        paddingRight: 15,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    points2levelText: {
+        color: '#0E395A',
+        fontSize: 11,
+    },
+    chooseContentView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '90%',
+    },
+    chooseContentViewOne: {
+        height: 43,
+        width: 103,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 23
+    },
+    chooseContentViewActive: {
+        backgroundColor: '#0A3251',
+    },
+    chooseContentViewDisactive: {
+        backgroundColor: '#F3F3F3'
+    },
+    chooseContentText: {
+        fontSize: 13,
+    },
+    chooseContentTextActive: {
+        color: '#FFFFFF',
+    },
+    chooseContentTextDisactive: {
+        color: '#0A3251',
+    },
+});

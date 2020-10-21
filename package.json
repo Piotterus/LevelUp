@@ -14,7 +14,12 @@
     "@react-navigation/drawer": "^5.9.0",
     "@react-navigation/native": "^5.7.2",
     "@react-navigation/stack": "^5.8.0",
+    "@reduxjs/toolkit": "^1.4.0",
+    "countdown": "^2.6.0",
+    "moment": "^2.29.1",
+    "moment-countdown": "0.0.3",
     "react": "16.13.1",
+    "react-moment": "^1.0.0",
     "react-native": "0.63.1",
     "react-native-elements": "^2.3.2",
     "react-native-gesture-handler": "^1.7.0",
@@ -25,8 +30,11 @@
     "react-native-screens": "^2.9.0",
     "react-native-svg": "^12.1.0",
     "react-native-svg-uri": "^1.2.3",
+    "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^7.1.0",
-    "react-native-webview": "^10.3.3"
+    "react-native-webview": "^10.3.3",
+    "react-redux": "^7.2.1",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@babel/core": "7.10.5",
@@ -36,7 +44,8 @@
     "eslint": "6.8.0",
     "jest": "25.5.4",
     "metro-react-native-babel-preset": "0.59.0",
-    "react-test-renderer": "16.13.1"
+    "react-test-renderer": "16.13.1",
+    "redux-devtools": "^3.7.0"
   },
   "jest": {
     "preset": "react-native"

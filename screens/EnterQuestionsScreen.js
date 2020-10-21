@@ -6,43 +6,133 @@ import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import Info from '../components/Info';
+import QuestionListItem from '../components/QuestionListItem';
+import ErrorModal from '../components/ErrorModal';
+import QuestionTurbo from '../components/QuestionTurbo';
+import QuestionLifebuoy from '../components/QuestionLifebuoy';
 
 export default class EnterQuestionsScreen extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            questionList: '',
+            modalErrorVisible: false,
+            error: '',
+        }
+
+    }
+
+    objToQueryString(obj) {
+        const keyValuePairs = [];
+        for (const key in obj) {
+            keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+        }
+        return keyValuePairs.join('&');
+    }
+
+    componentDidMount() {
+
+        const queryString = this.objToQueryString({
+            key: this.props.keyApp,
+            token: this.props.token,
+        });
+
+        let url = `https://levelup.verbum.com.pl/api/challenge/actionList?${queryString}`;
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': "application/json",
+            },
+        })
+            .then(response => response.json())
+            .then(responseJson => {
+                this.setState({
+                    questionList: responseJson.list,
+                })
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    createQuestionList() {
+        let questionList = []
+        for (let i in this.state.questionList) {
+            if (this.state.questionList[i].modelId === 1 || this.state.questionList[i].modelId === 4) {
+                questionList.push(<QuestionListItem key={i}
+                                                    navigation={this.props.navigation}
+                                                    id={this.state.questionList[i].id}
+                                                    active={this.state.questionList[i].isActive}
+                                                    activeText={this.state.questionList[i].status.title}
+                                                    number={this.state.questionList[i].number}
+                                                    model={this.state.questionList[i].modelId}
+                                                    status={this.state.questionList[i].status}/>)
+            }
+        }
+        return questionList;
+    }
+
+    createQuestionLifebuoy() {
+        let questionLifebuoy = []
+        for (let i in this.state.questionList) {
+            if (this.state.questionList[i].modelId === 3) {
+                questionLifebuoy.push(<QuestionLifebuoy key={i}
+                                                    navigation={this.props.navigation}
+                                                    id={this.state.questionList[i].id}
+                                                    active={this.state.questionList[i].isActive}
+                                                    activeText={this.state.questionList[i].status.title}
+                                                    number={this.state.questionList[i].number}
+                                                    model={this.state.questionList[i].modelId}
+                                                    status={this.state.questionList[i].status}/>)
+            }
+        }
+        return questionLifebuoy;
+    }
+
+    createQuestionTurbo() {
+        let questionTurbo = []
+        for (let i in this.state.questionList) {
+            if (this.state.questionList[i].modelId === 2 ) {
+                questionTurbo.push(<QuestionTurbo key={i}
+                                                    navigation={this.props.navigation}
+                                                    id={this.state.questionList[i].id}
+                                                    active={this.state.questionList[i].isActive}
+                                                    activeText={this.state.questionList[i].status.title}
+                                                    number={this.state.questionList[i].number}
+                                                    model={this.state.questionList[i].modelId}
+                                                    status={this.state.questionList[i].status}/>)
+            }
+        }
+        return questionTurbo;
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
                 <Info/>
-                <View style={styles.knowledgeMain}>
-                    <Text style={styles.knowledgeHeaderText}>PYTANIA</Text>
+                <View style={[styles.knowledgeMain, {flex: 1}]}>
+                    <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.knowledgeNav}>
+                        <Image source={require('../icons/back_back.png')}/>
+                        <Text style={{fontSize: 13, color: '#5E6367', marginLeft: 15}}>WRÓĆ</Text>
+                    </TouchableOpacity>
                     <View style={[styles.shadow, styles.questionMain]}>
-                        <View style={styles.questionOne}>
-                            <Text style={{color: '#0A3251', fontSize: 18, fontWeight: 'bold'}}>Nazwa pierwszej wiedzy</Text>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Question')} style={[styles.buttonBase, {backgroundColor: '#E20000', marginTop: 15}, styles.shadow]}>
-                                <Text style={{color: '#FFFFFF', fontSize: 13}}>PYTANIE 1</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.questionOne}>
-                            <Text style={{color: '#0A3251', fontSize: 18, fontWeight: 'bold'}}>Nazwa drugiej wiedzy</Text>
-                            <TouchableOpacity style={[styles.buttonBase, {borderColor: '#2592E6', borderWidth: 1, marginTop: 15}]}>
-                                <Text style={{color: '#2592E6', fontSize: 13}}>PYTANIE 2</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.questionOne}>
-                            <Text style={{color: '#0A3251', fontSize: 18, fontWeight: 'bold'}}>Nazwa trzeciej wiedzy</Text>
-                            <TouchableOpacity style={[styles.buttonBase, {borderColor: '#2592E6', borderWidth: 1, marginTop: 15}]}>
-                                <Text style={{color: '#2592E6', fontSize: 13}}>PYTANIE 3</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[styles.questionOne, {marginTop: 60}]}>
-                            <TouchableOpacity style={[styles.buttonBase, {borderColor: '#2592E6', borderWidth: 1, marginTop: 15}]}>
-                                <Text style={{color: '#2592E6', fontSize: 13}}>ROZWIĄŻ TEST</Text>
-                            </TouchableOpacity>
+                        <Text style={styles.knowledgeHeaderText}>TESTUJ WIEDZĘ</Text>
+                        <Text style={styles.knowledgeText}>Przygotuj się i daj z siebie wszystko, by zadbać o doskonały wynik, bo na te pytania możesz odpowiedzieć tylko raz!</Text>
+                        {this.createQuestionList()}
+                        <View style={styles.additionalQuestions}>
+                            {this.createQuestionLifebuoy()}
+                            {this.createQuestionTurbo()}
                         </View>
                     </View>
                 </View>
-                <Footer navigation={this.props.navigation}/>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}  active={"QUESTIONS"}/>
             </ScrollView>
         )
     }
@@ -60,10 +150,10 @@ const styles = StyleSheet.create({
         zIndex: 3
     },
     knowledgeHeaderText: {
-        fontSize: 13,
+        fontSize: 36,
         color: '#0E395A',
-        marginTop: 12,
-        marginBottom: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
     questionMain: {
         width: '90%',
@@ -71,16 +161,18 @@ const styles = StyleSheet.create({
         zIndex: 2,
         paddingBottom: 5,
         marginBottom: 30,
-        paddingTop: 20
+        marginTop: 25
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     knowledgeDesc: {
         flex: 1,
@@ -102,6 +194,25 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingLeft: 26,
         paddingRight: 26,
-        marginBottom: 30
+        marginBottom: 15
+    },
+    knowledgeText: {
+        fontSize: 15,
+        color: '#0E395A',
+        textAlign: 'center',
+        width: '90%',
+        alignSelf: 'center',
+    },
+    knowledgeNav: {
+        flexDirection: 'row',
+        marginTop: 15,
+        marginLeft: 25,
+        alignSelf: 'flex-start',
+    },
+    additionalQuestions: {
+        flexDirection: 'row',
+        paddingLeft: 26,
+        paddingRight: 26,
+        width: '100%'
     }
 })

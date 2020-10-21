@@ -1,25 +1,25 @@
 import React from 'react'
-import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 
-export default class HeaderBurger extends React.Component {
+import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+
+export default class LapItem extends React.Component {
 
     render() {
-        return(
-            <View style={styles.headerView}>
-                <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}
-                                  style={{marginLeft: 20, marginBottom: 9}}>
-                    <View style={{borderTopWidth: 1, borderTopColor: '#FFFFFF', width: 25, marginBottom: 9}}/>
-                    <View style={{borderTopWidth: 1, borderTopColor: '#FFFFFF', width: 35, marginBottom: 9}}/>
-                    <View style={{borderTopWidth: 1, borderTopColor: '#FFFFFF', width: 25, marginBottom: 9}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
-                    <Image source={require('../icons/logo_white_PNG.png')}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('MyAccount')}>
-                    <Image style={{marginRight: 23, marginBottom: 9}} source={require('../icons/user.png')}/>
-                </TouchableOpacity>
-            </View>
-        )
+        if (this.props.item !== "EMPTY") {
+            return (
+                <View style={styles.lapView}>
+                    <Image style={{marginTop: 12, alignContent: 'flex-end'}}
+                           source={require('../icons/001-wall-clock_race.png')}/>
+                    <Text style={styles.lapText}>{this.props.item.idRound} OKRĄŻENIE</Text>
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.lapView}>
+
+                </View>
+            )
+        }
     }
 }
 
@@ -28,10 +28,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#0A3251',
         width: '100%',
-        height: 84,
+        height: 112,
         justifyContent: 'space-between',
         alignItems: 'flex-end',
-        //paddingBottom: 26,
+        paddingBottom: 26,
     },
     infoView: {
         backgroundColor: '#2592E6',
@@ -60,14 +60,19 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
     levelView: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
         width: '90%',
         marginTop: 14,
+        borderRadius: 9,
+    },
+    levelRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
     onelevelView: {
         justifyContent: 'space-between',
-        height: 50
+        height: 50,
+        flex: 1,
+        alignItems: 'center'
     },
     rectangleView: {
         backgroundColor: '#0E395A66',
@@ -89,12 +94,14 @@ const styles = StyleSheet.create({
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     timeView: {
         flexDirection: 'row',
@@ -102,7 +109,6 @@ const styles = StyleSheet.create({
         paddingLeft: 9,
         paddingRight: 9,
         justifyContent: 'space-between',
-
     },
     timeTextView: {
         alignItems: 'center',
@@ -146,6 +152,26 @@ const styles = StyleSheet.create({
     footerInfo: {
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    levelInfoView: {
+        alignItems: 'center'
+    },
+    slides: {
+        paddingLeft: 30,
+        paddingBottom: 30,
+    },
+    lapsRow: {
+        flexDirection: 'row',
+        paddingLeft: 15,
+        paddingRight: 15,
+        justifyContent: 'space-between'
+    },
+    lapView: {
+        alignItems: 'center',
+        flex: 1,
+    },
+    lapText: {
+        color: '#0A3251',
+        fontSize: 12,
     }
 });
-

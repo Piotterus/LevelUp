@@ -2,6 +2,7 @@ import React from 'react';
 
 import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
 import {SafeAreaView} from 'react-native-safe-area-context';
+import ErrorModal from '../components/ErrorModal';
 
 const BLUE = "#428AF8"
 const LIGHT_GRAY = "#D3D3D3"
@@ -16,88 +17,60 @@ export default class LoginScreen extends React.Component {
             isFocusedName: false,
             isFocusedAge: false,
             error: '',
+            modalErrorVisible: false,
         }
     }
 
+    objToQueryString(obj) {
+        const keyValuePairs = [];
+        for (const key in obj) {
+            keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+        }
+        return keyValuePairs.join('&');
+    }
 
-    /*handleLogin() {
-        let url = "https://piotr2.scementowani.pl/apiPiotr";
+    login(login,password) {
+
+        if (login == "") {
+            login = "PL22"
+        }
+        if (password == "") {
+            password = "9LB92F3D"
+        }
+
+        const queryString = this.objToQueryString({
+            key: this.props.keyApp,
+        });
+        let body = {
+            login: login,
+            password: password,
+            device: 'testdevice1234',
+            from: 'app',
+        }
+
+        let url = `https://levelup.verbum.com.pl/api/user/login?${queryString}`;
 
         fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': "application/json",
             },
-            body: JSON.stringify({
-                method: "login",
-                name: this.state.login,
-                password: this.state.password,
-            }),
+            body: JSON.stringify(body)
         })
             .then(response => response.json())
             .then(responseJson => {
-
-                if (responseJson.error == "0") {
-                    global.myID = responseJson.id
-                    this.props.navigation.navigate('Main', {},
-                        {
-                            type: "Navigate",
-                            routeName: "Login",
-                            params: {myID: responseJson.id},
-                            actions: {
-                                params: {myID: responseJson.id}
-                            }
-                        }
-                    );
+                if (responseJson.error.code == 0) {
+                    this.props.login(responseJson.user.mobileToken)
                 } else {
-
                     this.setState({
-                        error: responseJson.message,
-                    })
+                        error: responseJson.error,
+                    }, () => this.setModalErrorVisible(true))
                 }
-
             })
             .catch((error) => {
                 console.error(error);
             });
     }
-
-    handleRegister() {
-        let url = "https://piotr2.scementowani.pl/apiPiotr";
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': "application/json",
-            },
-            body: JSON.stringify({
-                method: "addParent",
-                name: this.state.login,
-                password: this.state.password,
-            }),
-        })
-            .then(response => response.json())
-            .then(responseJson => {
-                if (responseJson.error == "0") {
-                    global.myID = responseJson.id
-                    this.props.navigation.navigate('Main', {},
-                        {
-                            type: "Navigate",
-                            routeName: "Login",
-                            params: {myID: responseJson.id}
-                        }
-                    );
-                } else {
-                    this.setState({
-                        error: "Rejestracja nieudana"
-                    })
-                }
-
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }*/
 
     updateValue(text,field) {
         if (field == 'login') {
@@ -111,12 +84,17 @@ export default class LoginScreen extends React.Component {
         }
     }
 
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
             <View style={styles.view}>
-                <ScrollView style={styles.scrollView}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scrollView}>
                     <ImageBackground source={require('../images/levelup_start_v2.png')} resizeMode='contain' style={styles.imageBackground}>
-                        <View style={styles.insideView}>
+                        <View style={[styles.insideView, {flex: 1}]}>
                             <TextInput
                                 placeholder="LOGIN"
                                 placeholderTextColor="#FFFFFF33"
@@ -132,14 +110,14 @@ export default class LoginScreen extends React.Component {
                                 secureTextEntry={true}
                                 onChangeText = {(text) => this.updateValue(text,'password')}
                             />
-                            <View style={styles.remindMeView}>
-                                <Text  onPress={() => this.props.navigation.navigate("RemindPassword")} style={styles.remindMeText}>Nie pamiętasz hasła?</Text>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate("RemindPassword")} style={styles.remindMeView}>
+                                <Text style={styles.remindMeText}>Nie pamiętasz hasła?</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Text style={styles.remindMeText}>Zapamiętaj mnie</Text>
                                     <Switch/>
                                 </View>
-                            </View>
-                            <TouchableOpacity onPress={() => this.props.login()} style={styles.loginButton}>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.login(this.state.login, this.state.password)} style={styles.loginButton}>
                                 <Text style={styles.loginText}>ZALOGUJ SIĘ</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate("Register1")} style={styles.signinButton}>
@@ -225,7 +203,7 @@ const styles = StyleSheet.create({
 
     },
     signinButton: {
-        marginTop: 290,
+        marginTop: 30,
         backgroundColor: '#F1F9FF',
         borderColor: '#0E395A',
         borderWidth: 1,
@@ -236,7 +214,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 27,
+        marginBottom: 287,
     },
     signinText: {
         color: '#0A3251',

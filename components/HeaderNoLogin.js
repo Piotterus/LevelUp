@@ -1,23 +1,12 @@
 import React from 'react'
 import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 
-export default class HeaderBurger extends React.Component {
+export default class HeaderNoLogin extends React.Component {
 
     render() {
         return(
             <View style={styles.headerView}>
-                <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}
-                                  style={{marginLeft: 20, marginBottom: 9}}>
-                    <View style={{borderTopWidth: 1, borderTopColor: '#FFFFFF', width: 25, marginBottom: 9}}/>
-                    <View style={{borderTopWidth: 1, borderTopColor: '#FFFFFF', width: 35, marginBottom: 9}}/>
-                    <View style={{borderTopWidth: 1, borderTopColor: '#FFFFFF', width: 25, marginBottom: 9}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
-                    <Image source={require('../icons/logo_white_PNG.png')}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('MyAccount')}>
-                    <Image style={{marginRight: 23, marginBottom: 9}} source={require('../icons/user.png')}/>
-                </TouchableOpacity>
+                <Image source={require('../icons/logo_white_PNG.png')}/>
             </View>
         )
     }
@@ -29,7 +18,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0A3251',
         width: '100%',
         height: 84,
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'flex-end',
         //paddingBottom: 26,
     },

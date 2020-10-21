@@ -20,6 +20,5 @@ export default class SplashScreen extends React.Component {
 const styles = StyleSheet.create({
     imageBackground: {
         width: Dimensions.get("window").width, //for full screen
-
     },
 });

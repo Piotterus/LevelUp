@@ -15,7 +15,7 @@ export default class CustomDrawer extends React.Component {
                             <Image style={{alignSelf: 'center'}} source={require('../icons/userDrawer.png')}/>
                         </View>
                         <Text style={[styles.textColor, {marginTop: 20}]}>ZALOGOWANY:</Text>
-                        <Text style={[styles.textColor, styles.textName]}>Maciej <Text style={{fontWeight: 'bold'}}>Nowak</Text></Text>
+                        <Text style={[styles.textColor, styles.textName]}>{this.props.firstName} <Text style={{fontWeight: 'bold'}}>{this.props.lastName} </Text></Text>
                         <Image style={{marginTop: 26, marginBottom: 22}} source={require('../icons/gear.png')}/>
                         <View style={styles.drawerLine}/>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.drawerItem}>

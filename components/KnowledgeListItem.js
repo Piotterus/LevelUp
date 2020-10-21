@@ -2,42 +2,84 @@ import React from 'react'
 
 import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
 
+import Icon from 'react-native-vector-icons/Entypo';
+
 export default class KnowledgeListItem extends React.Component {
 
     render() {
-        let activeText = ""
-        if (this.props.active == true) {
-            activeText = "AKTUALNE"
-        } else {
-            activeText = "NIEAKTUALNE"
-        }
-        if (this.props.active == true) {
-            return (
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('OneKnowledge', {id: this.props.id})}
-                                  style={[styles.knowledgeOne, styles.shadow]}>
-                    <Image style={{width: '100%'}} resizeMode="contain"
-                           source={require('../images/iStock_000022969370_XXXLarge.png')}/>
-                    <View style={styles.knowledgeDesc}>
-                        <Text style={[styles.knowledgeDescText, {fontSize: 12}]}>{activeText}</Text>
-                        <Text style={[styles.knowledgeDescText, {
-                            fontSize: 18,
-                            marginTop: 5
-                        }]}>{this.props.knowledgeTitle}</Text>
-                    </View>
-                </TouchableOpacity>
-            )
+        if (this.props.active === true) {
+            if (this.props.status.id === 1) {
+                return (
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('OneKnowledge', {id: this.props.id})}
+                        style={[styles.knowledgeOne, styles.shadow, {borderColor: '#2592E6', borderWidth: 1, borderRadius: 9}]}>
+                        <View style={styles.knowledgeDesc}>
+                            <Text style={[styles.knowledgeDescText, styles.knowledgeTextRead, {fontSize: 12, fontWeight: 'normal'}]}>DZIEŃ TYGODNIA -
+                                DATA</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                width: '100%',
+                                marginTop: 9,
+                                justifyContent: 'space-between'
+                            }}>
+                                <Text style={[styles.knowledgeDescText, styles.knowledgeTextRead]}>{this.props.knowledgeTitle}</Text>
+                                <Image source={require('../icons/left_arrow_alt.png')}/>
+                            </View>
+                            <View style={{flexDirection: 'row', width: '100%', marginTop: 12}}>
+                                <Image source={require('../icons/eye.png')}/>
+                                <Text style={[styles.knowledgeTextRead, {fontSize: 10, marginLeft: 7, fontWeight: 'normal'}]}>{this.props.activeText}</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                )
+            } else if (this.props.status.id === 2) {
+                return (
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('OneKnowledge', {id: this.props.id})}
+                        style={[styles.knowledgeOne, styles.shadow, {backgroundColor: '#E20000'}]}>
+                        <View style={[styles.knowledgeDesc]}>
+                            <Text style={[styles.knowledgeDescText, styles.knowledgeTextNotRead, {fontSize: 12, fontWeight: 'normal'}]}>DZIEŃ TYGODNIA -
+                                DATA {this.props.status.id}</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                width: '100%',
+                                marginTop: 9,
+                                justifyContent: 'space-between'
+                            }}>
+                                <Text style={[styles.knowledgeDescText, styles.knowledgeTextNotRead]}>{this.props.knowledgeTitle}</Text>
+                                <Image source={require('../icons/left_arrow_alt-2.png')}/>
+                            </View>
+                            <View style={{flexDirection: 'row', width: '100%', marginTop: 12}}>
+                                <Image source={require('../icons/eye_slash-1.png')}/>
+                                <Text style={[styles.knowledgeTextNotRead, {fontSize: 10, marginLeft: 7, fontWeight: 'normal'}]}>{this.props.activeText}</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                )
+            }
         } else {
             return (
                 <TouchableOpacity
-                                  style={[styles.knowledgeOne, styles.shadow]}>
-                    <Image style={{width: '100%'}} resizeMode="contain"
-                           source={require('../images/iStock_000022969370_XXXLarge.png')}/>
+                    onPress={() => this.props.navigation.navigate('OneKnowledge', {id: this.props.id})}
+                    style={[styles.knowledgeOne, {borderColor: '#2592E6', borderWidth: 1, borderRadius: 9, opacity: 0.25}]}>
                     <View style={styles.knowledgeDesc}>
-                        <Text style={[styles.knowledgeDescText, {fontSize: 12}]}>{activeText}</Text>
-                        <Text style={[styles.knowledgeDescText, {
-                            fontSize: 18,
-                            marginTop: 5
-                        }]}>{this.props.knowledgeTitle}</Text>
+                        <Text style={[styles.knowledgeDescText, styles.knowledgeTextRead, {fontSize: 12, fontWeight: 'normal'}]}>DZIEŃ TYGODNIA -
+                            DATA</Text>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            width: '100%',
+                            marginTop: 9,
+                            justifyContent: 'space-between'
+                        }}>
+                            <Text style={[styles.knowledgeDescText, styles.knowledgeTextRead]}>{this.props.knowledgeTitle}</Text>
+                            <Icon name="lock" size={30} color="#2592E6" />
+                        </View>
+                        <View style={{flexDirection: 'row', width: '100%', marginTop: 12}}>
+
+                        </View>
                     </View>
                 </TouchableOpacity>
             )
@@ -71,18 +113,32 @@ const styles = StyleSheet.create({
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     knowledgeDesc: {
         flex: 1,
-        paddingLeft: 26,
+        paddingLeft: 12,
+        paddingRight: 26,
+        paddingTop: 5,
     },
     knowledgeDescText: {
-        color: '#0E395A'
-    }
+        fontSize: 20,
+        marginTop: 5,
+        width: '80%',
+    },
+    knowledgeTextRead: {
+        color: '#2592E6',
+        fontWeight: 'bold'
+    },
+    knowledgeTextNotRead: {
+        color: '#FFFFFF',
+        fontWeight: 'bold'
+    },
 })

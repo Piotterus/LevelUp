@@ -4,13 +4,59 @@ import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackgr
 
 import HeaderBurger from '../components/HeaderBurger';
 import Icon from 'react-native-vector-icons/Feather';
+import HeaderNoLogin from '../components/HeaderNoLogin';
+import ErrorModal from '../components/ErrorModal';
 
 export default class Register2Screen extends React.Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            firstname: this.props.route.params.firstname,
+            lastname: this.props.route.params.lastname,
+            phone: this.props.route.params.phone,
+            email: this.props.route.params.email,
+            firmName: '',
+            firmAddressStreet: '',
+            firmAddressPostal: '',
+            firmAddressCity: '',
+            modalErrorVisible: false,
+            error: '',
+        }
+        console.log(this.state);
+        //console.log(this.props.navigation.state.params);
+        console.log(this.props.route.params)
+    }
+
+    updateValue(text,field) {
+        if (field === 'firmName') {
+            this.setState({
+                firmName: text,
+            })
+        } else if (field === 'firmAddressStreet' ){
+            this.setState( {
+                firmAddressStreet: text,
+            })
+        } else if (field === 'firmAddressPostal' ){
+            this.setState( {
+                firmAddressPostal: text,
+            })
+        } else if (field === 'firmAddressCity' ){
+            this.setState( {
+                firmAddressCity: text,
+            })
+        }
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
-            <ScrollView contentContainerStyle={styles.backgroundContent} style={styles.background}>
-                <HeaderBurger/>
+            <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                <HeaderNoLogin/>
                 <View style={styles.textView}>
                     <Text style={styles.headerText}>Chcesz dołączyć do LEVEL UP?</Text>
                     <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej LEVEL UP.</Text>
@@ -23,35 +69,35 @@ export default class Register2Screen extends React.Component {
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        //onChangeText = {(text) => this.updateValue(text,'login')}
+                        onChangeText = {(text) => this.updateValue(text,'firmName')}
                     />
                     <TextInput
                         placeholder="PROFIL DZIAŁALNOŚCI"
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        //onChangeText = {(text) => this.updateValue(text,'login')}
+                        onChangeText = {(text) => this.updateValue(text,'firmProfile')}
                     />
                     <TextInput
                         placeholder="ADRES"
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        //onChangeText = {(text) => this.updateValue(text,'login')}
+                        onChangeText = {(text) => this.updateValue(text,'firmAddressStreet')}
                     />
                     <TextInput
                         placeholder="KOD POCZTOWY"
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        //onChangeText = {(text) => this.updateValue(text,'login')}
+                        onChangeText = {(text) => this.updateValue(text,'firmAddressPostal')}
                     />
                     <TextInput
                         placeholder="MIEJSCOWOŚĆ"
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        //onChangeText = {(text) => this.updateValue(text,'login')}
+                        onChangeText = {(text) => this.updateValue(text,'firmAddressCity')}
                     />
                 </View>
                 <View style={styles.bottomView}>
@@ -60,7 +106,16 @@ export default class Register2Screen extends React.Component {
                             <Icon name="chevron-left" size={50} color="#2592E6" />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Register3')} style={styles.nextButton}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Register3' , {
+                        firstname: this.state.firstname,
+                        lastname: this.state.lastname,
+                        phone: this.state.phone,
+                        email: this.state.email,
+                        firmName: this.state.firmName,
+                        firmAddressStreet: this.state.firmAddressStreet,
+                        firmAddressPostal: this.state.firmAddressPostal,
+                        firmAddressCity: this.state.firmAddressCity
+                    })} style={styles.nextButton}>
                         <Text style={{color: '#FFFFFF', fontSize: 16}}>DALEJ >>></Text>
                     </TouchableOpacity>
                 </View>

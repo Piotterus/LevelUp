@@ -6,15 +6,67 @@ import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import Info from '../components/Info';
+import ErrorModal from '../components/ErrorModal';
 
 export default class MyAccountScreen extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: '',
+            firm: '',
+            modalErrorVisible: false,
+            error: '',
+        }
+
+    }
+
+    objToQueryString(obj) {
+        const keyValuePairs = [];
+        for (const key in obj) {
+            keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+        }
+        return keyValuePairs.join('&');
+    }
+
+    componentDidMount() {
+
+        const queryString = this.objToQueryString({
+            key: this.props.keyApp,
+            token: this.props.token,
+        });
+
+        let url = `https://levelup.verbum.com.pl/api/user/userData/?${queryString}`;
+        console.log(url);
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': "application/json",
+            },
+        })
+            .then(response => response.json())
+            .then(responseJson => {
+                this.setState({
+                    user: responseJson.user,
+                    firm: responseJson.firm,
+                })
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
                 <Info/>
-                <View style={styles.knowledgeMain}>
+                <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>MOJE KONTO</Text>
                     <View style={[styles.shadow, styles.myAccount]}>
                         <Text style={styles.headerText}>Dane Uczestnika</Text>
@@ -28,10 +80,10 @@ export default class MyAccountScreen extends React.Component {
                             <View style={{width: 10}}>
                             </View>
                             <View style={styles.userData}>
-                                <Text style={styles.userDataText}>MAREK</Text>
-                                <Text style={styles.userDataText}>WRÓBLEWSKI</Text>
-                                <Text style={styles.userDataText}>XXX XXX XXX</Text>
-                                <Text style={styles.userDataText}>NAZWA@DOMENY.PL</Text>
+                                <Text style={styles.userDataText}>{this.state.user.firstname}</Text>
+                                <Text style={styles.userDataText}>{this.state.user.lastname}</Text>
+                                <Text style={styles.userDataText}>{this.state.user.phone}</Text>
+                                <Text style={styles.userDataText}>{this.state.user.email}</Text>
                             </View>
                         </View>
                         <View style={styles.line}></View>
@@ -47,11 +99,11 @@ export default class MyAccountScreen extends React.Component {
                             <View style={{width: 10}}>
                             </View>
                             <View style={styles.userData}>
-                                <Text style={styles.userDataText}>NAZWA</Text>
+                                <Text style={styles.userDataText}>{this.state.firm.name}</Text>
                                 <Text style={styles.userDataText}>PROFIL DZIAŁALNOŚCI</Text>
-                                <Text style={styles.userDataText}>ADRES</Text>
-                                <Text style={styles.userDataText}>KOD POCZTOWY</Text>
-                                <Text style={styles.userDataText}>MIEJSCOWOŚĆ</Text>
+                                <Text style={styles.userDataText}>{this.state.firm.address_street}</Text>
+                                <Text style={styles.userDataText}>{this.state.firm.address_zipcode}</Text>
+                                <Text style={styles.userDataText}>{this.state.firm.address_city}</Text>
                             </View>
                         </View>
                         <View style={styles.line}></View>
@@ -68,12 +120,12 @@ export default class MyAccountScreen extends React.Component {
                             </View>
                         </View>
                         <View style={styles.line}></View>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('MyConsent')} style={[styles.buttonBase, styles.buttonConsent, styles.shadow]}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('MyConsent')} style={[styles.buttonBase, styles.shadow, styles.buttonConsent]}>
                             <Text style={styles.buttonText}>MOJE ZGODY</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-                <Footer navigation={this.props.navigation}/>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
             </ScrollView>
         )
     }
@@ -109,12 +161,14 @@ const styles = StyleSheet.create({
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     buttonBase: {
         width: '100%',

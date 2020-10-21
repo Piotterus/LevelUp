@@ -6,15 +6,29 @@ import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import Info from '../components/Info';
+import ErrorModal from '../components/ErrorModal';
 
 export default class AboutLevelsScreen extends React.Component {
 
+    constructor() {
+        super();
+        this.state = {
+            modalErrorVisible: false,
+            error: '',
+        }
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
                 <Info/>
-                <View style={styles.knowledgeMain}>
+                <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
                     <View style={[styles.shadow, styles.aboutLaps]}>
                         <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251'}}>Punktacja</Text>
@@ -40,14 +54,9 @@ export default class AboutLevelsScreen extends React.Component {
                                 <Text style={{fontSize: 14, color: '#0E395A'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
                             </View>
                         </View>
-                        <View style={{marginTop: 150, marginBottom: 16, flexDirection: 'row', justifyContent: 'center'}}>
-                            <View opacity={1.0} style={[styles.circle]}></View>
-                            <View opacity={0.45} style={[styles.circle]}></View>
-                            <View opacity={0.45} style={[styles.circle]}></View>
-                        </View>
                     </View>
                 </View>
-                <Footer navigation={this.props.navigation}/>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
             </ScrollView>
         )
     }
@@ -82,12 +91,14 @@ const styles = StyleSheet.create({
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     buttonBase: {
         width: '100%',

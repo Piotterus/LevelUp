@@ -1,52 +1,183 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    ImageBackground,
+    ScrollView,
+    Dimensions,
+    Image,
+    Switch,
+    TouchableHighlight,
+} from 'react-native';
 
 import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import Info from '../components/Info';
+import ErrorModal from '../components/ErrorModal';
+import Swiper from 'react-native-swiper'
+
 
 export default class AboutLapsScreen extends React.Component {
 
+    constructor() {
+        super();
+        this.state = {
+            modalErrorVisible: false,
+            error: '',
+        }
+    }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         return(
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
                 <Info/>
-                <View style={styles.knowledgeMain}>
-                    <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
-                    <View style={[styles.shadow, styles.aboutLaps]}>
-                        <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251'}}>Okrążenia</Text>
-                        <Text style={{fontSize: 16, color: '#0A3251'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
-                        <View style={{flexDirection: 'row', marginTop: 30}}>
-                            <View style={{flex: 1, alignItems: 'center'}}>
-                                <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
-                                <Text>Okrążenia aktualne</Text>
+                <Swiper height={500} showsButtons={false}>
+                    <View style={[styles.knowledgeMain, {flex: 1}]}>
+                        <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
+                        <View style={[styles.shadow, styles.aboutLaps]}>
+                            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251'}}>Okrążenia</Text>
+                            <Text style={{fontSize: 16, color: '#0A3251'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
+                            <View style={{flexDirection: 'row', marginTop: 30}}>
+                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
+                                    <Text>Okrążenia aktualne</Text>
+                                </View>
+                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
+                                    <Text>Okrążenie pominięte</Text>
+                                </View>
                             </View>
-                            <View style={{flex: 1, alignItems: 'center'}}>
-                                <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
-                                <Text>Okrążenie pominięte</Text>
+                            <View style={{flexDirection: 'row', marginTop: 10}}>
+                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
+                                    <Text>Okrążenia ukończone</Text>
+                                </View>
+                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
+                                    <Text>Wkrótce</Text>
+                                </View>
                             </View>
-                        </View>
-                        <View style={{flexDirection: 'row', marginTop: 10}}>
-                            <View style={{flex: 1, alignItems: 'center'}}>
-                                <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
-                                <Text>Okrążenia ukończone</Text>
-                            </View>
-                            <View style={{flex: 1, alignItems: 'center'}}>
-                                <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
-                                <Text>Wkrótce</Text>
-                            </View>
-                        </View>
-                        <View style={{marginTop: 150, marginBottom: 16, flexDirection: 'row', justifyContent: 'center'}}>
-                            <View opacity={1.0} style={[styles.circle]}></View>
-                            <View opacity={0.45} style={[styles.circle]}></View>
-                            <View opacity={0.45} style={[styles.circle]}></View>
                         </View>
                     </View>
-                </View>
-                <Footer navigation={this.props.navigation}/>
+                    <View style={[styles.knowledgeMain, {flex: 1}]}>
+                        <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
+                        <View style={[styles.shadow, styles.aboutLaps]}>
+                            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251'}}>Punktacja</Text>
+                            <Text style={{fontSize: 16, color: '#0A3251'}}>Level.UP to dobra gra - na wyższych poziomach gry dostajesz więcej punktów za te same działania.</Text>
+                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 8}}>
+                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/Page-1.png')}/>
+                                <View style={{flex: 3}}>
+                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>STARTER</Text>
+                                    <Text style={{fontSize: 14, color: '#0E395A'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/001-scooter.png')}/>
+                                <View style={{flex: 3}}>
+                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>EXPERT</Text>
+                                    <Text style={{fontSize: 14, color: '#0E395A'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/003-car.png')}/>
+                                <View style={{flex: 3}}>
+                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>CHAMPION</Text>
+                                    <Text style={{fontSize: 14, color: '#0E395A'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={[styles.knowledgeMain, {flex: 1}]}>
+                        <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
+                        <View style={[styles.shadow, styles.aboutLaps]}>
+                            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251'}}>Punktacja</Text>
+                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 8}}>
+                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/Page-1.png')}/>
+                                <View style={{flex: 4}}>
+                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>STARTER</Text>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź POPRAWNA</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>2 pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź NIEPOPRAWNA</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>1 pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Brak odpowiedzi</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>-1 pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Maksymalna ilość pkt</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>26 pkt</Text>
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                <TouchableHighlight style={{marginBottom: 10, flex: 2, alignSelf: 'center'}}
+                                                    onPress={() => {
+                                                        this.setModalVisible(true);
+                                                    }}>
+                                    <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/001-scooter.png')}/>
+                                </TouchableHighlight>
+                                <View style={{flex: 4}}>
+                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>EXPERT</Text>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź POPRAWNA</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>4 pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź NIEPOPRAWNA</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>2 pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Brak odpowiedzi</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>-2 pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Maksymalna ilość pkt</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>52 pkt</Text>
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/003-car.png')}/>
+                                <View style={{flex: 4}}>
+                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>CHAMPION</Text>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź POPRAWNA</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>8 pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź NIEPOPRAWNA</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>4 pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Brak odpowiedzi</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>-4 pkt</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Maksymalna ilość pkt</Text>
+                                        <Text style={{fontSize: 12, color: '#0E395A'}}>78 pkt</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </Swiper>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
             </ScrollView>
         )
     }
@@ -81,12 +212,14 @@ const styles = StyleSheet.create({
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     buttonBase: {
         width: '100%',

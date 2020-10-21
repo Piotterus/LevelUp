@@ -21,13 +21,20 @@ import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import Info from '../components/Info';
+import ErrorModal from '../components/ErrorModal';
 
 export default class AboutQuestionsScreen extends React.Component {
-    state = {
-        modalVisible: false,
-        modalHeader: "",
-        modalText: ""
-    };
+
+    constructor() {
+        super();
+        this.state = {
+            modalVisible: false,
+            modalHeader: "",
+            modalText: "",
+            modalErrorVisible: false,
+            error: '',
+        }
+    }
 
     setModalVisible = (visible) => {
         this.setState({ modalVisible: visible });
@@ -41,10 +48,15 @@ export default class AboutQuestionsScreen extends React.Component {
         this.setState({ modalText: text });
     }
 
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    }
+
     render() {
         const { modalVisible, modalHeader, modalText } = this.state;
         return(
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
                 <Info/>
                 <Modal isVisible={modalVisible}>
@@ -69,7 +81,7 @@ export default class AboutQuestionsScreen extends React.Component {
                     </TouchableWithoutFeedback>
                 </Modal>
 
-                <View style={styles.knowledgeMain}>
+                <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>Pytania</Text>
                     <View style={[styles.shadow, styles.aboutLaps]}>
                         <TouchableWithoutFeedback style={{marginBottom: 10, flex: 2, alignSelf: 'center'}}
@@ -156,7 +168,7 @@ export default class AboutQuestionsScreen extends React.Component {
                         </View>
                     </View>
                 </View>
-                <Footer navigation={this.props.navigation}/>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
             </ScrollView>
         )
     }
@@ -191,12 +203,14 @@ const styles = StyleSheet.create({
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
             height: 3,
         },
-        shadowRadius: 6
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
     },
     buttonBase: {
         width: '100%',
