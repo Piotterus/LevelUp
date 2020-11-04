@@ -1,23 +1,33 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
-import LapItem from './LapItem';
+import {
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    ImageBackground,
+    ScrollView,
+    Dimensions,
+    Image,
+    Switch,
+    TouchableHighlight,
+} from 'react-native';
 
-export default class LapRow extends React.Component {
+import HTML from "react-native-render-html";
+import {CheckBox} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Feather';
 
-    createLapItems() {
-        let number = 0;
-        let lapItems = [];
-        lapItems.push(<LapItem key={1} item={this.props.item1} activeRound={this.props.activeRound} changeActiveRound={this.props.changeActiveRound}/>)
-        lapItems.push(<LapItem key={2} item={this.props.item2} activeRound={this.props.activeRound} changeActiveRound={this.props.changeActiveRound}/>)
-        lapItems.push(<LapItem key={3} item={this.props.item3} activeRound={this.props.activeRound} changeActiveRound={this.props.changeActiveRound}/>)
-        return lapItems
-    }
+export default class RankingRow extends React.Component {
 
     render() {
+        let rank = parseInt(this.props.position) + 1;
         return(
-            <View style={styles.lapsRow}>
-                {this.createLapItems()}
+            <View style={styles.rankingRow}>
+                <Text style={[styles.rankingText, {flex: 1}]}>{rank}</Text>
+                <Text style={[styles.rankingText, {flex: 5}]}>{this.props.firstName} {this.props.lastName}</Text>
+                <Text style={[styles.rankingText, {flex: 1}]}>{this.props.points}</Text>
             </View>
         )
     }
@@ -173,5 +183,56 @@ const styles = StyleSheet.create({
     lapText: {
         color: '#0A3251',
         fontSize: 12,
-    }
+    },
+    points2levelView: {
+        flexDirection: 'row',
+        paddingLeft: 15,
+        paddingRight: 15,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    points2levelText: {
+        color: '#0E395A',
+        fontSize: 11,
+    },
+    chooseContentView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '90%',
+    },
+    chooseContentViewOne: {
+        height: 43,
+        width: 103,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 23
+    },
+    chooseContentViewActive: {
+        backgroundColor: '#0A3251',
+    },
+    chooseContentViewDisactive: {
+        backgroundColor: '#F3F3F3'
+    },
+    chooseContentText: {
+        fontSize: 13,
+    },
+    chooseContentTextActive: {
+        color: '#FFFFFF',
+    },
+    chooseContentTextDisactive: {
+        color: '#0A3251',
+    },
+    rankingRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        paddingRight: 20,
+        paddingLeft: 20,
+        paddingBottom: 20,
+    },
+    rankingText: {
+        fontSize: 16,
+        color: '#0A3251',
+    },
 });
+

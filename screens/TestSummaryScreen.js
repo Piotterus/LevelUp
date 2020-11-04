@@ -25,8 +25,30 @@ export default class TestSummaryScreen extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.listenerFocus = this.props.navigation.addListener('focus', () => {
+
+            this.setState({
+                results : this.props.route.params.results,
+                sum: this.props.route.params.sum,
+                model: this.props.route.params.model,
+                id: this.props.route.params.id,
+            })
+
+        });
+
+        this.listenerBlur = this.props.navigation.addListener('blur', () => {
+
+        });
+    }
+
+    componentWillUnmount() {
+        this.listenerFocus();
+        this.listenerBlur();
+    }
+
     createTestSummaryList() {
-        let testSummaryList = []
+        let testSummaryList = [];
         for (let i in this.state.results) {
             testSummaryList.push(<TestSummaryItem
                 key={i}
@@ -57,76 +79,6 @@ export default class TestSummaryScreen extends React.Component {
                     <Text style={styles.knowledgeHeaderText}>PODSUMOWANIE TESTU</Text>
                     <View style={[styles.shadow, styles.summaryView]}>
                         {this.createTestSummaryList()}
-                        {/*<View style={styles.questionRow}>
-                            <Text style={styles.answerNumber}>Pytanie 1</Text>
-                            <View style={styles.questionRow2}>
-                                <Icon name="check" size={20} color="#AAEE00" />
-                                <Text>+2</Text>
-                            </View>
-                        </View>
-                        <View style={styles.questionRow}>
-                            <Text style={styles.answerNumber}>Pytanie 2</Text>
-                            <View style={styles.questionRow2}>
-                                <Icon name="check" size={20} color="#AAEE00" />
-                                <Text>+2</Text>
-                            </View>
-                        </View>
-                        <View style={styles.questionRow}>
-                            <Text style={styles.answerNumber}>Pytanie 3</Text>
-                            <View style={styles.questionRow2}>
-                                <Icon name="check" size={20} color="#AAEE00" />
-                                <Text>+2</Text>
-                            </View>
-                        </View>
-                        <View style={styles.questionRow}>
-                            <Text style={styles.answerNumber}>Pytanie 4</Text>
-                            <View style={styles.questionRow2}>
-                                <Icon name="minus" size={20} color="#FF0000" />
-                                <Text>+2</Text>
-                            </View>
-                        </View>
-                        <View style={styles.questionRow}>
-                            <Text style={styles.answerNumber}>Pytanie 5</Text>
-                            <View style={styles.questionRow2}>
-                                <Icon name="check" size={20} color="#AAEE00" />
-                                <Text>+2</Text>
-                            </View>
-                        </View>
-                        <View style={styles.questionRow}>
-                            <Text style={styles.answerNumber}>Pytanie 6</Text>
-                            <View style={styles.questionRow2}>
-                                <Icon name="check" size={20} color="#AAEE00" />
-                                <Text>+2</Text>
-                            </View>
-                        </View>
-                        <View style={styles.questionRow}>
-                            <Text style={styles.answerNumber}>Pytanie 7</Text>
-                            <View style={styles.questionRow2}>
-                                <Icon name="check" size={20} color="#AAEE00" />
-                                <Text>+2</Text>
-                            </View>
-                        </View>
-                        <View style={styles.questionRow}>
-                            <Text style={styles.answerNumber}>Pytanie 8</Text>
-                            <View style={styles.questionRow2}>
-                                <Icon name="minus" size={20} color="#FF0000" />
-                                <Text>+2</Text>
-                            </View>
-                        </View>
-                        <View style={styles.questionRow}>
-                            <Text style={styles.answerNumber}>Pytanie 9</Text>
-                            <View style={styles.questionRow2}>
-                                <Icon name="check" size={20} color="#AAEE00" />
-                                <Text>+2</Text>
-                            </View>
-                        </View>
-                        <View style={styles.questionRow}>
-                            <Text style={styles.answerNumber}>Pytanie 10</Text>
-                            <View style={styles.questionRow2}>
-                                <Icon name="check" size={20} color="#AAEE00" />
-                                <Text>+2</Text>
-                            </View>
-                        </View>*/}
                     </View>
                 </View>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"QUESTIONS"}/>

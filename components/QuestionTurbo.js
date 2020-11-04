@@ -11,18 +11,20 @@ export default class QuestionTurbo extends React.Component {
                     <Image resizeMode='contain' style={{width: '100%'}} source={require('../images/Group_176.png')}/>
                 </TouchableOpacity>
             )
-        } else if (this.props.status.id == 4){
+        } else if (this.props.status.id === 4){
             return (
                 <TouchableOpacity style={{flex: 1}}>
                     <Image resizeMode='contain' style={{width: '100%', opacity: 0.25}} source={require('../images/Group_176.png')}/>
                 </TouchableOpacity>
             )
-        } else if (this.props.status.id == 2) {
+        } else if (this.props.status.id === 2) {
             return (
                 <TouchableOpacity style={{flex: 1}}>
                     <Image resizeMode='contain' style={{width: '100%', opacity: 0.25}} source={require('../images/Group_176.png')}/>
                 </TouchableOpacity>
             )
+        } else {
+            return null;
         }
     }
 }

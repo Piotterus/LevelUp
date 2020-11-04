@@ -32,8 +32,13 @@ export default class QuestionSummary extends React.Component {
         //console.log("NUMBER-" + this.props.number);
         return (
             <View>
+                {this.props.questionCount > 1 &&
                 <Text style={styles.questionHeaderText}>PYTANIE {this.props.number}<Text
                     style={{fontSize: 19}}>/{this.props.questionCount}</Text></Text>
+                }
+                {this.props.questionCount === 1 &&
+                <Text style={styles.questionHeaderText}>PYTANIE {this.props.number}</Text>
+                }
                 <HTML html={this.props.text}/>
                 {this.createAnswersList()}
             </View>

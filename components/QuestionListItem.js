@@ -4,8 +4,12 @@ import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackgr
 
 export default class QuestionListItem extends React.Component {
 
+    getTestResults() {
+
+    }
+
     render() {
-        if (this.props.model == 1) {
+        if (this.props.model === 1) {
             if (this.props.active) {
                 return (
                     <View style={styles.questionOne}>
@@ -15,26 +19,29 @@ export default class QuestionListItem extends React.Component {
                         </TouchableOpacity>
                     </View>
                 )
-            } else if (this.props.status.id == 4){
+            } else if (this.props.status.id === 4){
                 return (
                     <View style={styles.questionOne}>
-                        <TouchableOpacity
-                                          style={[styles.buttonBase, styles.buttonPending]}>
+                        <TouchableOpacity style={[styles.buttonBase, styles.buttonPending]}>
                             <Text style={styles.questionTextPending}>PYTANIE {this.props.number}</Text>
                         </TouchableOpacity>
                     </View>
                 )
-            } else if (this.props.status.id == 2) {
+            } else if (this.props.status.id === 2) {
                 return (
                     <View style={styles.questionOne}>
-                        <TouchableOpacity
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("QuestionSummary", {
+                            model: this.props.model,
+                            id: this.props.id,
+                            pollId: this.props.number,
+                        })}
                             style={[styles.buttonBase, styles.buttonSolved]}>
                             <Text style={styles.questionTextSolved}>PYTANIE {this.props.number}</Text>
                         </TouchableOpacity>
                     </View>
                 )
             }
-        } else if (this.props.model == 2) {
+        } else if (this.props.model === 2) {
             if (this.props.active) {
                 return (
                     <View style={styles.questionOne}>
@@ -44,7 +51,7 @@ export default class QuestionListItem extends React.Component {
                         </TouchableOpacity>
                     </View>
                 )
-            } else if (this.props.status.id == 4){
+            } else if (this.props.status.id === 4){
                 return (
                     <View style={styles.questionOne}>
                         <TouchableOpacity
@@ -53,7 +60,7 @@ export default class QuestionListItem extends React.Component {
                         </TouchableOpacity>
                     </View>
                 )
-            } else if (this.props.status.id == 2) {
+            } else if (this.props.status.id === 2) {
                 return (
                     <View style={styles.questionOne}>
                         <TouchableOpacity
@@ -63,7 +70,7 @@ export default class QuestionListItem extends React.Component {
                     </View>
                 )
             }
-        } else if (this.props.model == 3) {
+        } else if (this.props.model === 3) {
             if (this.props.active) {
                 return (
                     <View style={styles.questionOne}>
@@ -73,7 +80,7 @@ export default class QuestionListItem extends React.Component {
                         </TouchableOpacity>
                     </View>
                 )
-            } else if (this.props.status.id == 4){
+            } else if (this.props.status.id === 4){
                 return (
                     <View style={styles.questionOne}>
                         <TouchableOpacity
@@ -82,7 +89,7 @@ export default class QuestionListItem extends React.Component {
                         </TouchableOpacity>
                     </View>
                 )
-            } else if (this.props.status.id == 2) {
+            } else if (this.props.status.id === 2) {
                 return (
                     <View style={styles.questionOne}>
                         <TouchableOpacity
@@ -92,7 +99,7 @@ export default class QuestionListItem extends React.Component {
                     </View>
                 )
             }
-        } else if (this.props.model == 4) {
+        } else if (this.props.model === 4) {
             if (this.props.active) {
                 return (
                     <View style={styles.questionOne}>
@@ -102,21 +109,21 @@ export default class QuestionListItem extends React.Component {
                         </TouchableOpacity>
                     </View>
                 )
-            } else if (this.props.status.id == 4){
+            } else if (this.props.status.id === 4){
                 return (
                     <View style={styles.questionOne}>
                         <TouchableOpacity
                             style={[styles.buttonBase, styles.buttonPending]}>
-                            <Text style={styles.questionTextPending}>ROZWIĄŻ TEST</Text>
+                            <Text style={styles.questionTextPending}>TEST</Text>
                         </TouchableOpacity>
                     </View>
                 )
-            } else if (this.props.status.id == 2) {
+            } else if (this.props.status.id === 2) {
                 return (
                     <View style={styles.questionOne}>
                         <TouchableOpacity
                             style={[styles.buttonBase, styles.buttonSolved]}>
-                            <Text style={styles.questionTextSolved}>ROZWIĄŻ TEST</Text>
+                            <Text style={styles.questionTextSolved}>TEST</Text>
                         </TouchableOpacity>
                     </View>
                 )
@@ -191,11 +198,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#E20000'
     },
     buttonSolved: {
-        borderColor: '#2592E6',
-        borderWidth: 1
+        backgroundColor: '#2592E6',
     },
     buttonPending: {
-        backgroundColor: '#2592E6',
+        backgroundColor: '#8A8A8A',
         opacity: 0.5
     },
     questionTextActive: {
@@ -203,7 +209,7 @@ const styles = StyleSheet.create({
         fontSize: 13
     },
     questionTextSolved: {
-        color: '#2592E6',
+        color: '#FFFFFF',
         fontSize: 13,
     },
     questionTextPending: {

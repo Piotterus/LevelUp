@@ -86,40 +86,19 @@ export default class MyAccountScreen extends React.Component {
                                 <Text style={styles.userDataText}>{this.state.user.email}</Text>
                             </View>
                         </View>
-                        <View style={styles.line}></View>
-                        <Text style={styles.headerText}>Serwis</Text>
+                        <View style={styles.line}/>
+                        <Text style={styles.headerText}>Firma</Text>
                         <View style={styles.userDataView}>
                             <View style={styles.userInfo}>
-                                <Text style={styles.userInfoText}>NAZWA</Text>
-                                <Text style={styles.userInfoText}>PROFIL DZIAŁALNOŚCI</Text>
-                                <Text style={styles.userInfoText}>ADRES</Text>
-                                <Text style={styles.userInfoText}>KOD POCZTOWY</Text>
-                                <Text style={styles.userInfoText}>MIEJSCOWOŚĆ</Text>
+                                <Text style={styles.userInfoText}>NIP</Text>
                             </View>
                             <View style={{width: 10}}>
                             </View>
                             <View style={styles.userData}>
-                                <Text style={styles.userDataText}>{this.state.firm.name}</Text>
-                                <Text style={styles.userDataText}>PROFIL DZIAŁALNOŚCI</Text>
-                                <Text style={styles.userDataText}>{this.state.firm.address_street}</Text>
-                                <Text style={styles.userDataText}>{this.state.firm.address_zipcode}</Text>
-                                <Text style={styles.userDataText}>{this.state.firm.address_city}</Text>
+                                <Text style={styles.userDataText}>{this.state.user.nip}</Text>
                             </View>
                         </View>
-                        <View style={styles.line}></View>
-                        <Text style={styles.headerText}>Przedstawiciel handlowy</Text>
-                        <Text style={styles.headerText}>GoodYear</Text>
-                        <View style={styles.userDataView}>
-                            <View style={styles.userInfo}>
-                                <Text style={styles.userInfoText}>IMIĘ I NAZWISKO</Text>
-                            </View>
-                            <View style={{width: 10}}>
-                            </View>
-                            <View style={styles.userData}>
-                                <Text style={styles.userDataText}>IMIĘ I NAZWISKO</Text>
-                            </View>
-                        </View>
-                        <View style={styles.line}></View>
+                        <View style={styles.line}/>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('MyConsent')} style={[styles.buttonBase, styles.shadow, styles.buttonConsent]}>
                             <Text style={styles.buttonText}>MOJE ZGODY</Text>
                         </TouchableOpacity>

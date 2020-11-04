@@ -33,27 +33,39 @@ export default class EnterQuestionsScreen extends React.Component {
 
     componentDidMount() {
 
-        const queryString = this.objToQueryString({
-            key: this.props.keyApp,
-            token: this.props.token,
-        });
+        this.listenerFocus = this.props.navigation.addListener('focus', () => {
 
-        let url = `https://levelup.verbum.com.pl/api/challenge/actionList?${queryString}`;
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': "application/json",
-            },
-        })
-            .then(response => response.json())
-            .then(responseJson => {
-                this.setState({
-                    questionList: responseJson.list,
-                })
-            })
-            .catch((error) => {
-                console.error(error);
+            const queryString = this.objToQueryString({
+                key: this.props.keyApp,
+                token: this.props.token,
             });
+
+            let url = `https://levelup.verbum.com.pl/api/challenge/actionList?${queryString}`;
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+            })
+                .then(response => response.json())
+                .then(responseJson => {
+                    this.setState({
+                        questionList: responseJson.list,
+                    })
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+        });
+        this.listenerBlur = this.props.navigation.addListener('blur', () => {
+
+        });
+    }
+
+    componentWillUnmount() {
+        this.listenerFocus();
+        this.listenerBlur();
     }
 
     createQuestionList() {
@@ -109,6 +121,15 @@ export default class EnterQuestionsScreen extends React.Component {
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
+    };
+
+    getTestResults(id) {
+        const queryString = this.objToQueryString({
+            key: this.props.keyApp,
+            token: this.props.token,
+        });
+
+
     }
 
     render() {

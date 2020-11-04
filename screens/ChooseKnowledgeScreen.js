@@ -96,27 +96,6 @@ export default class ChooseKnowledgeScreen extends React.Component {
                 <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>WIEDZA</Text>
                     {this.createKnowledgeList()}
-                    {/*<TouchableOpacity onPress={() => this.props.navigation.navigate('OneKnowledge')} style={[styles.knowledgeOne, styles.shadow]}>
-                        <Image style={{width: '100%'}} resizeMode="contain" source={require('../images/iStock_000022969370_XXXLarge.png')}/>
-                        <View style={styles.knowledgeDesc}>
-                            <Text style={[styles.knowledgeDescText, {fontSize: 12}]}>AKTUALNE</Text>
-                            <Text style={[styles.knowledgeDescText, {fontSize: 18, marginTop: 5}]}>Nazwa Pierwszej Wiedzy</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.knowledgeOne, styles.shadow]}>
-                        <Image style={{width: '100%'}} resizeMode="contain" source={require('../images/iStock_000022543329_Medium.png')}/>
-                        <View style={styles.knowledgeDesc}>
-                            <Text style={[styles.knowledgeDescText, {fontSize: 12}]}>NIEDOSTĘPNE</Text>
-                            <Text style={[styles.knowledgeDescText, {fontSize: 18, marginTop: 5}]}>Nazwa Pierwszej Wiedzy</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.knowledgeOne, styles.shadow]}>
-                        <Image style={{width: '100%'}} resizeMode="contain" source={require('../images/Depositphotos_163959576_original.png')}/>
-                        <View style={styles.knowledgeDesc}>
-                            <Text style={[styles.knowledgeDescText, {fontSize: 12}]}>NIEDOSTĘPNE</Text>
-                            <Text style={[styles.knowledgeDescText, {fontSize: 18, marginTop: 5}]}>Nazwa Pierwszej Wiedzy</Text>
-                        </View>
-                    </TouchableOpacity>*/}
                 </View>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"KNOWLEDGE"}/>
             </ScrollView>

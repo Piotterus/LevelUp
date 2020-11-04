@@ -3,20 +3,37 @@ import React from 'react'
 import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 
-export default class TestSummaryItem extends React.Component {
+export default class QuestionSummaryItem extends React.Component {
 
     render() {
         let number = parseInt(this.props.number) + 1;
         return(
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("QuestionSummary",  {model: this.props.model, id: this.props.id, pollId: this.props.number, points: this.props.points})} style={styles.questionRow}>
+            <View style={styles.questionRow}>
                 <Text style={styles.answerNumber}>Pytanie {number}</Text>
                 <View style={styles.questionRow2}>
-                    {this.props.correct && <Icon name="check" size={20} color="#AAEE00" />}
-                    {!this.props.correct && <Icon name="x" size={20} color="#FF0000" />}
+                    {/*<Text>St: {this.props.status}</Text>*/}
+                    {(this.props.status === 2 && this.props.correct) && <Icon name="check" size={20} color="#AAEE00" />}{/*DOBRZE*/}
+                    {(this.props.status === 2 && !this.props.correct) && <Icon name="x" size={20} color="#FF0000" />}{/*ŹLE*/}
+                    {this.props.status === 3 && <Icon name="minus" size={20} color="#AAAAAA" />}{/*NIE ZROBIŁES*/}
+                    {this.props.status === 4 && <Icon name="minus" size={20} color="#AAAAAA" />}{/*NIE ZROBIŁES*/}
                     <Text>{this.props.points}</Text>
-                    <Icon name="chevron-right" size={20} color="#0A3251" />
+                    {(this.props.status === 1 || this.props.status === 2) &&
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("QuestionSummary", {
+                            model: this.props.model,
+                            id: this.props.id,
+                            pollId: this.props.number,
+                            points: this.props.points
+                        })}>
+                            <Icon name="chevron-right" size={20} color="#0A3251"/>
+                        </TouchableOpacity>
+                    }
+                    {(this.props.status === 3 || this.props.status === 4) &&
+                    <TouchableOpacity>
+                        <Icon name="chevron-right" size={20} color="#0A3251"/>
+                    </TouchableOpacity>
+                    }
                 </View>
-            </TouchableOpacity>
+            </View>
         )
     }
 }

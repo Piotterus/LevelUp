@@ -62,7 +62,6 @@ export default class KnowledgeListItem extends React.Component {
         } else {
             return (
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('OneKnowledge', {id: this.props.id})}
                     style={[styles.knowledgeOne, {borderColor: '#2592E6', borderWidth: 1, borderRadius: 9, opacity: 0.25}]}>
                     <View style={styles.knowledgeDesc}>
                         <Text style={[styles.knowledgeDescText, styles.knowledgeTextRead, {fontSize: 12, fontWeight: 'normal'}]}>DZIEŃ TYGODNIA -

@@ -133,12 +133,12 @@ export default class QuestionScreen extends React.Component {
         })
             .then(response => response.json())
             .then(responseJson => {
-                this.props.navigation.push('TestSummary', {
+                this.props.navigation.navigate('TestSummary', {
                     results: responseJson.data.result,
                     sum: responseJson.data.sum,
                     model: this.props.route.params.model,
                     id: this.props.route.params.id,
-                })
+                });
             })
             .catch((error) => {
                 console.error(error);
@@ -189,7 +189,7 @@ export default class QuestionScreen extends React.Component {
         let questionList = [];
         console.log("createQuestion");
         for (let i in this.state.question) {
-            console.log("CREATE QUESTION LIST PUSH: " + JSON.stringify(this.state.question[i].answers))
+            //console.log("CREATE QUESTION LIST PUSH: " + JSON.stringify(this.state.question[i].answers))
             number++;
             questionList.push(<Question key={i}
                                         navigation={this.props.navigation}
@@ -229,12 +229,12 @@ export default class QuestionScreen extends React.Component {
             console.log("POLL ID: " + poll[i].id);
             console.log("QUESTION ID: " + idQuestion);
             console.log("QUESTION TYPE: " + poll[i].type);
-            if (poll[i].id == idQuestion) {
-                if (poll[i].type == "radio") {
+            if (poll[i].id === idQuestion) {
+                if (poll[i].type === "radio") {
                     for (let j in poll[i].answers) {
                         console.log("POLL ANSWER ID: " + poll[i].id)
                         console.log("ANSWER ID: " + idAnswer)
-                        if (poll[i].answers[j].id == idAnswer) {
+                        if (poll[i].answers[j].id === idAnswer) {
                             console.log("VALUE BEFORE: " + poll[i].answers[j].value)
                             poll[i].answers[j].value = !poll[i].answers[j].value;
                             console.log("VALUE AFTER: " + poll[i].answers[j].value)
@@ -242,11 +242,11 @@ export default class QuestionScreen extends React.Component {
                             poll[i].answers[j].value = false;
                         }
                     }
-                } else if (poll[i].type == "check") {
+                } else if (poll[i].type === "check") {
                     for (let j in poll[i].answers) {
                         console.log("POLL ANSWER ID: " + poll[i].id)
                         console.log("ANSWER ID: " + idAnswer)
-                        if (poll[i].answers[j].id == idAnswer) {
+                        if (poll[i].answers[j].id === idAnswer) {
                             console.log("VALUE BEFORE: " + poll[i].answers[j].value)
                             poll[i].answers[j].value = !poll[i].answers[j].value;
                             console.log("VALUE AFTER: " + poll[i].answers[j].value)
@@ -262,6 +262,51 @@ export default class QuestionScreen extends React.Component {
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
+    };
+
+    buttonsNavigate() {
+        let buttonList = [];
+        if (this.state.questionCount > 1) {
+            if (this.state.questionNumber > 1) {
+                buttonList.push(<View key={2} style={{opacity: 1, flex: 1, padding: 10}}>
+                    <TouchableOpacity
+                        onPress={() => this.prevQuestion()}
+                        style={[styles.buttonBase, styles.shadow, styles.buttonConsent, styles.buttonNavigate]}
+                    >
+                        <Text style={styles.buttonText}>WRÓĆ</Text>
+                    </TouchableOpacity>
+                </View>)
+            } else {
+                buttonList.push(<View key={2} style={{opacity: 0.5, flex: 1, padding: 10}}>
+                    <TouchableOpacity
+                        disabled={true}
+                        style={[styles.buttonBase, styles.shadow, styles.buttonConsent, styles.buttonNavigate]}
+                    >
+                        <Text style={styles.buttonText}>WRÓĆ</Text>
+                    </TouchableOpacity>
+                </View>)
+            }
+            if (this.state.questionNumber < this.state.questionCount) {
+                buttonList.push(<View key={1} style={{opacity: 1, flex: 1, padding: 10}}>
+                    <TouchableOpacity
+                        onPress={() => this.nextQuestion()}
+                        style={[styles.buttonBase, styles.shadow, styles.buttonConsent, styles.buttonNavigate]}
+                    >
+                        <Text style={styles.buttonText}>DALEJ</Text>
+                    </TouchableOpacity>
+                </View>)
+            } else {
+                buttonList.push(<View key={1} style={{opacity: 0.5, flex: 1, padding: 10}}>
+                    <TouchableOpacity
+                        disabled={true}
+                        style={[styles.buttonBase, styles.shadow, styles.buttonConsent, styles.buttonNavigate]}
+                    >
+                        <Text style={styles.buttonText}>DALEJ</Text>
+                    </TouchableOpacity>
+                </View>)
+            }
+        }
+        return buttonList;
     }
 
     render() {
@@ -274,22 +319,12 @@ export default class QuestionScreen extends React.Component {
                     <Text style={styles.knowledgeHeaderText}>PYTANIA</Text>
                     <View style={[styles.shadow, styles.questionView]}>
                         {this.createQuestionList()}
-
-                        {this.state.questionNumber < this.state.questionCount &&
-                            <TouchableOpacity onPress={() => this.nextQuestion()}
-                                              style={[styles.buttonBase, styles.shadow, styles.buttonConsent]}>
-                                <Text style={styles.buttonText}>DALEJ</Text>
-                            </TouchableOpacity>
-                        }
-                        {this.state.questionNumber > 1 &&
-                        <TouchableOpacity onPress={() => this.prevQuestion()}
-                                          style={[styles.buttonBase, styles.shadow, styles.buttonConsent]}>
-                            <Text style={styles.buttonText}>WRÓĆ</Text>
-                        </TouchableOpacity>
-                        }
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                            {this.buttonsNavigate()}
+                        </View>
                         {this.state.questionNumber >= this.state.questionCount &&
                             <TouchableOpacity onPress={() => this.sendPoll()}
-                                              style={[styles.buttonBase, styles.shadow, styles.buttonConsent]}>
+                                              style={[styles.buttonBase, styles.shadow, styles.buttonConsent, {backgroundColor: '#0E395A'}]}>
                                 <Text style={styles.buttonText}>ZAKOŃCZ</Text>
                             </TouchableOpacity>
                         }
@@ -396,5 +431,8 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         color: '#0A3251'
+    },
+    buttonNavigate: {
+        width: '100%',
     }
-})
+});

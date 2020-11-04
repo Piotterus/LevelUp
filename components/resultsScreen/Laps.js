@@ -1,46 +1,23 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
-import LapItem from './LapItem';
+import {
+    View,
+    StyleSheet,
+} from 'react-native';
 
-export default class LapRow extends React.Component {
 
-    createLapItems() {
-        let number = 0;
-        let lapItems = [];
-        lapItems.push(<LapItem key={1} item={this.props.item1} activeRound={this.props.activeRound} changeActiveRound={this.props.changeActiveRound}/>)
-        lapItems.push(<LapItem key={2} item={this.props.item2} activeRound={this.props.activeRound} changeActiveRound={this.props.changeActiveRound}/>)
-        lapItems.push(<LapItem key={3} item={this.props.item3} activeRound={this.props.activeRound} changeActiveRound={this.props.changeActiveRound}/>)
-        return lapItems
-    }
+export default class Laps extends React.Component {
 
     render() {
         return(
-            <View style={styles.lapsRow}>
-                {this.createLapItems()}
+            <View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
+                {this.props.createLapRows}
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    headerView: {
-        flexDirection: 'row',
-        backgroundColor: '#0A3251',
-        width: '100%',
-        height: 112,
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        paddingBottom: 26,
-    },
-    infoView: {
-        backgroundColor: '#2592E6',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '100%',
-        height: 55,
-    },
     infoText: {
         color: '#FFFFFF',
         fontSize: 13,
@@ -173,5 +150,44 @@ const styles = StyleSheet.create({
     lapText: {
         color: '#0A3251',
         fontSize: 12,
-    }
+    },
+    points2levelView: {
+        flexDirection: 'row',
+        paddingLeft: 15,
+        paddingRight: 15,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    points2levelText: {
+        color: '#0E395A',
+        fontSize: 11,
+    },
+    chooseContentView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '90%',
+    },
+    chooseContentViewOne: {
+        height: 43,
+        width: 103,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 23
+    },
+    chooseContentViewActive: {
+        backgroundColor: '#0A3251',
+    },
+    chooseContentViewDisactive: {
+        backgroundColor: '#F3F3F3'
+    },
+    chooseContentText: {
+        fontSize: 13,
+    },
+    chooseContentTextActive: {
+        color: '#FFFFFF',
+    },
+    chooseContentTextDisactive: {
+        color: '#0A3251',
+    },
 });
+

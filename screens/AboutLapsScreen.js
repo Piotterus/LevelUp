@@ -51,21 +51,21 @@ export default class AboutLapsScreen extends React.Component {
                             <Text style={{fontSize: 16, color: '#0A3251'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
                             <View style={{flexDirection: 'row', marginTop: 30}}>
                                 <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
+                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaCurrent.png')}/>
                                     <Text>Okrążenia aktualne</Text>
                                 </View>
                                 <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
+                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaNO.png')}/>
                                     <Text>Okrążenie pominięte</Text>
                                 </View>
                             </View>
                             <View style={{flexDirection: 'row', marginTop: 10}}>
                                 <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
+                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaOK.png')}/>
                                     <Text>Okrążenia ukończone</Text>
                                 </View>
                                 <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/001-wall-clock_race.png')}/>
+                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaPending.png')}/>
                                     <Text>Wkrótce</Text>
                                 </View>
                             </View>

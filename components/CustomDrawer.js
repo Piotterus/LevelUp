@@ -16,7 +16,8 @@ export default class CustomDrawer extends React.Component {
                         </View>
                         <Text style={[styles.textColor, {marginTop: 20}]}>ZALOGOWANY:</Text>
                         <Text style={[styles.textColor, styles.textName]}>{this.props.firstName} <Text style={{fontWeight: 'bold'}}>{this.props.lastName} </Text></Text>
-                        <Image style={{marginTop: 26, marginBottom: 22}} source={require('../icons/gear.png')}/>
+                        <View style={{marginTop: 12, marginBottom: 12}}/>
+                        {/*<Image style={{marginTop: 26, marginBottom: 22}} source={require('../icons/gear.png')}/>*/}
                         <View style={styles.drawerLine}/>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.drawerItem}>
                             <Text style={styles.drawerText}>HOME</Text>
@@ -34,11 +35,11 @@ export default class CustomDrawer extends React.Component {
                             <Text style={styles.drawerText}>PYTANIA</Text>
                         </TouchableOpacity>
                         <View style={styles.drawerLine}/>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Ranking')} style={styles.drawerItem}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Results')} style={styles.drawerItem}>
                             <Text style={styles.drawerText}>MOJE WYNIKI</Text>
                         </TouchableOpacity>
                         <View style={styles.drawerLine}/>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.drawerItem}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Contact')} style={styles.drawerItem}>
                             <Text style={styles.drawerText}>KONTAKT</Text>
                         </TouchableOpacity>
                         <View style={styles.drawerLine}/>

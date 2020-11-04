@@ -3,27 +3,26 @@ import React from 'react'
 import {
     Text,
     View,
-    Button,
     StyleSheet,
-    TextInput,
     TouchableOpacity,
-    ImageBackground,
     ScrollView,
-    Dimensions,
-    Image,
-    Switch,
-    TouchableWithoutFeedback, TouchableHighlight,
+    TouchableWithoutFeedback,
 } from 'react-native';
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import Info from '../components/Info';
 import Modal from 'react-native-modal';
 import ErrorModal from '../components/ErrorModal';
-import Question from '../components/Question';
 import LapRow from '../components/LapRow';
 import MyLevelView from '../components/resultsScreen/MyLevelView';
 import MyRank from '../components/resultsScreen/MyRank';
 import CurrentRound from '../components/resultsScreen/CurrentRound';
+import Laps from '../components/resultsScreen/Laps';
+import QuestionSummaryItem from '../components/QuestionSummaryItem';
+import QuestionLifebuoy from '../components/QuestionLifebuoy';
+import QuestionTurbo from '../components/QuestionTurbo';
+import Ranking from '../components/resultsScreen/Ranking';
+import MyRanking from '../components/resultsScreen/MyRanking';
 
 export default class ResultsScreen extends  React.Component {
 
@@ -49,34 +48,17 @@ export default class ResultsScreen extends  React.Component {
                 points: '',
                 name: '',
             },
-            content: 'ogolne'
+            content: 'ogolne',
+            activeRound: '',
+            showQuestions: false,
+            showTest: false,
+            questions: '',
+            test: '',
+            lifebuoy: '',
+            turbo: '',
+            rankingList: '',
         }
-
-    }
-
-    setModalVisible = (visible) => {
-        this.setState({ modalVisible: visible });
-    }
-
-    setModalHeader = (text) => {
-        this.setState({ modalHeader: text });
-    }
-
-    setModalAnswerOK = (text) => {
-        this.setState({ modalAnswerOK: text });
-    }
-
-    setModalAnswerWrong = (text) => {
-        this.setState({ modalAnswerWrong: text });
-    }
-
-    setModalAnswerNO = (text) => {
-        this.setState({ modalAnswerNO: text });
-    }
-
-    setModalMaxPoints = (text) => {
-        this.setState({ modalMaxPoints: text });
-    }
+    };
 
     setModal = (visible, header, answerOK, answerWrong, answerNO, maxPoints) => {
         this.setState({
@@ -87,9 +69,9 @@ export default class ResultsScreen extends  React.Component {
             modalAnswerNO: answerNO,
             modalMaxPoints: maxPoints,
         })
-    }
+    };
 
-    objToQueryString(obj) {
+    static objToQueryString(obj) {
         const keyValuePairs = [];
         for (const key in obj) {
             keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
@@ -99,41 +81,77 @@ export default class ResultsScreen extends  React.Component {
 
     componentDidMount() {
 
-        const queryString = this.objToQueryString({
-            key: this.props.keyApp,
-            token: this.props.token,
-        });
+        this.listenerFocus = this.props.navigation.addListener('focus', () => {
 
-        let url = `https://levelup.verbum.com.pl/api/user/userAccount?${queryString}`;
-
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': "application/json",
-            },
-        })
-            .then(response => response.json())
-            .then(responseJson => {
-                if (responseJson.error.code == 0) {
-                    this.setState({
-                        ranking: responseJson.userData.rank.position,
-                        points: responseJson.userData.rank.points,
-                        week: responseJson.userData.round,
-                        knowledgeCount: responseJson.userData.knowledgeCount,
-                        testCount: responseJson.userData.testCount,
-                        level: responseJson.userData.rank.level,
-                        rounds: responseJson.userData.rounds,
-                        points2level: responseJson.userData.rank.points2level,
-                    })
-                } else {
-                    this.setState({
-                        error: responseJson.error,
-                    }, () => this.setModalErrorVisible(true))
-                }
-            })
-            .catch((error) => {
-                console.error(error);
+            const queryString = ResultsScreen.objToQueryString({
+                key: this.props.keyApp,
+                token: this.props.token,
             });
+
+            let url = `https://levelup.verbum.com.pl/api/user/userAccount?${queryString}`;
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+            })
+                .then(response => response.json())
+                .then(responseJson => {
+                    if (responseJson.error.code === 0) {
+                        this.setState({
+                            ranking: responseJson.userData.rank.position,
+                            points: responseJson.userData.rank.points,
+                            week: responseJson.userData.round,
+                            knowledgeCount: responseJson.userData.knowledgeCount,
+                            testCount: responseJson.userData.testCount,
+                            level: responseJson.userData.rank.level,
+                            rounds: responseJson.userData.rounds,
+                            points2level: responseJson.userData.rank.points2level,
+                            activeRound: responseJson.userData.round,
+                        }, () => this.getActiveRound())
+                    } else {
+                        this.setState({
+                            error: responseJson.error,
+                        }, () => this.setModalErrorVisible(true))
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+            url = `https://levelup.verbum.com.pl/api/user/ranking?${queryString}`;
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+            })
+                .then(response => response.json())
+                .then(responseJson => {
+                    if (responseJson.error.code === 0) {
+                        this.setState({
+                            rankingList: responseJson.data.rank,
+                        })
+                    } else {
+                        this.setState({
+                            error: responseJson.error,
+                        }, () => this.setModalErrorVisible(true))
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        });
+        this.listenerBlur = this.props.navigation.addListener('blur', () => {
+
+        });
+    }
+
+    componentWillUnmount() {
+        this.listenerFocus();
+        this.listenerBlur();
     }
 
     setModalErrorVisible = (visible) => {
@@ -141,14 +159,11 @@ export default class ResultsScreen extends  React.Component {
     };
 
     createLapRows() {
-        let number = 0;
         let lapRows = [];
         let item1;
         let item2;
         let item3;
-        console.log("lapRows");
         for (let i = 0; i < this.state.rounds.length; i+=3) {
-            console.log(i)
             if (this.state.rounds[i] !== undefined) {
                 item1 = this.state.rounds[i];
             } else {
@@ -164,7 +179,7 @@ export default class ResultsScreen extends  React.Component {
             } else {
                 item3 = "EMPTY";
             }
-            lapRows.push(<LapRow key={i} item1={item1} item2={item2} item3={item3}/>)
+            lapRows.push(<LapRow key={i} item1={item1} item2={item2} item3={item3} activeRound={this.state.activeRound} changeActiveRound={this.changeActiveRound.bind(this)}/>)
         }
         return lapRows
     }
@@ -175,6 +190,124 @@ export default class ResultsScreen extends  React.Component {
         })
     }
 
+    changeActiveRound(round) {
+        this.setState({
+            activeRound: round,
+        }, () => this.getActiveRound())
+    }
+
+    changeShowQuestions(show) {
+        this.setState({
+            showQuestions: show,
+        })
+    }
+
+    changeShowTest(show) {
+        this.setState({
+            showTest: show,
+        })
+    }
+
+    getActiveRound() {
+        const queryString = ResultsScreen.objToQueryString({
+            key: this.props.keyApp,
+            token: this.props.token,
+        });
+
+        let url = `https://levelup.verbum.com.pl/api/challenge/roundId/${this.state.activeRound}?${queryString}`;
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': "application/json",
+            },
+        })
+            .then(response => response.json())
+            .then(responseJson => {
+                if (responseJson.error.code === 0) {
+                    this.setState({
+                        questions: responseJson.data.questions,
+                        test: responseJson.data.test,
+                    }, () => console.log(JSON.stringify(responseJson.data)))
+                } else {
+                    this.setState({
+                        error: responseJson.error,
+                    }, () => this.setModalErrorVisible(true))
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    createQuestionsList() {
+        let questionSummaryList = [];
+        for (let i in this.state.questions) {
+            console.log(this.state.questions[i]);
+            questionSummaryList.push(<QuestionSummaryItem
+                key={i}
+                navigation={this.props.navigation}
+                points={this.state.questions[i].questions.points}
+                correct={this.state.questions[i].questions.correct}
+                number={i}
+                model={this.state.questions[i].modelId}
+                id={this.state.questions[i].id}
+                status={this.state.questions[i].status}
+            />);
+        }
+        return questionSummaryList;
+    }
+
+    createTestList() {
+        let questionSummaryList = [];
+        let number = 0;
+        for (let i in this.state.test.questions) {
+            console.log(i + " PYTANIE " + JSON.stringify(this.state.test.questions[i]));
+            console.log(i);
+            questionSummaryList.push(<QuestionSummaryItem
+                key={i}
+                navigation={this.props.navigation}
+                points={this.state.test.questions[i].points}
+                correct={this.state.test.questions[i].correct}
+                number={i}
+                model={this.state.test.modelId}
+                id={this.state.test.id}
+                status={this.state.test.status}
+            />);
+        }
+        return questionSummaryList;
+    }
+
+    createQuestionLifebuoy() {
+        let questionLifebuoy = [];
+        let status = {
+            id: this.state.lifebuoy.status,
+        };
+        questionLifebuoy.push(<QuestionLifebuoy
+            key={1}
+            navigation={this.props.navigation}
+            id={this.state.lifebuoy.id}
+            active={this.state.lifebuoy.isActive}
+            model={this.state.lifebuoy.modelId}
+            status={status}/>);
+        return questionLifebuoy;
+    }
+
+    createQuestionTurbo() {
+        let questionTurbo = [];
+        let status = {
+            id: this.state.turbo.status,
+        };
+        questionTurbo.push(<QuestionTurbo
+            key={1}
+            navigation={this.props.navigation}
+            id={this.state.turbo.id}
+            active={this.state.turbo.isActive}
+            model={this.state.turbo.modelId}
+            status={status}/>);
+        return questionTurbo;
+    }
+
     render() {
         return(
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -182,7 +315,7 @@ export default class ResultsScreen extends  React.Component {
                 <HeaderBurger navigation={this.props.navigation}/>
                 <Info/>
                 <Modal isVisible={this.state.modalVisible}>
-                    <TouchableWithoutFeedback onPress={() => this.setModalVisible(false)}>
+                    <TouchableWithoutFeedback onPress={() => this.setModal(false, '','','','','')}>
                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                             <View style={{backgroundColor: '#FFFFFF', height: 400, width: '90%', padding: 25, justifyContent: 'space-between'}}>
                                 <View>
@@ -265,9 +398,37 @@ export default class ResultsScreen extends  React.Component {
                     {this.state.content === 'ogolne' &&
                         <CurrentRound week={this.state.week}/>
                     }
+                    {this.state.content === 'ranking' &&
+                        <Ranking rankingList={this.state.rankingList}/>
+                    }
+                    {this.state.content === 'ranking' &&
+                        <MyRanking ranking={this.state.ranking} points={this.state.points}/>
+                    }
+                    {this.state.content === 'rundy' &&
+                        <Laps createLapRows={this.createLapRows()}/>
+                    }
                     {this.state.content === 'rundy' &&
                         <View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
-                            {this.createLapRows()}
+                            <TouchableOpacity onPress={() => this.changeShowQuestions(!this.state.showQuestions)} style={[styles.buttonBase, {borderRadius: 25, borderWidth: 1, borderColor: '#2592E6', marginTop: 10}]}>
+                                <Text style={styles.buttonBaseText}>PYTANIA</Text>
+                            </TouchableOpacity>
+                            {this.state.showQuestions &&
+                            <View style={{width: '90%'}}>
+                                {this.createQuestionsList()}
+                            </View>
+                            }
+                            <TouchableOpacity onPress={() => this.changeShowTest(!this.state.showTest)} style={[styles.buttonBase, {borderRadius: 25, borderWidth: 1, borderColor: '#2592E6', marginTop: 10}]}>
+                                <Text style={styles.buttonBaseText}>TEST</Text>
+                            </TouchableOpacity>
+                            {this.state.showTest &&
+                            <View style={{width: '90%'}}>
+                                {this.createTestList()}
+                            </View>
+                            }
+                            <View style={styles.additionalQuestions}>
+                                {this.createQuestionLifebuoy()}
+                                {this.createQuestionTurbo()}
+                            </View>
                         </View>
                     }
                     {/*<View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
@@ -350,6 +511,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: '90%',
         borderRadius: 9,
+        alignItems: 'center'
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
@@ -394,11 +556,16 @@ const styles = StyleSheet.create({
 
     },
     buttonBase: {
-        width: 146,
-        height: 42,
+        width: '90%',
+        height: 50,
         borderRadius: 21,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    buttonBaseText: {
+        color: '#2592E6',
+        fontWeight: 'bold',
+        fontSize: 16
     },
     footerView: {
         flexDirection: 'row',
@@ -471,4 +638,10 @@ const styles = StyleSheet.create({
     chooseContentTextDisactive: {
         color: '#0A3251',
     },
+    additionalQuestions: {
+        flexDirection: 'row',
+        paddingLeft: 26,
+        paddingRight: 26,
+        width: '100%'
+    }
 });

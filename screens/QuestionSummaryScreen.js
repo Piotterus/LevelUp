@@ -57,6 +57,16 @@ export default class QuestionSummaryScreen extends React.Component {
         });
         console.log("COMPONENT DID MOUNT-" + this.state.questionNumber)
         this.listenerFocus = this.props.navigation.addListener('focus', () => {
+
+            this.setState({
+                results : this.props.route.params.results,
+                sum: this.props.route.params.sum,
+                model: this.props.route.params.model,
+                id: this.props.route.params.id,
+                pollId: this.props.route.params.pollId,
+                points: this.props.route.params.points,
+            });
+
             //console.log("PARAM FOCUS");
             //console.log(this.props.route.params.id);
             //console.log("END PARAM FOCUS");
@@ -70,7 +80,7 @@ export default class QuestionSummaryScreen extends React.Component {
             })
                 .then(response => response.json())
                 .then(responseJson => {
-                    console.log(responseJson);
+                    console.log(JSON.stringify(responseJson));
                     this.setState({
                         model: responseJson.poll.modelId,
                         id: responseJson.poll.id,
@@ -96,6 +106,8 @@ export default class QuestionSummaryScreen extends React.Component {
             this.setState( {
                 model: '',
                 id: '',
+                pollId: '',
+                points: '',
                 status: '',
                 question: '',
                 questionNumber: 1,
@@ -119,6 +131,27 @@ export default class QuestionSummaryScreen extends React.Component {
         let number = 0;
         let questionList = [];
         console.log("createQuestion");
+        for (let i in this.state.question) {
+            number = parseInt(this.state.pollId) + 1
+            questionList.push(<QuestionSummary
+                key={i}
+                navigation={this.props.navigation}
+                id={this.state.question[i].id}
+                number={number}
+                text={this.state.question[i].text}
+                type={this.state.question[i].type}
+                image={this.state.question[i].image}
+                questionCount={this.state.question.length}
+                answers={this.state.question[i].answers}
+            />)
+        }
+        return questionList;
+    }
+
+    createTestList() {
+        let number = 0;
+        let questionList = [];
+        console.log("createTestQuestion");
         for (let i in this.state.question) {
             number++;
             console.log(this.state.pollId)
@@ -148,15 +181,25 @@ export default class QuestionSummaryScreen extends React.Component {
     render() {
         return(
             <ScrollView style={{backgroundColor: '#FFFFFF'}} contentContainerStyle={{ flexGrow: 1 }}>
-                <TouchableOpacity style={{marginTop: 45, marginLeft: 15, marginBottom: 55}} onPress={() => this.props.navigation.goBack()}>
-                    <Icon name="x-circle" size={30} color="#0A3251" />
-                </TouchableOpacity>
+                <View style={{marginBottom: 55}}>
+                </View>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <View style={[styles.questionView]}>
-                        {this.createQuestionList()}
+                        {this.props.route.params.model === 1 &&
+                            this.createQuestionList()
+                        }
+                        {this.props.route.params.model === 4 &&
+                            this.createTestList()
+                        }
+
                         <Text style={{color: '#0A3251', fontSize: 24, textAlign: 'center'}}>Zdobyte punkty:</Text>
-                        <Text style={{color: '#0A3251', fontSize: 47, textAlign: 'center', fontWeight: 'bold', marginBottom: 30}}>{this.state.points}<Text style={{fontSize: 24}}>pkt</Text></Text>
+                        {(this.props.route.params.model === 1 && this.state.question !== '') &&
+                            <Text style={{color: '#0A3251', fontSize: 47, textAlign: 'center', fontWeight: 'bold', marginBottom: 30}}>{this.state.question['0'].points}<Text style={{fontSize: 24}}>pkt</Text></Text>
+                        }
+                        {(this.props.route.params.model === 4 && this.state.question !== '') &&
+                            <Text style={{color: '#0A3251', fontSize: 47, textAlign: 'center', fontWeight: 'bold', marginBottom: 30}}>{this.state.question[this.state.pollId].points}<Text style={{fontSize: 24}}>pkt</Text></Text>
+                        }
                         <TouchableOpacity onPress={() => this.props.navigation.goBack()}
                                           style={[styles.buttonBase, styles.shadow, styles.buttonConsent]}>
                             <Text style={styles.buttonText}>OK</Text>

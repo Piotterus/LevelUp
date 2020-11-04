@@ -16,10 +16,7 @@ export default class Register2Screen extends React.Component {
             lastname: this.props.route.params.lastname,
             phone: this.props.route.params.phone,
             email: this.props.route.params.email,
-            firmName: '',
-            firmAddressStreet: '',
-            firmAddressPostal: '',
-            firmAddressCity: '',
+            firmNIP: '',
             modalErrorVisible: false,
             error: '',
         }
@@ -29,21 +26,9 @@ export default class Register2Screen extends React.Component {
     }
 
     updateValue(text,field) {
-        if (field === 'firmName') {
+        if (field === 'firmNIP') {
             this.setState({
-                firmName: text,
-            })
-        } else if (field === 'firmAddressStreet' ){
-            this.setState( {
-                firmAddressStreet: text,
-            })
-        } else if (field === 'firmAddressPostal' ){
-            this.setState( {
-                firmAddressPostal: text,
-            })
-        } else if (field === 'firmAddressCity' ){
-            this.setState( {
-                firmAddressCity: text,
+                firmNIP: text,
             })
         }
     }
@@ -63,41 +48,13 @@ export default class Register2Screen extends React.Component {
                 </View>
                 <View style={styles.registerView}>
                     <Text style={styles.stepText}>Krok 2/3</Text>
-                    <Text style={styles.stepText}>Serwis</Text>
+                    <Text style={styles.stepText}>Firma</Text>
                     <TextInput
-                        placeholder="NAZWA"
+                        placeholder="NIP"
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        onChangeText = {(text) => this.updateValue(text,'firmName')}
-                    />
-                    <TextInput
-                        placeholder="PROFIL DZIAŁALNOŚCI"
-                        placeholderTextColor="#FFFFFF33"
-                        textAlign='center'
-                        style={styles.textInput}
-                        onChangeText = {(text) => this.updateValue(text,'firmProfile')}
-                    />
-                    <TextInput
-                        placeholder="ADRES"
-                        placeholderTextColor="#FFFFFF33"
-                        textAlign='center'
-                        style={styles.textInput}
-                        onChangeText = {(text) => this.updateValue(text,'firmAddressStreet')}
-                    />
-                    <TextInput
-                        placeholder="KOD POCZTOWY"
-                        placeholderTextColor="#FFFFFF33"
-                        textAlign='center'
-                        style={styles.textInput}
-                        onChangeText = {(text) => this.updateValue(text,'firmAddressPostal')}
-                    />
-                    <TextInput
-                        placeholder="MIEJSCOWOŚĆ"
-                        placeholderTextColor="#FFFFFF33"
-                        textAlign='center'
-                        style={styles.textInput}
-                        onChangeText = {(text) => this.updateValue(text,'firmAddressCity')}
+                        onChangeText = {(text) => this.updateValue(text,'firmNIP')}
                     />
                 </View>
                 <View style={styles.bottomView}>
@@ -111,10 +68,7 @@ export default class Register2Screen extends React.Component {
                         lastname: this.state.lastname,
                         phone: this.state.phone,
                         email: this.state.email,
-                        firmName: this.state.firmName,
-                        firmAddressStreet: this.state.firmAddressStreet,
-                        firmAddressPostal: this.state.firmAddressPostal,
-                        firmAddressCity: this.state.firmAddressCity
+                        firmNIP: this.state.firmNIP,
                     })} style={styles.nextButton}>
                         <Text style={{color: '#FFFFFF', fontSize: 16}}>DALEJ >>></Text>
                     </TouchableOpacity>
@@ -167,6 +121,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         width: '100%',
         marginTop: 50,
+        marginBottom: 40,
     },
     backButton: {
         backgroundColor: '#FFFFFF',

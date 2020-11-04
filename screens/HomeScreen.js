@@ -47,27 +47,27 @@ export default class HomeScreen extends  React.Component {
 
     setModalVisible = (visible) => {
         this.setState({ modalVisible: visible });
-    }
+    };
 
     setModalHeader = (text) => {
         this.setState({ modalHeader: text });
-    }
+    };
 
     setModalAnswerOK = (text) => {
         this.setState({ modalAnswerOK: text });
-    }
+    };
 
     setModalAnswerWrong = (text) => {
         this.setState({ modalAnswerWrong: text });
-    }
+    };
 
     setModalAnswerNO = (text) => {
         this.setState({ modalAnswerNO: text });
-    }
+    };
 
     setModalMaxPoints = (text) => {
         this.setState({ modalMaxPoints: text });
-    }
+    };
 
     objToQueryString(obj) {
         const keyValuePairs = [];
@@ -96,15 +96,21 @@ export default class HomeScreen extends  React.Component {
             })
                 .then(response => response.json())
                 .then(responseJson => {
-                    this.setState({
-                        ranking: responseJson.dashboard.position,
-                        points: responseJson.dashboard.points,
-                        week: responseJson.dashboard.round,
-                        knowledgeCount: responseJson.dashboard.knowledgeCount,
-                        testCount: responseJson.dashboard.testCount,
-                        level: responseJson.dashboard.level,
-                        date2Go: responseJson.dashboard.clock.date2Go,
-                    }, () => this.props.updateFooter(this.state.knowledgeCount, this.state.testCount))
+                    if (responseJson.error.code === 0) {
+                        this.setState({
+                            ranking: responseJson.dashboard.position,
+                            points: responseJson.dashboard.points,
+                            week: responseJson.dashboard.round,
+                            knowledgeCount: responseJson.dashboard.knowledgeCount,
+                            testCount: responseJson.dashboard.testCount,
+                            level: responseJson.dashboard.level,
+                            date2Go: responseJson.dashboard.clock.date2Go,
+                        }, () => this.props.updateFooter(this.state.knowledgeCount, this.state.testCount))
+                    } else {
+                        this.setState({
+                            error: responseJson.error,
+                        }, () => this.setModalErrorVisible(true))
+                    }
                 })
                 .catch((error) => {
                     //console.error(error);
@@ -231,7 +237,7 @@ export default class HomeScreen extends  React.Component {
                                     <Image source={require('../icons/info.png')}/>
                                 </TouchableHighlight>
                             </View>
-                            {this.state.level == "starter" &&
+                            {this.state.level === "starter" &&
                             <TouchableHighlight style={{flex: 1, justifyContent: 'flex-end'}}
                                                 onPress={() => {
                                                     this.setModalVisible(true);
@@ -270,7 +276,7 @@ export default class HomeScreen extends  React.Component {
                                     <Image source={require('../icons/info.png')}/>
                                 </TouchableHighlight>
                             </View>
-                            {this.state.level == "expert" &&
+                            {this.state.level === "expert" &&
                             <TouchableHighlight style={{flex: 1, justifyContent: 'flex-end'}}
                                                 onPress={() => {
                                                     this.setModalVisible(true);
@@ -309,7 +315,7 @@ export default class HomeScreen extends  React.Component {
                                     <Image source={require('../icons/info.png')}/>
                                 </TouchableHighlight>
                             </View>
-                            {this.state.level == "champion" &&
+                            {this.state.level === "champion" &&
                             <TouchableHighlight style={{flex: 1, justifyContent: 'flex-end'}}
                                                 onPress={() => {
                                                     this.setModalVisible(true);

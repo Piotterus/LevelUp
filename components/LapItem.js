@@ -6,13 +6,39 @@ export default class LapItem extends React.Component {
 
     render() {
         if (this.props.item !== "EMPTY") {
-            return (
-                <View style={styles.lapView}>
-                    <Image style={{marginTop: 12, alignContent: 'flex-end'}}
-                           source={require('../icons/001-wall-clock_race.png')}/>
-                    <Text style={styles.lapText}>{this.props.item.idRound} OKRĄŻENIE</Text>
-                </View>
-            )
+                if (this.props.item.status === 1) {
+                    return (
+                        <TouchableOpacity style={styles.lapView} onPress={() => this.props.changeActiveRound(this.props.item.idRound)}>
+                            <Image style={{marginTop: 12, alignContent: 'flex-end'}}
+                                   source={require('../icons/rundaCurrent.png')}/>
+                            <Text style={[styles.lapText, (this.props.activeRound === this.props.item.idRound) ? styles.lapTextActive : '']}>{this.props.item.idRound} RUNDA</Text>
+                        </TouchableOpacity>
+                    )
+                } else if (this.props.item.status === 2) {
+                    return (
+                        <TouchableOpacity style={styles.lapView} onPress={() => this.props.changeActiveRound(this.props.item.idRound)}>
+                            <Image style={{marginTop: 12, alignContent: 'flex-end'}}
+                                   source={require('../icons/rundaOK.png')}/>
+                            <Text style={[styles.lapText, (this.props.activeRound === this.props.item.idRound) ? styles.lapTextActive : '']}>{this.props.item.idRound} RUNDA</Text>
+                        </TouchableOpacity>
+                    )
+                } else if (this.props.item.status === 3) {
+                    return (
+                        <TouchableOpacity style={styles.lapView} onPress={() => this.props.changeActiveRound(this.props.item.idRound)}>
+                            <Image style={{marginTop: 12, alignContent: 'flex-end'}}
+                                   source={require('../icons/rundaNO.png')}/>
+                            <Text style={[styles.lapText, (this.props.activeRound === this.props.item.idRound) ? styles.lapTextActive : '']}>{this.props.item.idRound} RUNDA</Text>
+                        </TouchableOpacity>
+                    )
+                } else if (this.props.item.status === 4) {
+                    return (
+                        <TouchableOpacity style={styles.lapView}>
+                            <Image style={{marginTop: 12, alignContent: 'flex-end'}}
+                                   source={require('../icons/rundaPending.png')}/>
+                            <Text style={[styles.lapText, (this.props.activeRound === this.props.item.idRound) ? styles.lapTextActive : '']}>{this.props.item.idRound} RUNDA</Text>
+                        </TouchableOpacity>
+                    )
+                }
         } else {
             return (
                 <View style={styles.lapView}>
@@ -24,36 +50,6 @@ export default class LapItem extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    headerView: {
-        flexDirection: 'row',
-        backgroundColor: '#0A3251',
-        width: '100%',
-        height: 112,
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        paddingBottom: 26,
-    },
-    infoView: {
-        backgroundColor: '#2592E6',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '100%',
-        height: 55,
-    },
-    infoText: {
-        color: '#FFFFFF',
-        fontSize: 13,
-        marginRight: 10
-    },
-    mainView: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 10,
-        alignItems: 'center',
-        marginTop: -5,
-        paddingBottom: 10,
-        zIndex: 1,
-    },
     levelText: {
         fontSize: 13,
         color: '#0E395A',
@@ -173,5 +169,8 @@ const styles = StyleSheet.create({
     lapText: {
         color: '#0A3251',
         fontSize: 12,
+    },
+    lapTextActive: {
+        fontWeight: 'bold'
     }
 });

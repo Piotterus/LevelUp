@@ -124,7 +124,7 @@ export default class Register3Screen extends React.Component {
                             />
                         <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy Regulaminu Konkursu „Gra Szkoleniowa GOOD GAME”. Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
                     </View>
-                    <View style={styles.consentRow}>
+                    {/*<View style={styles.consentRow}>
                         <Text style={styles.consentText}>Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z obowiązującymi przepisami prawa w celach komunikacji marketingowej, niezwiązanej z Konkursem następującymi kanałami:</Text>
                     </View>
                     <View style={styles.consentRow}>
@@ -150,7 +150,7 @@ export default class Register3Screen extends React.Component {
                     </View>
                     <View style={styles.consentRow}>
                         <Text style={styles.consentText}>Wyrażenie tych zgód jest dobrowolne tzn. że nie stanowi warunku uczestnictwa w Konkursie. Zaznaczając którąkolwiek ze zgód potwierdza Pan/Pani swoje uprawnienie do reprezentowania firmy. Zgody mogą zostać wycofane w każdym czasie; wycofanie zgody numer 1 będzie jednak oznaczać zakończenie udziału firmy w Konkursie „Gra szkoleniowa GOOD GAME”. Szczegóły znajdziesz w Regulaminie Konkursu.</Text>
-                    </View>
+                    </View>*/}
                 </View>
                 <View style={styles.bottomView}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.backButton}>
@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         width: '100%',
         marginTop: 50,
+        marginBottom: 40,
     },
     backButton: {
         backgroundColor: '#FFFFFF',

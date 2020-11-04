@@ -1,4 +1,4 @@
-package com.levelup;
+package pl.com.verbum.levelup;
 
 import android.app.Application;
 import android.content.Context;

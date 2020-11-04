@@ -31,10 +31,6 @@ export default class Register1Screen extends React.Component {
             this.setState( {
                 lastname: text,
             })
-        } else if (field === 'phone' ){
-            this.setState( {
-                phone: text,
-            })
         } else if (field === 'email' ){
             this.setState( {
                 email: text,
@@ -73,13 +69,6 @@ export default class Register1Screen extends React.Component {
                         onChangeText = {(text) => this.updateValue(text,'lastname')}
                     />
                     <TextInput
-                        placeholder="TELEFON"
-                        placeholderTextColor="#FFFFFF33"
-                        textAlign='center'
-                        style={styles.textInput}
-                        onChangeText = {(text) => this.updateValue(text,'phone')}
-                    />
-                    <TextInput
                         placeholder="EMAIL"
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
@@ -96,7 +85,6 @@ export default class Register1Screen extends React.Component {
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("Register2", {
                         firstname: this.state.firstname,
                         lastname: this.state.lastname,
-                        phone: this.state.phone,
                         email: this.state.email
                     })} style={styles.nextButton}>
                         <Text style={{color: '#FFFFFF', fontSize: 16}}>DALEJ >>></Text>
@@ -150,6 +138,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         width: '100%',
         marginTop: 50,
+        marginBottom: 40,
     },
     backButton: {
         backgroundColor: '#FFFFFF',

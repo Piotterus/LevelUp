@@ -1,11 +1,10 @@
 import React from 'react';
 
 import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
-import {SafeAreaView} from 'react-native-safe-area-context';
-import ErrorModal from '../components/ErrorModal';
 
-const BLUE = "#428AF8"
-const LIGHT_GRAY = "#D3D3D3"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import ErrorModal from '../components/ErrorModal';
 
 export default class LoginScreen extends React.Component {
 
@@ -18,6 +17,7 @@ export default class LoginScreen extends React.Component {
             isFocusedAge: false,
             error: '',
             modalErrorVisible: false,
+            rememberEnabled: false,
         }
     }
 
@@ -31,10 +31,10 @@ export default class LoginScreen extends React.Component {
 
     login(login,password) {
 
-        if (login == "") {
+        if (login === "") {
             login = "PL22"
         }
-        if (password == "") {
+        if (password === "") {
             password = "9LB92F3D"
         }
 
@@ -46,7 +46,7 @@ export default class LoginScreen extends React.Component {
             password: password,
             device: 'testdevice1234',
             from: 'app',
-        }
+        };
 
         let url = `https://levelup.verbum.com.pl/api/user/login?${queryString}`;
 
@@ -58,8 +58,12 @@ export default class LoginScreen extends React.Component {
             body: JSON.stringify(body)
         })
             .then(response => response.json())
-            .then(responseJson => {
-                if (responseJson.error.code == 0) {
+            .then(async responseJson => {
+                if (responseJson.error.code === 0) {
+                    if (this.state.rememberEnabled) {
+                        await AsyncStorage.setItem('isLoggedIn', '1');
+                        await AsyncStorage.setItem('token', responseJson.user.mobileToken);
+                    }
                     this.props.login(responseJson.user.mobileToken)
                 } else {
                     this.setState({
@@ -73,11 +77,11 @@ export default class LoginScreen extends React.Component {
     }
 
     updateValue(text,field) {
-        if (field == 'login') {
+        if (field === 'login') {
             this.setState({
                 login: text,
             })
-        } else if (field == 'password' ){
+        } else if (field === 'password' ){
             this.setState( {
                 password: text,
             })
@@ -86,7 +90,7 @@ export default class LoginScreen extends React.Component {
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
-    }
+    };
 
     render() {
         return(
@@ -101,6 +105,7 @@ export default class LoginScreen extends React.Component {
                                 textAlign='center'
                                 style={styles.textInput}
                                 onChangeText = {(text) => this.updateValue(text,'login')}
+                                autoCapitalize="none"
                             />
                             <TextInput
                                 placeholder="HASŁO"
@@ -109,12 +114,16 @@ export default class LoginScreen extends React.Component {
                                 style={styles.textInput}
                                 secureTextEntry={true}
                                 onChangeText = {(text) => this.updateValue(text,'password')}
+                                autoCapitalize="none"
                             />
                             <TouchableOpacity onPress={() => this.props.navigation.navigate("RemindPassword")} style={styles.remindMeView}>
                                 <Text style={styles.remindMeText}>Nie pamiętasz hasła?</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Text style={styles.remindMeText}>Zapamiętaj mnie</Text>
-                                    <Switch/>
+                                    <Switch
+                                        value={this.state.rememberEnabled}
+                                        onValueChange={() => this.setState({rememberEnabled: !this.state.rememberEnabled})}
+                                    />
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => this.login(this.state.login, this.state.password)} style={styles.loginButton}>

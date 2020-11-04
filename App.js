@@ -8,11 +8,9 @@
 
 import React, {Fragment} from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
-
 import { NavigationContainer } from "@react-navigation/native";
 
-import { Provider } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MainScreen from "./screens/MainScreen";
 import LoginScreen from "./screens/LoginScreen";
@@ -41,8 +39,8 @@ import QuestionScreen from './screens/QuestionScreen';
 import TestSummaryScreen from './screens/TestSummaryScreen';
 import ResultsScreen from './screens/ResultsScreen';
 import QuestionSummaryScreen from './screens/QuestionSummaryScreen';
+import ContactScreen from './screens/ContactScreen';
 
-const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export default class App extends  React.Component {
@@ -58,11 +56,16 @@ export default class App extends  React.Component {
             testCount: 0,
             firstName: '',
             lastName: '',
+            rememberMe: false
         }
     }
 
     componentDidMount() {
-        setTimeout(this.setup.bind(this), 1000)
+        setTimeout(this.setup.bind(this), 1000);
+        console.log("MOUNT");
+    }
+
+    componentWillUnmount() {
 
     }
 
@@ -88,22 +91,48 @@ export default class App extends  React.Component {
         return keyValuePairs.join('&');
     }
 
-    setup() {
+    setup = async() => {
+        const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+        const token = await AsyncStorage.getItem('token');
+        console.log(token);
+        console.log(isLoggedIn);
+        if (isLoggedIn !== '1') {
+            this.setState({
+                isSettingUp: false
+            })
+        } else {
+            this.setState({
+                isSettingUp: false,
+                isLoggedIn: true,
+                token: token
+            })
+        }
+    }
+
+    /*setup() {
         this.setState( {
             isSettingUp: false
         }, this.logout.bind(this) )
-    }
+    }*/
 
     login(token) {
         this.setState( {
             token: token,
             isLoggedIn: true,
+        });
+    }
+
+    async logout() {
+        await AsyncStorage.setItem('isLoggedIn','0');
+        await AsyncStorage.setItem('token','');
+        this.setState( {
+            isLoggedIn: false,
         })
     }
 
-    logout() {
-        this.setState( {
-            isLoggedIn: false,
+    rememberMe(value) {
+        this.setState({
+            rememberMe: value
         })
     }
 
@@ -296,6 +325,15 @@ export default class App extends  React.Component {
                                         testCount={this.state.testCount}
                                     />}
                                 </Drawer.Screen>
+                                <Drawer.Screen name="Contact">
+                                    {props => <ContactScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
                             </>
                         ) : (
                             <>
@@ -312,6 +350,7 @@ export default class App extends  React.Component {
                                         {...props}
                                         login={this.login.bind(this)}
                                         keyApp={this.state.key}
+                                        rememberMe={this.rememberMe.bind(this)}
                                     />}
                                 </Drawer.Screen>
                                 <Drawer.Screen name="Register1">

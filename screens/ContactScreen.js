@@ -1,26 +1,60 @@
-import React from 'react'
+import React from 'react';
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
-import LapItem from './LapItem';
+import {
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View,
+} from 'react-native';
+import HeaderBurger from '../components/HeaderBurger';
+import Footer from '../components/Footer';
+import Info from '../components/Info';
+import Modal from 'react-native-modal';
+import ErrorModal from '../components/ErrorModal';
+import Moment from 'react-moment';
+import moment from 'moment/moment.js';
+import countdown from 'countdown';
+import 'moment-countdown';
 
-export default class LapRow extends React.Component {
+export default class ContactScreen extends  React.Component {
 
-    createLapItems() {
-        let number = 0;
-        let lapItems = [];
-        lapItems.push(<LapItem key={1} item={this.props.item1} activeRound={this.props.activeRound} changeActiveRound={this.props.changeActiveRound}/>)
-        lapItems.push(<LapItem key={2} item={this.props.item2} activeRound={this.props.activeRound} changeActiveRound={this.props.changeActiveRound}/>)
-        lapItems.push(<LapItem key={3} item={this.props.item3} activeRound={this.props.activeRound} changeActiveRound={this.props.changeActiveRound}/>)
-        return lapItems
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalErrorVisible: false,
+            error: '',
+        }
+
     }
+
+    setModalErrorVisible = (visible) => {
+        this.setState({ modalErrorVisible: visible });
+    };
 
     render() {
         return(
-            <View style={styles.lapsRow}>
-                {this.createLapItems()}
-            </View>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                <HeaderBurger navigation={this.props.navigation}/>
+                <Info/>
+                <View style={[styles.mainView, {flex: 1}]}>
+                    <Text style={styles.levelText}>KONTAKT</Text>
+                    <View style={[styles.shadow, styles.contactView]}>
+                        <Text style={{fontSize: 16, fontWeight: 'bold'}}>Masz pytania?</Text>
+                        <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 20}}>Napisz do nas lub zadzwoń!</Text>
+                        <Text style={{fontSize: 16, marginBottom: 10}}>E-mail: info@levelup.pl</Text>
+                        <Text style={{fontSize: 16}}>Infolinia: 61 8250 785</Text>
+                    </View>
+                </View>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
+            </ScrollView>
         )
     }
+
 }
 
 const styles = StyleSheet.create({
@@ -60,13 +94,10 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
     levelView: {
-        width: '90%',
-        marginTop: 14,
-        borderRadius: 9,
-    },
-    levelRow: {
         flexDirection: 'row',
         justifyContent: 'space-around',
+        width: '90%',
+        marginTop: 14,
     },
     onelevelView: {
         justifyContent: 'space-between',
@@ -88,9 +119,10 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     nextInfoView: {
-        marginTop: 10,
+        borderRadius: 16,
         width: '90%',
-        borderRadius: 9,
+        backgroundColor: '#FFFFFF',
+        marginTop: 10
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
@@ -109,6 +141,7 @@ const styles = StyleSheet.create({
         paddingLeft: 9,
         paddingRight: 9,
         justifyContent: 'space-between',
+
     },
     timeTextView: {
         alignItems: 'center',
@@ -153,25 +186,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    levelInfoView: {
-        alignItems: 'center'
+    contactView: {
+        justifyContent: 'space-around',
+        width: '90%',
+        marginTop: 14,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 20,
+        paddingBottom: 20,
     },
-    slides: {
-        paddingLeft: 30,
-        paddingBottom: 30,
-    },
-    lapsRow: {
-        flexDirection: 'row',
-        paddingLeft: 15,
-        paddingRight: 15,
-        justifyContent: 'space-between'
-    },
-    lapView: {
-        alignItems: 'center',
-        flex: 1,
-    },
-    lapText: {
-        color: '#0A3251',
-        fontSize: 12,
-    }
 });
