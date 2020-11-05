@@ -3,10 +3,12 @@ import React from 'react'
 import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
 
 import Icon from 'react-native-vector-icons/Entypo';
+import moment from 'moment/moment.js';
 
 export default class KnowledgeListItem extends React.Component {
 
     render() {
+        let date = moment(this.props.date);
         if (this.props.active === true) {
             if (this.props.status.id === 1) {
                 return (
@@ -14,8 +16,7 @@ export default class KnowledgeListItem extends React.Component {
                         onPress={() => this.props.navigation.navigate('OneKnowledge', {id: this.props.id})}
                         style={[styles.knowledgeOne, styles.shadow, {borderColor: '#2592E6', borderWidth: 1, borderRadius: 9}]}>
                         <View style={styles.knowledgeDesc}>
-                            <Text style={[styles.knowledgeDescText, styles.knowledgeTextRead, {fontSize: 12, fontWeight: 'normal'}]}>DZIEŃ TYGODNIA -
-                                DATA</Text>
+                            <Text style={[styles.knowledgeDescText, styles.knowledgeTextRead, {fontSize: 12, fontWeight: 'normal'}]}>{this.props.day.toUpperCase()} - {date.format('DD-M-Y')}</Text>
                             <View style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',

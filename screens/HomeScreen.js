@@ -41,6 +41,7 @@ export default class HomeScreen extends  React.Component {
             modalErrorVisible: false,
             error: '',
             countdown: '',
+            showInfo: false,
         }
 
     }
@@ -78,6 +79,10 @@ export default class HomeScreen extends  React.Component {
     }
 
     componentDidMount() {
+
+        this.setState({
+            showInfo: true,
+        });
 
         this.listenerFocus = this.props.navigation.addListener('focus', () => {
 
@@ -133,7 +138,9 @@ export default class HomeScreen extends  React.Component {
                 });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {
-
+            this.setState({
+                showInfo: false,
+            })
         });
         this.interval = setInterval(() => this.setCountDown(), 1000);
     }
@@ -165,7 +172,9 @@ export default class HomeScreen extends  React.Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
-                <Info/>
+                {this.state.showInfo &&
+                    <Info/>
+                }
                 <Modal isVisible={this.state.modalVisible}>
                     <TouchableWithoutFeedback onPress={() => this.setModalVisible(false)}>
                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -331,7 +340,7 @@ export default class HomeScreen extends  React.Component {
                             }
                         </View>
                     </View>
-                    <View style={[styles.shadow, styles.nextInfoView, {paddingBottom: 10, marginTop: 36, width: '90%'}]}>
+                    <View style={[styles.shadow, styles.nextInfoView, {paddingBottom: 10, marginTop: 16, width: '90%'}]}>
                         <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>NASTĘPNY TEST JUŻ ZA:</Text>
                         <View style={styles.timeView}>
                             <Image style={{marginTop: 12}} source={require('../icons/001-wall-clock_time.png')}/>
@@ -421,7 +430,7 @@ export default class HomeScreen extends  React.Component {
                             </View>
                         </View>
                         <View style={styles.knowledgeView}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Ranking')} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6'}]}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Results')} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6'}]}>
                                 <Text style={{color: '#FFFFFF', fontSize: 13}}>ZOBACZ RANKING</Text>
                             </TouchableOpacity>
                         </View>

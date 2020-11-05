@@ -137,7 +137,6 @@ export default class EnterQuestionsScreen extends React.Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
-                <Info/>
                 <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.knowledgeNav}>
                         <Image source={require('../icons/back_back.png')}/>
@@ -236,4 +235,4 @@ const styles = StyleSheet.create({
         paddingRight: 26,
         width: '100%'
     }
-})
+});

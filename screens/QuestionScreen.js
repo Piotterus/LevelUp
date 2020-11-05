@@ -68,22 +68,28 @@ export default class QuestionScreen extends React.Component {
             })
                 .then(response => response.json())
                 .then(responseJson => {
-                    this.setState({
-                        model: responseJson.poll.modelId,
-                        id: responseJson.poll.id,
-                        status: responseJson.poll.status,
-                        question: responseJson.poll.poll,
-                        questionCount: responseJson.poll.poll.length,
-                        poll: {
+                    if (responseJson.error.code === 0) {
+                        this.setState({
+                            model: responseJson.poll.modelId,
                             id: responseJson.poll.id,
-                            modelId: responseJson.poll.modelId,
-                            poll: [],
-                        },
-                        isLoading: false,
-                    }, () => {
-                            console.log("BEFORE CREATEPOLL: " + this.state),
-                            this.createPoll()
-                    })
+                            status: responseJson.poll.status,
+                            question: responseJson.poll.poll,
+                            questionCount: responseJson.poll.poll.length,
+                            poll: {
+                                id: responseJson.poll.id,
+                                modelId: responseJson.poll.modelId,
+                                poll: [],
+                            },
+                            isLoading: false,
+                        }, () => {
+                                console.log("BEFORE CREATEPOLL: " + this.state),
+                                this.createPoll()
+                        })
+                    } else {
+                        this.setState({
+                            error: responseJson.error,
+                        }, () => this.setModalErrorVisible(true))
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
@@ -314,7 +320,6 @@ export default class QuestionScreen extends React.Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
-                <Info/>
                 <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>PYTANIA</Text>
                     <View style={[styles.shadow, styles.questionView]}>

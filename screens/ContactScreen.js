@@ -40,7 +40,6 @@ export default class ContactScreen extends  React.Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
-                <Info/>
                 <View style={[styles.mainView, {flex: 1}]}>
                     <Text style={styles.levelText}>KONTAKT</Text>
                     <View style={[styles.shadow, styles.contactView]}>

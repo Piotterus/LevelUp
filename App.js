@@ -40,6 +40,7 @@ import TestSummaryScreen from './screens/TestSummaryScreen';
 import ResultsScreen from './screens/ResultsScreen';
 import QuestionSummaryScreen from './screens/QuestionSummaryScreen';
 import ContactScreen from './screens/ContactScreen';
+import StatuteScreen from './screens/StatuteScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -56,7 +57,7 @@ export default class App extends  React.Component {
             testCount: 0,
             firstName: '',
             lastName: '',
-            rememberMe: false
+            rememberMe: false,
         }
     }
 
@@ -327,6 +328,15 @@ export default class App extends  React.Component {
                                 </Drawer.Screen>
                                 <Drawer.Screen name="Contact">
                                     {props => <ContactScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                        knowledgeCount={this.state.knowledgeCount}
+                                        testCount={this.state.testCount}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="Statute">
+                                    {props => <StatuteScreen
                                         {...props}
                                         token={this.state.token}
                                         keyApp={this.state.key}

@@ -313,7 +313,6 @@ export default class ResultsScreen extends  React.Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
-                <Info/>
                 <Modal isVisible={this.state.modalVisible}>
                     <TouchableWithoutFeedback onPress={() => this.setModal(false, '','','','','')}>
                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -615,6 +614,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '90%',
+        marginTop: 10,
     },
     chooseContentViewOne: {
         height: 43,

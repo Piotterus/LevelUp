@@ -27,7 +27,6 @@ export default class AboutLevelsScreen extends React.Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
-                <Info/>
                 <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
                     <View style={[styles.shadow, styles.aboutLaps]}>

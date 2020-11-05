@@ -1,37 +1,24 @@
 import React from 'react'
 
-import {
-    Text,
-    View,
-    Button,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    ImageBackground,
-    ScrollView,
-    Dimensions,
-    Image,
-    Switch,
-    TouchableWithoutFeedback,
-} from 'react-native';
+import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
 
-import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import Info from '../components/Info';
 import ErrorModal from '../components/ErrorModal';
 import {CheckBox} from 'react-native-elements';
+import HTML from 'react-native-render-html';
+import { WebView } from 'react-native-webview';
 
-export default class MyAccountScreen extends React.Component {
+export default class StatuteScreen extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            user: '',
-            firm: '',
+            title: '',
+            content: '',
             modalErrorVisible: false,
             error: '',
-            agree1: false,
         }
 
     }
@@ -48,33 +35,34 @@ export default class MyAccountScreen extends React.Component {
 
         this.listenerFocus = this.props.navigation.addListener('focus', () => {
 
-        const queryString = this.objToQueryString({
-            key: this.props.keyApp,
-            token: this.props.token,
-        });
-
-        let url = `https://levelup.verbum.com.pl/api/user/userData/?${queryString}`;
-        console.log(url);
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': "application/json",
-            },
-        })
-            .then(response => response.json())
-            .then(responseJson => {
-                this.setState({
-                    user: responseJson.user,
-                    firm: responseJson.firm,
-                    agree1: responseJson.user.agree1,
-                })
-            })
-            .catch((error) => {
-                console.error(error);
+            const queryString = this.objToQueryString({
+                key: this.props.keyApp,
             });
+
+            let url = `https://levelup.verbum.com.pl/api/page/statute/pl_PL/?${queryString}`;
+            console.log(url);
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+            })
+                .then(response => response.json())
+                .then(responseJson => {
+                    this.setState({
+                        title: responseJson.article.title,
+                        content: responseJson.article.content,
+                    })
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {
-
+            this.setState({
+                title: '',
+                content: '',
+            })
         });
     }
 
@@ -88,50 +76,23 @@ export default class MyAccountScreen extends React.Component {
     }
 
     render() {
+        console.log(this.state.content);
         return(
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
                 <View style={[styles.knowledgeMain, {flex: 1}]}>
-                    <Text style={styles.knowledgeHeaderText}>MOJE KONTO</Text>
-                    <View style={[styles.shadow, styles.myAccount]}>
-                        <Text style={styles.headerText}>Dane Uczestnika</Text>
-                        <View style={styles.userDataView}>
-                            <View style={styles.userInfo}>
-                                <Text style={styles.userInfoText}>IMIĘ</Text>
-                                <Text style={styles.userInfoText}>NAZWISKO</Text>
-                                <Text style={styles.userInfoText}>E-MAIL</Text>
-                            </View>
-                            <View style={{width: 10}}/>
-                            <View style={styles.userData}>
-                                <Text style={styles.userDataText}>{this.state.user.firstname}</Text>
-                                <Text style={styles.userDataText}>{this.state.user.lastname}</Text>
-                                <Text style={styles.userDataText}>{this.state.user.email}</Text>
-                            </View>
-                        </View>
-                        <View style={styles.line}/>
-                        <Text style={styles.headerText}>Firma</Text>
-                        <View style={styles.userDataView}>
-                            <View style={styles.userInfo}>
-                                <Text style={styles.userInfoText}>NIP</Text>
-                            </View>
-                            <View style={{width: 10}}/>
-                            <View style={styles.userData}>
-                                <Text style={styles.userDataText}>{this.state.user.nip}</Text>
-                            </View>
-                        </View>
-                        <View style={styles.line}/>
-                        <Text style={styles.headerText}>Zgoda</Text>
-                        <View style={styles.consentRow}>
-                            <CheckBox
-                                checked={this.state.agree1}
-                                //onPress={() => this.setState({agree1: !this.state.agree1})}
-                                checkedColor={'#A3A3A3'}
-                            />
-                            <View style={{flex: 1}}>
-                                <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Statute')}><Text style={[styles.consentText, {fontWeight: 'bold'}]}>Regulaminu Konkursu „Gra Edukacyjna LevelUP”.</Text></TouchableWithoutFeedback> Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
-                            </View>
-                        </View>
+                    <Text style={styles.knowledgeHeaderText}>{this.state.title}</Text>
+                    <View style={[styles.shadow, styles.myAccount, {flex: 1}]}>
+                        {/*this.state.content !== '' &&
+                            <HTML html={this.state.content}/>
+                        */}
+                        <WebView
+                            originWhitelist={['*']}
+                            source={{ html: this.state.content }}
+                            style={{width: Dimensions.get('window').width*0.85}}
+                            scalesPageToFit={false}
+                        />
                     </View>
                 </View>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
@@ -155,14 +116,12 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: '#0E395A',
         marginTop: 12,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     myAccount: {
         width: '90%',
         borderRadius: 9,
         zIndex: 2,
-        paddingBottom: 5,
-        marginBottom: 30,
         paddingTop: 6,
         paddingLeft: 8,
         paddingRight: 6,

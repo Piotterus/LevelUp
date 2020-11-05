@@ -78,6 +78,8 @@ export default class ChooseKnowledgeScreen extends React.Component {
                 activeText={this.state.knowledgeList[i].status.title}
                 shortContent={this.state.knowledgeList[i].shortContent}
                 status={this.state.knowledgeList[i].status}
+                day={this.state.knowledgeList[i].day}
+                date={this.state.knowledgeList[i].dateFrom}
             />)
         }
         return knowledgeList;
@@ -92,7 +94,6 @@ export default class ChooseKnowledgeScreen extends React.Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
-                <Info/>
                 <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>WIEDZA</Text>
                     {this.createKnowledgeList()}

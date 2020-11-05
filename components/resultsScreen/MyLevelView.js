@@ -97,6 +97,7 @@ export default class MyLevelView extends React.Component {
                         }
                     </View>
                 </View>
+                {this.props.points2level.name !== '' &&
                 <View style={[styles.points2levelView]}>
                     <Text style={styles.points2levelText}>
                         DO POZIOMU {this.props.points2level.name.toUpperCase()} BRAKUJE TOBIE
@@ -106,6 +107,7 @@ export default class MyLevelView extends React.Component {
                         <Text style={[styles.points2levelText]}>PUNKTÓW</Text>
                     </View>
                 </View>
+                }
             </View>
         )
     }

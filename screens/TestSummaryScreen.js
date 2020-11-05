@@ -74,7 +74,6 @@ export default class TestSummaryScreen extends React.Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
-                <Info/>
                 <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>PODSUMOWANIE TESTU</Text>
                     <View style={[styles.shadow, styles.summaryView]}>

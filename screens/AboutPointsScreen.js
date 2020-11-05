@@ -49,7 +49,6 @@ export default class AboutPointsScreen extends React.Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
-                <Info/>
                 <Modal isVisible={modalVisible}>
                     <TouchableWithoutFeedback onPress={() => this.setModalVisible(false)}>
                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>

@@ -76,6 +76,29 @@ export default class LoginScreen extends React.Component {
             });
     }
 
+    componentDidMount() {
+        this.listenerFocus = this.props.navigation.addListener('focus', () => {
+            //if (typeof this.props.route.params.title !== "undefined" && typeof this.props.route.params.message !== "undefined" ) {
+            if (this.props.route.params?.title && this.props.route.params?.message) {
+                this.setState({
+                    error: {
+                        code: this.props.route.params.title,
+                        message: this.props.route.params.message,
+                    }
+                }, () => this.setModalErrorVisible(true))
+                console.log("fff");
+            }
+        });
+        this.listenerBlur = this.props.navigation.addListener('blur', () => {
+
+        });
+    }
+
+    componentWillUnmount() {
+        this.listenerFocus();
+        this.listenerBlur();
+    }
+
     updateValue(text,field) {
         if (field === 'login') {
             this.setState({

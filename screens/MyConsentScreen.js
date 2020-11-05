@@ -81,43 +81,18 @@ export default class MyConsentScreen extends React.Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderBurger navigation={this.props.navigation}/>
-                <Info/>
                 <View style={[styles.knowledgeMain, {flex: 1}]}>
                     <Text style={styles.knowledgeHeaderText}>MOJE ZGODY</Text>
                     <View style={[styles.shadow, styles.myAccount]}>
                         <View style={styles.consentRow}>
                             <CheckBox
                                 checked={this.state.agree1}
-                                onPress={() => this.setState({agree1: !this.state.agree1})}
+                                //onPress={() => this.setState({agree1: !this.state.agree1})}
                             />
-                            <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy Regulaminu Konkursu „Gra Szkoleniowa GOOD GAME”. Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
-                        </View>
-                        <View style={styles.consentRow}>
-                            <Text style={styles.consentText}>Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z obowiązującymi przepisami prawa w celach komunikacji marketingowej, niezwiązanej z Konkursem następującymi kanałami:</Text>
-                        </View>
-                        <View style={styles.consentRow}>
-                            <CheckBox
-                                checked={this.state.agree2}
-                                onPress={() => this.setState({agree2: !this.state.agree2})}
-                            />
-                            <Text style={styles.consentText}>Telefon</Text>
-                        </View>
-                        <View style={styles.consentRow}>
-                            <CheckBox
-                                checked={this.state.agree3}
-                                onPress={() => this.setState({agree3: !this.state.agree3})}
-                            />
-                            <Text style={styles.consentText}>SMS</Text>
-                        </View>
-                        <View style={styles.consentRow}>
-                            <CheckBox
-                                checked={this.state.agree4}
-                                onPress={() => this.setState({agree4: !this.state.agree4})}
-                            />
-                            <Text style={styles.consentText}>Poczta elektroniczna</Text>
-                        </View>
-                        <View style={styles.consentRow}>
-                            <Text style={styles.consentText}>Wyrażenie tych zgód jest dobrowolne tzn. że nie stanowi warunku uczestnictwa w Konkursie. Zaznaczając którąkolwiek ze zgód potwierdza Pan/Pani swoje uprawnienie do reprezentowania firmy. Zgody mogą zostać wycofane w każdym czasie; wycofanie zgody numer 1 będzie jednak oznaczać zakończenie udziału firmy w Konkursie „Gra szkoleniowa GOOD GAME”. Szczegóły znajdziesz w Regulaminie Konkursu.</Text>
+                            <View style={{flex: 1}}>
+                                <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy Regulaminu Konkursu „Gra Edukacyjna LevelUP”. </Text>
+                                <Text style={styles.consentText}>Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
+                            </View>
                         </View>
                     </View>
                 </View>
@@ -148,9 +123,9 @@ const styles = StyleSheet.create({
         width: '90%',
         borderRadius: 9,
         zIndex: 2,
-        paddingBottom: 5,
+        paddingBottom: 15,
         marginBottom: 30,
-        paddingTop: 6,
+        paddingTop: 15,
         paddingLeft: 8,
         paddingRight: 6,
         alignItems: 'center'
@@ -235,6 +210,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         alignSelf: 'flex-start',
-        paddingLeft: 20
+        paddingLeft: 0
     }
 })

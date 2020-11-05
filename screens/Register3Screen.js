@@ -94,7 +94,9 @@ export default class Register3Screen extends React.Component {
         })
             .then(response => response.json())
             .then(responseJson => {
-                this.props.navigation.navigate('Login');
+                let title = 'Dziękujemy za rejestracje';
+                let message = 'Na Twój adres e-mail wysłaliśmy dane dostępowe.';
+                this.props.navigation.navigate('Login', {message: message, title: title});
             })
             .catch((error) => {
                 console.error(error);

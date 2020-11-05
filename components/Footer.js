@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     footerView: {
         flexDirection: 'row',
         backgroundColor: '#2592E6',
-        height: 89,
+        height: 75,
         marginTop: -5,
         zIndex: 0,
         justifyContent: 'space-around',

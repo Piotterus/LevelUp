@@ -11,7 +11,7 @@ export default class RemindPasswordScreen extends React.Component {
     constructor(){
         super();
         this.state = {
-            login: '',
+            email: '',
             modalErrorVisible: false,
             error: '',
         }
@@ -32,7 +32,7 @@ export default class RemindPasswordScreen extends React.Component {
         });
 
         let body = {
-            login: this.state.login,
+            email: this.state.email,
         }
 
         let url = `https://levelup.verbum.com.pl/api/user/remind?${queryString}`;
@@ -46,7 +46,7 @@ export default class RemindPasswordScreen extends React.Component {
         })
             .then(response => response.json())
             .then(responseJson => {
-                if (responseJson.error.code == 0) {
+                if (responseJson.error.code === 0) {
                     let error = {
                         code: "Przypomnij hasło",
                         message: "Dane dostępowe zostały wysłane na Twój adres mailowy."
@@ -68,9 +68,9 @@ export default class RemindPasswordScreen extends React.Component {
     }
 
     updateValue(text,field) {
-        if (field === 'login') {
+        if (field === 'email') {
             this.setState({
-                login: text,
+                email: text,
             })
         }
     }
@@ -94,12 +94,17 @@ export default class RemindPasswordScreen extends React.Component {
                         placeholderTextColor="#FFFFFF33"
                         textAlign='center'
                         style={styles.textInput}
-                        onChangeText = {(text) => this.updateValue(text,'login')}
+                        onChangeText = {(text) => this.updateValue(text,'email')}
                     />
                 </View>
                 <View style={styles.bottomView}>
                     <TouchableOpacity onPress={() => this.remindPassword()} style={styles.nextButton}>
                         <Text style={{color: '#FFFFFF', fontSize: 16}}>WYŚLIJ</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.bottomView}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style={[styles.goToLoginButton]}>
+                        <Text style={styles.goToLoginText}>WRÓĆ DO LOGOWANIA</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -149,7 +154,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '100%',
-        marginTop: 100,
+        marginTop: 40,
     },
     backButton: {
         backgroundColor: '#FFFFFF',
@@ -169,5 +174,22 @@ const styles = StyleSheet.create({
     },
     emailView: {
         marginTop: 50,
-    }
+    },
+    goToLoginButton: {
+        backgroundColor: '#F1F9FF',
+        borderColor: '#0E395A',
+        borderWidth: 1,
+        width: 241,
+        height: 50,
+        opacity: 0.8,
+        borderRadius: 25,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 287,
+    },
+    goToLoginText: {
+        color: '#0A3251',
+        fontSize: 16,
+    },
 })
