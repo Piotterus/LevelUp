@@ -58,6 +58,7 @@ export default class App extends  React.Component {
             firstName: '',
             lastName: '',
             rememberMe: false,
+            week: 0,
         }
     }
 
@@ -81,6 +82,12 @@ export default class App extends  React.Component {
         this.setState({
             firstName: firstname,
             lastName: lastname,
+        })
+    }
+
+    updateWeek(week) {
+        this.setState({
+            week: week,
         })
     }
 
@@ -108,7 +115,7 @@ export default class App extends  React.Component {
                 token: token
             })
         }
-    }
+    };
 
     /*setup() {
         this.setState( {
@@ -162,6 +169,7 @@ export default class App extends  React.Component {
                                         testCount={this.state.testCount}
                                         updateFooter={this.updateFooter.bind(this)}
                                         updateDrawer={this.updateDrawer.bind(this)}
+                                        updateWeek={this.updateWeek.bind(this)}
                                     />}
                                 </Drawer.Screen>
                                 <Drawer.Screen name="Main">
@@ -225,6 +233,7 @@ export default class App extends  React.Component {
                                         keyApp={this.state.key}
                                         knowledgeCount={this.state.knowledgeCount}
                                         testCount={this.state.testCount}
+                                        week={this.state.week}
                                     />}
                                 </Drawer.Screen>
                                 <Drawer.Screen name="Ranking">

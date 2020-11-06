@@ -1,11 +1,9 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, ScrollView} from "react-native";
 
-import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
-import Info from '../components/Info';
 import { CheckBox } from 'react-native-elements'
 import ErrorModal from '../components/ErrorModal';
 
@@ -49,12 +47,18 @@ export default class MyConsentScreen extends React.Component {
         })
             .then(response => response.json())
             .then(responseJson => {
-                this.setState({
-                    agree1: responseJson.user.agree1,
-                    agree2: responseJson.user.agree2,
-                    agree3: responseJson.user.agree3,
-                    agree4: responseJson.user.agree4,
-                })
+                if (responseJson.error.code === 0) {
+                    this.setState({
+                        agree1: responseJson.user.agree1,
+                        agree2: responseJson.user.agree2,
+                        agree3: responseJson.user.agree3,
+                        agree4: responseJson.user.agree4,
+                    })
+                } else {
+                    this.setState({
+                        error: responseJson.error
+                    })
+                }
             })
             .catch((error) => {
                 console.error(error);
@@ -74,30 +78,32 @@ export default class MyConsentScreen extends React.Component {
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
-    }
+    };
 
     render() {
         return(
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <HeaderBurger navigation={this.props.navigation}/>
-                <View style={[styles.knowledgeMain, {flex: 1}]}>
-                    <Text style={styles.knowledgeHeaderText}>MOJE ZGODY</Text>
-                    <View style={[styles.shadow, styles.myAccount]}>
-                        <View style={styles.consentRow}>
-                            <CheckBox
-                                checked={this.state.agree1}
-                                //onPress={() => this.setState({agree1: !this.state.agree1})}
-                            />
-                            <View style={{flex: 1}}>
-                                <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy Regulaminu Konkursu „Gra Edukacyjna LevelUP”. </Text>
-                                <Text style={styles.consentText}>Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
+            <View style={{flex: 1}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <HeaderBurger navigation={this.props.navigation}/>
+                    <View style={[styles.knowledgeMain, {flex: 1}]}>
+                        <Text style={styles.knowledgeHeaderText}>MOJE ZGODY</Text>
+                        <View style={[styles.shadow, styles.myAccount]}>
+                            <View style={styles.consentRow}>
+                                <CheckBox
+                                    checked={this.state.agree1}
+                                    //onPress={() => this.setState({agree1: !this.state.agree1})}
+                                />
+                                <View style={{flex: 1}}>
+                                    <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy Regulaminu Konkursu „Gra Edukacyjna LevelUP”. </Text>
+                                    <Text style={styles.consentText}>Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
-                </View>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"KNOWLEDGE"}/>
-            </ScrollView>
+                </ScrollView>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
+            </View>
         )
     }
 }

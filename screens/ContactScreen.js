@@ -1,23 +1,14 @@
 import React from 'react';
 
 import {
-    Image,
     ScrollView,
     StyleSheet,
     Text,
-    TouchableHighlight,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
     View,
 } from 'react-native';
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
-import Info from '../components/Info';
-import Modal from 'react-native-modal';
 import ErrorModal from '../components/ErrorModal';
-import Moment from 'react-moment';
-import moment from 'moment/moment.js';
-import countdown from 'countdown';
 import 'moment-countdown';
 
 export default class ContactScreen extends  React.Component {
@@ -37,20 +28,22 @@ export default class ContactScreen extends  React.Component {
 
     render() {
         return(
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <HeaderBurger navigation={this.props.navigation}/>
-                <View style={[styles.mainView, {flex: 1}]}>
-                    <Text style={styles.levelText}>KONTAKT</Text>
-                    <View style={[styles.shadow, styles.contactView]}>
-                        <Text style={{fontSize: 16, fontWeight: 'bold'}}>Masz pytania?</Text>
-                        <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 20}}>Napisz do nas lub zadzwoń!</Text>
-                        <Text style={{fontSize: 16, marginBottom: 10}}>E-mail: info@levelup.pl</Text>
-                        <Text style={{fontSize: 16}}>Infolinia: 61 8250 785</Text>
+            <View style={{flex: 1}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <HeaderBurger navigation={this.props.navigation}/>
+                    <View style={[styles.mainView, {flex: 1}]}>
+                        <Text style={styles.levelText}>KONTAKT</Text>
+                        <View style={[styles.shadow, styles.contactView]}>
+                            <Text style={{fontSize: 16, fontWeight: 'bold'}}>Masz pytania?</Text>
+                            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 20}}>Napisz do nas lub zadzwoń!</Text>
+                            <Text style={{fontSize: 16, marginBottom: 10}}>E-mail: biuro@verbum.com.pl</Text>
+                            <Text style={{fontSize: 16}}>Infolinia: 61 8250 785</Text>
+                        </View>
                     </View>
-                </View>
+                </ScrollView>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
-            </ScrollView>
+            </View>
         )
     }
 

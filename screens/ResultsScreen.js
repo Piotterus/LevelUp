@@ -6,7 +6,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     ScrollView,
-    TouchableWithoutFeedback,
+    TouchableWithoutFeedback, ActivityIndicator,
 } from 'react-native';
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
@@ -57,6 +57,7 @@ export default class ResultsScreen extends  React.Component {
             lifebuoy: '',
             turbo: '',
             rankingList: '',
+            isLoading: true,
         }
     };
 
@@ -82,6 +83,12 @@ export default class ResultsScreen extends  React.Component {
     componentDidMount() {
 
         this.listenerFocus = this.props.navigation.addListener('focus', () => {
+
+            if (this.props.route.params?.content) {
+                this.setState({
+                    content: this.props.route.params.content
+                })
+            }
 
             const queryString = ResultsScreen.objToQueryString({
                 key: this.props.keyApp,
@@ -133,11 +140,11 @@ export default class ResultsScreen extends  React.Component {
                     if (responseJson.error.code === 0) {
                         this.setState({
                             rankingList: responseJson.data.rank,
-                        })
+                        },() => this.setState({isLoading: false}))
                     } else {
                         this.setState({
                             error: responseJson.error,
-                        }, () => this.setModalErrorVisible(true))
+                        }, () => this.setModalErrorVisible(true), this.setState({isLoading: false}))
                     }
                 })
                 .catch((error) => {
@@ -145,7 +152,7 @@ export default class ResultsScreen extends  React.Component {
                 });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {
-
+            this.setState({isLoading: true,})
         });
     }
 
@@ -310,133 +317,140 @@ export default class ResultsScreen extends  React.Component {
 
     render() {
         return(
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <HeaderBurger navigation={this.props.navigation}/>
-                <Modal isVisible={this.state.modalVisible}>
-                    <TouchableWithoutFeedback onPress={() => this.setModal(false, '','','','','')}>
-                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                            <View style={{backgroundColor: '#FFFFFF', height: 400, width: '90%', padding: 25, justifyContent: 'space-between'}}>
-                                <View>
-                                    <Text style={{color: '#0E395A', fontSize: 18, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalHeader}</Text>
-                                    <View
-                                        style={{
-                                            borderBottomColor: '#0E395A',
-                                            borderBottomWidth: 1,
-                                            width: '100%'
-                                        }}
-                                    />
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Odpowiedź POPRAWNA</Text>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerOK} pkt</Text>
+            <View style={{flex: 1}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <HeaderBurger navigation={this.props.navigation}/>
+                    <Modal isVisible={this.state.modalVisible}>
+                        <TouchableWithoutFeedback onPress={() => this.setModal(false, '','','','','')}>
+                            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                                <View style={{backgroundColor: '#FFFFFF', height: 400, width: '90%', padding: 25, justifyContent: 'space-between'}}>
+                                    <View>
+                                        <Text style={{color: '#0E395A', fontSize: 18, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalHeader}</Text>
+                                        <View
+                                            style={{
+                                                borderBottomColor: '#0E395A',
+                                                borderBottomWidth: 1,
+                                                width: '100%'
+                                            }}
+                                        />
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Odpowiedź POPRAWNA</Text>
+                                            <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerOK} pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Odpowiedź NIEPOPRAWNA</Text>
+                                            <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerWrong} pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>BRAK Odpowiedzi</Text>
+                                            <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerNO} pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Maksymalna ilość pkt</Text>
+                                            <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalMaxPoints} pkt</Text>
+                                        </View>
                                     </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Odpowiedź NIEPOPRAWNA</Text>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerWrong} pkt</Text>
+                                    <View>
+                                        <View
+                                            style={{
+                                                borderBottomColor: '#0E395A',
+                                                borderBottomWidth: 1,
+                                                width: '100%'
+                                            }}
+                                        />
+                                        <TouchableOpacity style={{alignSelf: 'center', marginTop: 15}} onPress={() => this.setModalVisible(false)}>
+                                            <Text style={{color: '#2592E6', fontSize: 18}}>OK</Text>
+                                        </TouchableOpacity>
                                     </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>BRAK Odpowiedzi</Text>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalAnswerNO} pkt</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5}}>Maksymalna ilość pkt</Text>
-                                        <Text style={{color: '#0E395A', fontSize: 15, marginTop: 5, marginBottom: 5, fontWeight: 'bold'}}>{this.state.modalMaxPoints} pkt</Text>
-                                    </View>
-                                </View>
-                                <View>
-                                    <View
-                                        style={{
-                                            borderBottomColor: '#0E395A',
-                                            borderBottomWidth: 1,
-                                            width: '100%'
-                                        }}
-                                    />
-                                    <TouchableOpacity style={{alignSelf: 'center', marginTop: 15}} onPress={() => this.setModalVisible(false)}>
-                                        <Text style={{color: '#2592E6', fontSize: 18}}>OK</Text>
-                                    </TouchableOpacity>
                                 </View>
                             </View>
+                        </TouchableWithoutFeedback>
+                    </Modal>
+                    <View style={[styles.mainView, {flex: 1}]}>
+                        <Text style={styles.levelText}>MOJE WYNIKI</Text>
+                        <View style={[styles.chooseContentView]}>
+                            <TouchableOpacity onPress={() => this.changeContent('ogolne')}>
+                                <View style={[styles.chooseContentViewOne, (this.state.content === 'ogolne' ? styles.chooseContentViewActive : styles.chooseContentViewDisactive)]}>
+                                    <Text style={[
+                                        styles.chooseContentText,
+                                        (this.state.content === 'ogolne' ? styles.chooseContentTextActive : styles.chooseContentTextDisactive)]}
+                                    >OGÓLNE</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.changeContent('ranking')}>
+                                <View style={[styles.chooseContentViewOne, (this.state.content === 'ranking' ? styles.chooseContentViewActive : styles.chooseContentViewDisactive)]}>
+                                    <Text style={[
+                                        styles.chooseContentText,
+                                        (this.state.content === 'ranking' ? styles.chooseContentTextActive : styles.chooseContentTextDisactive)]}
+                                    >RANKING</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.changeContent('rundy')}>
+                                <View style={[styles.chooseContentViewOne, (this.state.content === 'rundy' ? styles.chooseContentViewActive : styles.chooseContentViewDisactive)]}>
+                                    <Text style={[
+                                        styles.chooseContentText,
+                                        (this.state.content === 'rundy' ? styles.chooseContentTextActive : styles.chooseContentTextDisactive)]}
+                                    >RUNDY</Text>
+                                </View>
+                            </TouchableOpacity>
                         </View>
-                    </TouchableWithoutFeedback>
-                </Modal>
-                <View style={[styles.mainView, {flex: 1}]}>
-                    <Text style={styles.levelText}>MOJE WYNIKI</Text>
-                    <View style={[styles.chooseContentView]}>
-                        <TouchableOpacity onPress={() => this.changeContent('ogolne')}>
-                            <View style={[styles.chooseContentViewOne, (this.state.content === 'ogolne' ? styles.chooseContentViewActive : styles.chooseContentViewDisactive)]}>
-                                <Text style={[
-                                    styles.chooseContentText,
-                                    (this.state.content === 'ogolne' ? styles.chooseContentTextActive : styles.chooseContentTextDisactive)]}
-                                >OGÓLNE</Text>
+                        {this.state.content === 'ogolne' &&
+                            <MyLevelView level={this.state.level} points2level={this.state.points2level}
+                                 setModal={this.setModal}/>
+                        }
+                        {this.state.content === 'ogolne' &&
+                            <MyRank points={this.state.points} ranking={this.state.ranking}/>
+                        }
+                        {this.state.content === 'ogolne' &&
+                            <CurrentRound week={this.state.week}/>
+                        }
+                        {this.state.content === 'ranking' &&
+                            <Ranking rankingList={this.state.rankingList}/>
+                        }
+                        {this.state.content === 'ranking' &&
+                            <MyRanking ranking={this.state.ranking} points={this.state.points}/>
+                        }
+                        {this.state.content === 'rundy' &&
+                            <Laps createLapRows={this.createLapRows()}/>
+                        }
+                        {this.state.content === 'rundy' &&
+                            <View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
+                                <TouchableOpacity onPress={() => this.changeShowQuestions(!this.state.showQuestions)} style={[styles.buttonBase, {borderRadius: 25, borderWidth: 1, borderColor: '#2592E6', marginTop: 10}]}>
+                                    <Text style={styles.buttonBaseText}>PYTANIA</Text>
+                                </TouchableOpacity>
+                                {this.state.showQuestions &&
+                                <View style={{width: '90%'}}>
+                                    {this.createQuestionsList()}
+                                </View>
+                                }
+                                <TouchableOpacity onPress={() => this.changeShowTest(!this.state.showTest)} style={[styles.buttonBase, {borderRadius: 25, borderWidth: 1, borderColor: '#2592E6', marginTop: 10}]}>
+                                    <Text style={styles.buttonBaseText}>TEST</Text>
+                                </TouchableOpacity>
+                                {this.state.showTest &&
+                                <View style={{width: '90%'}}>
+                                    {this.createTestList()}
+                                </View>
+                                }
+                                <View style={styles.additionalQuestions}>
+                                    {this.createQuestionLifebuoy()}
+                                    {this.createQuestionTurbo()}
+                                </View>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.changeContent('ranking')}>
-                            <View style={[styles.chooseContentViewOne, (this.state.content === 'ranking' ? styles.chooseContentViewActive : styles.chooseContentViewDisactive)]}>
-                                <Text style={[
-                                    styles.chooseContentText,
-                                    (this.state.content === 'ranking' ? styles.chooseContentTextActive : styles.chooseContentTextDisactive)]}
-                                >RANKING</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.changeContent('rundy')}>
-                            <View style={[styles.chooseContentViewOne, (this.state.content === 'rundy' ? styles.chooseContentViewActive : styles.chooseContentViewDisactive)]}>
-                                <Text style={[
-                                    styles.chooseContentText,
-                                    (this.state.content === 'rundy' ? styles.chooseContentTextActive : styles.chooseContentTextDisactive)]}
-                                >RUNDY</Text>
-                            </View>
-                        </TouchableOpacity>
+                        }
+                        {/*<View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
+                            <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>OKRĄŻENIA:</Text>
+                            {this.createLapRows()}
+                        </View>*/}
                     </View>
-                    {this.state.content === 'ogolne' &&
-                        <MyLevelView level={this.state.level} points2level={this.state.points2level}
-                             setModal={this.setModal}/>
-                    }
-                    {this.state.content === 'ogolne' &&
-                        <MyRank points={this.state.points} ranking={this.state.ranking}/>
-                    }
-                    {this.state.content === 'ogolne' &&
-                        <CurrentRound week={this.state.week}/>
-                    }
-                    {this.state.content === 'ranking' &&
-                        <Ranking rankingList={this.state.rankingList}/>
-                    }
-                    {this.state.content === 'ranking' &&
-                        <MyRanking ranking={this.state.ranking} points={this.state.points}/>
-                    }
-                    {this.state.content === 'rundy' &&
-                        <Laps createLapRows={this.createLapRows()}/>
-                    }
-                    {this.state.content === 'rundy' &&
-                        <View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
-                            <TouchableOpacity onPress={() => this.changeShowQuestions(!this.state.showQuestions)} style={[styles.buttonBase, {borderRadius: 25, borderWidth: 1, borderColor: '#2592E6', marginTop: 10}]}>
-                                <Text style={styles.buttonBaseText}>PYTANIA</Text>
-                            </TouchableOpacity>
-                            {this.state.showQuestions &&
-                            <View style={{width: '90%'}}>
-                                {this.createQuestionsList()}
-                            </View>
-                            }
-                            <TouchableOpacity onPress={() => this.changeShowTest(!this.state.showTest)} style={[styles.buttonBase, {borderRadius: 25, borderWidth: 1, borderColor: '#2592E6', marginTop: 10}]}>
-                                <Text style={styles.buttonBaseText}>TEST</Text>
-                            </TouchableOpacity>
-                            {this.state.showTest &&
-                            <View style={{width: '90%'}}>
-                                {this.createTestList()}
-                            </View>
-                            }
-                            <View style={styles.additionalQuestions}>
-                                {this.createQuestionLifebuoy()}
-                                {this.createQuestionTurbo()}
-                            </View>
-                        </View>
-                    }
-                    {/*<View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
-                        <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>OKRĄŻENIA:</Text>
-                        {this.createLapRows()}
-                    </View>*/}
+                </ScrollView>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="RESULTS"/>
+                {this.state.isLoading &&
+                <View style={styles.loading}>
+                    <ActivityIndicator size='large' color='#0A3251'/>
                 </View>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"RESULTS"}/>
-            </ScrollView>
+                }
+            </View>
         )
     }
 
@@ -643,5 +657,16 @@ const styles = StyleSheet.create({
         paddingLeft: 26,
         paddingRight: 26,
         width: '100%'
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#A3A3A3',
+        opacity: 0.25
     }
 });

@@ -3,25 +3,17 @@ import React from 'react'
 import {
     Text,
     View,
-    Button,
     StyleSheet,
-    TextInput,
     TouchableOpacity,
-    ImageBackground,
     ScrollView,
-    Dimensions,
     Image,
-    Switch,
     TouchableHighlight,
 } from 'react-native';
 
-import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
-import Info from '../components/Info';
 import ErrorModal from '../components/ErrorModal';
 import Swiper from 'react-native-swiper'
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default class AboutLapsScreen extends React.Component {
@@ -40,225 +32,230 @@ export default class AboutLapsScreen extends React.Component {
 
     render() {
         return(
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <HeaderBurger navigation={this.props.navigation}/>
-                <Swiper height='100%' showsButtons={false}>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
-                        <View style={[styles.shadow, styles.aboutLaps]}>
-                            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10}}>Witaj w Level Up!</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>Przygotuj się na emocjonujący miesiąc, wypełniony po brzegi atrakcyjną wiedzą, która z pewnością poszerzy Ci horyzonty. Przekonasz się, że Level Up to idealne narzędzie, zwiększające kompetencje uczestników programu, który dla Ciebie przygotujemy!</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Przed Tobą trwająca miesiąc rozgrywka, składająca się z 4 rund. Zapoznawaj się z wiedzą, odpowiadaj na pytania, zdobywaj punkty i zajmij jak najwyższe miejsce w rankingu, a otrzymasz Certyfikat, potwierdzający Twoje umiejętności!</Text>
-                            <View style={{flexDirection: 'row', marginTop: 20}}>
-                                <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaCurrent.png')}/>
-                                    <Text>Okrążenia aktualne</Text>
-                                </View>
-                                <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaNO.png')}/>
-                                    <Text>Okrążenie pominięte</Text>
-                                </View>
-                            </View>
-                            <View style={{flexDirection: 'row', marginTop: 10, paddingBottom: 10}}>
-                                <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaOK.png')}/>
-                                    <Text>Okrążenia ukończone</Text>
-                                </View>
-                                <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaPending.png')}/>
-                                    <Text>Wkrótce</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
-                        <View style={[styles.shadow, styles.aboutLaps]}>
-                            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Jaki jest plan gry w Level Up?</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>1 tydzień = 1 runda</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}><Text style={{fontWeight: 'bold'}}>START</Text> rundy = poniedziałek 00:00</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}><Text style={{fontWeight: 'bold'}}>KONIEC</Text> rundy = niedziela 23:59</Text>
-                            <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 10}}>
-                                <View style={{paddingLeft: 10, flex: 2}}>
-                                    <Text style={{fontSize: 14, color: '#0A3251',fontWeight: 'bold'}}>PONIEDZIAŁEK</Text>
-                                    <Text style={{fontSize: 14, color: '#0A3251',fontWeight: 'bold'}}>WTOREK</Text>
-                                    <Text style={{fontSize: 14, color: '#0A3251',fontWeight: 'bold'}}>ŚRODA</Text>
-                                </View>
-                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 3}}>Pigułka Wiedzy i pytanie</Text>
-                            </View>
-                            <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
-                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 2}}><Text style={{fontWeight: 'bold'}}>CZWARTEK</Text></Text>
-                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 3}}>do 23:59 możesz odpowiedzieć na pytania z Pigułek Wiedzy</Text>
-                            </View>
-                            <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
-                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 2}}><Text style={{fontWeight: 'bold'}}>PIĄTEK</Text></Text>
-                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 3}}>startuje złożony z 10 pytań TEST WIEDZY</Text>
-                            </View>
-                            <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
-                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 2}}><Text style={{fontWeight: 'bold'}}>NIEDZIELA</Text></Text>
-                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 3}}>do 23:59 możesz wypełnić TEST WIEDZY</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
-                        <View style={[styles.shadow, styles.aboutLaps]}>
-                            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Jak działa Level Up?</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Każda Pigułka Wiedzy została tak skonstruowana, abyś znalazł podstawowe informacje w pierwszym akapicie. Jeżeli jednak jesteś głodny wiedzy, wystarczy że klikniesz „WIĘCEJ”, by przejść do rozszerzonej wersji materiału.</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Po zapoznaniu się z Pigułką Wiedzy, odpowiedz na pytanie, które dotyczy materiału, z jakim się zapoznałeś.</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>TEST WIEDZY zawsze dotyczy materiałów, jakie pojawiły się w danym tygodniu.</Text>
-                            <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 10}}>
-                                <View style={styles.questionOne}>
-                                    <TouchableOpacity style={[styles.buttonBase, styles.shadow, styles.buttonActive]}/>
-                                </View>
-                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10, flex: 2}}>Pytanie czeka na Ciebie.</Text>
-                            </View>
-                            <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
-                                <View style={styles.questionOne}>
-                                    <TouchableOpacity style={[styles.buttonBase, styles.shadow, styles.buttonSolved]}/>
-                                </View>
-                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10, flex: 2}}>Materiał oznaczony kolorem niebieskim, oznacza że zapoznałeś się z Pigułką Wiedzy, wciąż możesz do niej wrócić, by powtórzyć materiał.</Text>
-                            </View>
-                            <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginBottom: 10}}>
-                                <View style={styles.questionOne}>
-                                    <TouchableOpacity style={[styles.buttonBase, styles.shadow, styles.buttonPending]}/>
-                                </View>
-                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10, flex: 2}}>Materiał zaznaczony na szaro oznacza, ze Pigułka Wiedzy czeka na odblokowanie w kolejnych dniach.</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
-                        <View style={[styles.shadow, styles.aboutLaps]}>
-                            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Ranking i nagrody</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Sprawdzaj na bieżąco swoją pozycję w Rankingu. Każda zmiana punktowa na Twoim koncie może wpłynąć na lepszą lokatę, ale pamiętaj – tak jak Ty wyprzedzasz innych, tak inni będą walczyć o wyprzedzenie Ciebie. Dlatego dbaj o wysoki rezultat punktowy! W trakcie rozgrywki będą trzy rankingi, zależne od poziomu:</Text>
-                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 8}}>
-                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/Page-1.png')}/>
-                                <View style={{flex: 3}}>
-                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>STARTER</Text>
-                                    <Text style={{fontSize: 14, color: '#0E395A'}}>poniżej 23 pkt.</Text>
-                                </View>
-                            </View>
-                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
-                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/001-scooter.png')}/>
-                                <View style={{flex: 3}}>
-                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>EXPERT</Text>
-                                    <Text style={{fontSize: 14, color: '#0E395A'}}>od 24 do 71 pkt.</Text>
-                                    <Text style={{fontSize: 14, color: '#0E395A'}}>otrzymujesz <Text style={{fontWeight: 'bold'}}>Srebrny Certyfikat EXPERT Level Up</Text></Text>
-                                </View>
-                            </View>
-                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
-                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/003-car.png')}/>
-                                <View style={{flex: 3}}>
-                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>CHAMPION</Text>
-                                    <Text style={{fontSize: 14, color: '#0E395A'}}>od 72 pkt.</Text>
-                                    <Text style={{fontSize: 14, color: '#0E395A'}}>otrzymujesz <Text style={{fontWeight: 'bold'}}>Złoty Certyfikat CHAMPION Level Up</Text></Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
-                        <View style={[styles.shadow, styles.aboutLaps]}>
-                            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Punktacja i poziomy w Level Up</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Punkty zdobywasz za odpowiedzi na pytania z Pigułek Wiedzy oraz za rozwiązanie TESTU WIEDZY. Przede wszystkim nagradzamy Twoje zaangażowanie, dlatego otrzymasz punkty nawet za błędną odpowiedź. Zobacz, jak wygląda punktacja względem poziomów:</Text>
-                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 8, paddingLeft: 10}}>
-                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/Page-1.png')}/>
-                                <View style={{flex: 4}}>
-                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>STARTER</Text>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź POPRAWNA</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>2 pkt</Text>
+            <View style={{flex: 1}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <HeaderBurger navigation={this.props.navigation}/>
+                    <Swiper showsButtons={false} loadMinimal={true} loadMinimalSize={1}>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
+                            <View style={[styles.shadow, styles.aboutLaps]}>
+                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10}}>Witaj w Level Up!</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10, marginTop: 10}}>Przed Tobą miesiąc pełen atrakcyjnej wiedzy, która poszerzy Ci horyzont i pokaże pełnię możliwości Level Up – narzędzia, które pomoże Ci zwiększyć wyniki sprzedażowe poprzez wzrost wiedzy oraz kompetencji.</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Zapoznaj się z poniższą instrukcją i przekonaj się, że zasady gry są proste i wygodne! Na dobry początek, zapamiętaj poniższą informację o kolorach, które odgrywają ważną rolę w Level Up!</Text>
+                                <View style={{flexDirection: 'row', marginTop: 20}}>
+                                    <View style={{flex: 1, alignItems: 'center'}}>
+                                        <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaCurrent.png')}/>
+                                        <Text>Okrążenia aktualne</Text>
                                     </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź NIEPOPRAWNA</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>1 pkt</Text>
+                                    <View style={{flex: 1, alignItems: 'center'}}>
+                                        <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaNO.png')}/>
+                                        <Text>Okrążenie pominięte</Text>
                                     </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Brak odpowiedzi</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>-1 pkt</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', marginTop: 10, paddingBottom: 10}}>
+                                    <View style={{flex: 1, alignItems: 'center'}}>
+                                        <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaOK.png')}/>
+                                        <Text>Okrążenia ukończone</Text>
                                     </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Maksymalna ilość pkt</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>26 pkt</Text>
+                                    <View style={{flex: 1, alignItems: 'center'}}>
+                                        <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaPending.png')}/>
+                                        <Text>Wkrótce</Text>
                                     </View>
                                 </View>
                             </View>
-                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
-                                <TouchableHighlight style={{marginBottom: 10, flex: 2, alignSelf: 'center'}}
-                                                    onPress={() => {
-                                                        this.setModalVisible(true);
-                                                    }}>
+                        </View>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
+                            <View style={[styles.shadow, styles.aboutLaps]}>
+                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Jaki jest plan gry w Level Up?</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>1 tydzień = 1 runda</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}><Text style={{fontWeight: 'bold'}}>START</Text> rundy = poniedziałek 00:00</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}><Text style={{fontWeight: 'bold'}}>KONIEC</Text> rundy = niedziela 23:59</Text>
+                                <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 10}}>
+                                    <View style={{paddingLeft: 10, flex: 2}}>
+                                        <Text style={{fontSize: 14, color: '#0A3251',fontWeight: 'bold'}}>PONIEDZIAŁEK</Text>
+                                        <Text style={{fontSize: 14, color: '#0A3251',fontWeight: 'bold'}}>WTOREK</Text>
+                                        <Text style={{fontSize: 14, color: '#0A3251',fontWeight: 'bold'}}>ŚRODA</Text>
+                                    </View>
+                                    <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 3}}>Pigułka Wiedzy i pytanie</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                    <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 2}}><Text style={{fontWeight: 'bold'}}>CZWARTEK</Text></Text>
+                                    <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 3}}>do 23:59 możesz odpowiedzieć na pytania z Pigułek Wiedzy</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                    <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 2}}><Text style={{fontWeight: 'bold'}}>PIĄTEK</Text></Text>
+                                    <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 3}}>startuje złożony z 10 pytań TEST WIEDZY</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                    <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 2}}><Text style={{fontWeight: 'bold'}}>NIEDZIELA</Text></Text>
+                                    <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, flex: 3}}>do 23:59 możesz wypełnić TEST WIEDZY</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
+                            <View style={[styles.shadow, styles.aboutLaps]}>
+                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Jak działa Level Up?</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>1.	Gra składa się z 4 rund, a każda runda trwa tydzień</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>2.	W poniedziałek, wtorek i środę otrzymujesz Pigułkę Wiedzy, a każdej z nich towarzyszy jedno pytanie, odpowiedz na nie, by zdobyć punkty.</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>3.	W piątek aktywuje się test z zagadnień poruszonych w rundzie, rozwiąż go, by zdobyć punkty.</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>4.	Liczy się zaangażowanie, więc punkty otrzymasz nawet za błędną odpowiedź. Stracisz je, przy braku odpowiedzi.</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>5.	Baw się dobrze!</Text>
+                                <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 10}}>
+                                    <View style={styles.questionOne}>
+                                        <TouchableOpacity style={[styles.buttonBase, styles.shadow, styles.buttonActive]}/>
+                                    </View>
+                                    <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 15, flex: 2}}>Klikaj, dostępna jest interakcja – Pigułka Wiedzy, test lub pytanie!</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                    <View style={styles.questionOne}>
+                                        <TouchableOpacity style={[styles.buttonBase, styles.shadow, styles.buttonSolved]}/>
+                                    </View>
+                                    <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 15, flex: 2}}>Dobra robota, zadanie wykonane. Pamiętaj – zawsze możesz wrócić do Pigułek Wiedzy!</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginBottom: 10}}>
+                                    <View style={styles.questionOne}>
+                                        <TouchableOpacity style={[styles.buttonBase, styles.shadow, styles.buttonPending]}/>
+                                    </View>
+                                    <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 15, flex: 2}}>Interakcja będzie dostępna w przyszłości, czekaj cierpliwie!</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
+                            <View style={[styles.shadow, styles.aboutLaps]}>
+                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Ranking i nagrody</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Śledź swoją pozycję w błyskawicznie aktualizowanym rankingu i walcz z innymi o jak najwyższe miejsce. W Level Up istnieją 3 poziomy zależne od Twojego dorobku punktowego. Zdobądź co najmniej poziom EXPERT, by cieszyć się nagrodą – Certyfikatem! Pamiętaj, że wyższy status = lepsza nagroda!</Text>
+                                <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 10}}>
+                                    <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/Page-1.png')}/>
+                                    <View style={{flex: 3}}>
+                                        <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>STARTER</Text>
+                                        <Text style={{fontSize: 14, color: '#0E395A'}}>poniżej 23 pkt.</Text>
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
                                     <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/001-scooter.png')}/>
-                                </TouchableHighlight>
-                                <View style={{flex: 4}}>
-                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>EXPERT</Text>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź POPRAWNA</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>4 pkt</Text>
+                                    <View style={{flex: 3}}>
+                                        <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>EXPERT</Text>
+                                        <Text style={{fontSize: 14, color: '#0E395A'}}>od 24 do 71 pkt.</Text>
+                                        <Text style={{fontSize: 14, color: '#0E395A'}}>wygrywasz <Text style={{fontWeight: 'bold'}}>Srebrny Certyfikat EXPERT Level Up</Text></Text>
                                     </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź NIEPOPRAWNA</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>2 pkt</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Brak odpowiedzi</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>-2 pkt</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Maksymalna ilość pkt</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>52 pkt</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginBottom: 10}}>
+                                    <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/003-car.png')}/>
+                                    <View style={{flex: 3}}>
+                                        <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>CHAMPION</Text>
+                                        <Text style={{fontSize: 14, color: '#0E395A'}}>od 72 pkt.</Text>
+                                        <Text style={{fontSize: 14, color: '#0E395A'}}>wygrywasz <Text style={{fontWeight: 'bold'}}>Złoty Certyfikat CHAMPION Level Up</Text></Text>
                                     </View>
                                 </View>
                             </View>
-                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
-                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/003-car.png')}/>
-                                <View style={{flex: 4}}>
-                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>CHAMPION</Text>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź POPRAWNA</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>8 pkt</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź NIEPOPRAWNA</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>4 pkt</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Brak odpowiedzi</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>-4 pkt</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>Maksymalna ilość pkt</Text>
-                                        <Text style={{fontSize: 12, color: '#0E395A'}}>78 pkt</Text>
+                        </View>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
+                            <View style={[styles.shadow, styles.aboutLaps]}>
+                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Punktacja i poziomy w Level Up</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Punkty zdobywasz za odpowiedzi na pytania z Pigułek Wiedzy oraz za rozwiązanie TESTU WIEDZY. Przede wszystkim nagradzamy Twoje zaangażowanie, dlatego otrzymasz punkty nawet za błędną odpowiedź. Zobacz, jak wygląda punktacja względem poziomów:</Text>
+                                <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 10, paddingLeft: 10}}>
+                                    <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/Page-1.png')}/>
+                                    <View style={{flex: 4}}>
+                                        <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>STARTER</Text>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź POPRAWNA</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>2 pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź NIEPOPRAWNA</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>1 pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Brak odpowiedzi</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>-1 pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Maksymalna ilość pkt</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>26 pkt</Text>
+                                        </View>
                                     </View>
                                 </View>
+                                <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                    <TouchableHighlight style={{marginBottom: 10, flex: 2, alignSelf: 'center'}}
+                                                        onPress={() => {
+                                                            this.setModalVisible(true);
+                                                        }}>
+                                        <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/001-scooter.png')}/>
+                                    </TouchableHighlight>
+                                    <View style={{flex: 4}}>
+                                        <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>EXPERT</Text>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź POPRAWNA</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>4 pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź NIEPOPRAWNA</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>2 pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Brak odpowiedzi</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>-2 pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Maksymalna ilość pkt</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>52 pkt</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                    <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/003-car.png')}/>
+                                    <View style={{flex: 4}}>
+                                        <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>CHAMPION</Text>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź POPRAWNA</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>8 pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź NIEPOPRAWNA</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>4 pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Brak odpowiedzi</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>-4 pkt</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>Maksymalna ilość pkt</Text>
+                                            <Text style={{fontSize: 12, color: '#0E395A'}}>78 pkt</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, marginTop: 10, fontWeight: 'bold'}}>Pamiętaj!</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, marginTop: 10, paddingBottom: 10}}>WYŻSZE POZIOMY = WIĘCEJ PUNKTÓW</Text>
                             </View>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, marginTop: 10, fontWeight: 'bold'}}>Pamiętaj!</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, marginTop: 10, paddingBottom: 10}}>WYŻSZE POZIOMY = WIĘCEJ PUNKTÓW</Text>
                         </View>
-                    </View>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
-                        <View style={[styles.shadow, styles.aboutLaps]}>
-                            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Dodatkowe mechanizmy</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, fontWeight: 'bold'}}>KOŁO RATUNKOWE</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Pominąłeś rundę? Nic się nie stało, wybierz KOŁO RATUNKOWE, które pomoże Ci w odrobieniu straconych punktów. To specjalny mini-test, który składa się z pięciu pytań, które posiadają punktację uzależnioną od Twojego poziomu.</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, fontWeight: 'bold', marginTop: 10}}>Pytanie TURBO</Text>
-                            <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>To przywilej dla najlepszych – każdy, kto zdobędzie status CHAMPION może liczyć na specjalne pytanie otwarte. Za udzielenie odpowiedzi na pytanie TURBO możesz otrzymać nawet 30 pkt!</Text>
-                            <View style={styles.additionalQuestions}>
-                                <TouchableOpacity style={{flex: 1}}>
-                                    <Image resizeMode='contain' style={{width: '100%'}} source={require('../images/Group_177.png')}/>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{flex: 1}}>
-                                    <Image resizeMode='contain' style={{width: '100%'}} source={require('../images/Group_176.png')}/>
-                                </TouchableOpacity>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
+                            <View style={[styles.shadow, styles.aboutLaps]}>
+                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Dodatkowe mechanizmy</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, fontWeight: 'bold'}}>KOŁO RATUNKOWE</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Pominąłeś rundę? Nic się nie stało, wybierz KOŁO RATUNKOWE, które pomoże Ci w odrobieniu straconych punktów. To specjalny mini-test, który składa się z pięciu pytań, które posiadają punktację uzależnioną od Twojego poziomu.</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, fontWeight: 'bold', marginTop: 10}}>Pytanie TURBO</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>To przywilej dla najlepszych – każdy, kto zdobędzie status CHAMPION może liczyć na specjalne pytanie otwarte. Za udzielenie odpowiedzi na pytanie TURBO możesz otrzymać nawet 30 pkt!</Text>
+                                <View style={styles.additionalQuestions}>
+                                    <TouchableOpacity style={{flex: 1}}>
+                                        <Image resizeMode='contain' style={{width: '100%'}} source={require('../images/Group_177.png')}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={{flex: 1}}>
+                                        <Image resizeMode='contain' style={{width: '100%'}} source={require('../images/Group_176.png')}/>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                </Swiper>
+                    </Swiper>
+
+                </ScrollView>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
-            </ScrollView>
+            </View>
         )
     }
 }
@@ -351,5 +348,4 @@ const styles = StyleSheet.create({
         backgroundColor: '#8A8A8A',
         opacity: 0.5
     },
-
 });

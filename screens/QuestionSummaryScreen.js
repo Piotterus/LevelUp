@@ -1,6 +1,19 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    ImageBackground,
+    ScrollView,
+    Dimensions,
+    Image,
+    Switch,
+    ActivityIndicator,
+} from 'react-native';
 
 import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
@@ -81,19 +94,26 @@ export default class QuestionSummaryScreen extends React.Component {
                 .then(response => response.json())
                 .then(responseJson => {
                     console.log(JSON.stringify(responseJson));
-                    this.setState({
-                        model: responseJson.poll.modelId,
-                        id: responseJson.poll.id,
-                        status: responseJson.poll.status,
-                        question: responseJson.poll.poll,
-                        questionCount: responseJson.poll.poll.length,
-                        poll: {
+                    if (responseJson.error.code === 0) {
+                        this.setState({
+                            model: responseJson.poll.modelId,
                             id: responseJson.poll.id,
-                            modelId: responseJson.poll.modelId,
-                            poll: [],
-                        },
-                        isLoading: false,
-                    })
+                            status: responseJson.poll.status,
+                            question: responseJson.poll.poll,
+                            questionCount: responseJson.poll.poll.length,
+                            poll: {
+                                id: responseJson.poll.id,
+                                modelId: responseJson.poll.modelId,
+                                poll: [],
+                            },
+                            isLoading: false,
+                        })
+                    } else {
+                        this.setState({
+                            isLoading: false,
+                            error: responseJson.error,
+                        })
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
@@ -206,6 +226,11 @@ export default class QuestionSummaryScreen extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                {this.state.isLoading &&
+                <View style={styles.loading}>
+                    <ActivityIndicator size='large' color='#0A3251'/>
+                </View>
+                }
             </ScrollView>
         )
     }
@@ -306,5 +331,16 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         color: '#0A3251'
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#A3A3A3',
+        opacity: 0.25
     }
 })

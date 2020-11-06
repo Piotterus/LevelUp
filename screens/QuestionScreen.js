@@ -1,6 +1,19 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    ImageBackground,
+    ScrollView,
+    Dimensions,
+    Image,
+    Switch,
+    ActivityIndicator,
+} from 'react-native';
 
 import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
@@ -82,7 +95,7 @@ export default class QuestionScreen extends React.Component {
                             },
                             isLoading: false,
                         }, () => {
-                                console.log("BEFORE CREATEPOLL: " + this.state),
+
                                 this.createPoll()
                         })
                     } else {
@@ -317,26 +330,33 @@ export default class QuestionScreen extends React.Component {
 
     render() {
         return(
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <HeaderBurger navigation={this.props.navigation}/>
-                <View style={[styles.knowledgeMain, {flex: 1}]}>
-                    <Text style={styles.knowledgeHeaderText}>PYTANIA</Text>
-                    <View style={[styles.shadow, styles.questionView]}>
-                        {this.createQuestionList()}
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                            {this.buttonsNavigate()}
+            <View style={{flex: 1}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <HeaderBurger navigation={this.props.navigation}/>
+                    <View style={[styles.knowledgeMain, {flex: 1}]}>
+                        <Text style={styles.knowledgeHeaderText}>PYTANIA</Text>
+                        <View style={[styles.shadow, styles.questionView]}>
+                            {this.createQuestionList()}
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                {this.buttonsNavigate()}
+                            </View>
+                            {this.state.questionNumber >= this.state.questionCount &&
+                                <TouchableOpacity onPress={() => this.sendPoll()}
+                                                  style={[styles.buttonBase, styles.shadow, styles.buttonConsent, {backgroundColor: '#0E395A'}]}>
+                                    <Text style={styles.buttonText}>ZAKOŃCZ</Text>
+                                </TouchableOpacity>
+                            }
                         </View>
-                        {this.state.questionNumber >= this.state.questionCount &&
-                            <TouchableOpacity onPress={() => this.sendPoll()}
-                                              style={[styles.buttonBase, styles.shadow, styles.buttonConsent, {backgroundColor: '#0E395A'}]}>
-                                <Text style={styles.buttonText}>ZAKOŃCZ</Text>
-                            </TouchableOpacity>
-                        }
                     </View>
+                </ScrollView>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="QUESTIONS"/>
+                {this.state.isLoading &&
+                <View style={styles.loading}>
+                    <ActivityIndicator size='large' color='#0A3251'/>
                 </View>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"QUESTIONS"}/>
-            </ScrollView>
+                }
+            </View>
         )
     }
 }
@@ -439,5 +459,16 @@ const styles = StyleSheet.create({
     },
     buttonNavigate: {
         width: '100%',
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#A3A3A3',
+        opacity: 0.25
     }
 });

@@ -6,13 +6,13 @@ export default class Footer extends React.Component {
     render() {
         return(
             <View style={styles.footerView}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Results')} style={[styles.footerInfo, (this.props.active == "RESULTS") ? styles.footerActive : styles.footerDisActive]}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Results')} style={[styles.footerInfo, (this.props.active === "RESULTS") ? styles.footerActive : styles.footerDisActive]}>
                     <Image source={require('../icons/ikony_BOTTOM_wyniki.png')}/>
                     <Text style={{color: '#FFFFFF', fontSize: 11}}>WYNIKI</Text>
                 </TouchableOpacity>
                 <View  style={[styles.lineView, {borderColor: '#FFFFFF'}]}>
                 </View>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('ChooseKnowledge')} style={[styles.footerInfo, (this.props.active == "KNOWLEDGE") ? styles.footerActive : styles.footerDisActive]}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('ChooseKnowledge')} style={[styles.footerInfo, (this.props.active === "KNOWLEDGE") ? styles.footerActive : styles.footerDisActive]}>
                     <View style={{flexDirection: 'row'}}>
                         <Image source={require('../icons/ikony_BOTTOM_wiedza.png')}/>
                         {this.props.knowledgeCount > 0 &&
@@ -25,14 +25,14 @@ export default class Footer extends React.Component {
                     <Text
                         style={{color: '#FFFFFF', fontSize: 11}}>WIEDZA</Text>
                     }
-                    {this.props.knowledgeCount == 0 &&
+                    {this.props.knowledgeCount === 0 &&
                     <Text
                         style={{color: '#FFFFFF', fontSize: 11}}>WIEDZA</Text>
                     }
                 </TouchableOpacity>
                 <View  style={[styles.lineView, {borderColor: '#FFFFFF'}]}>
                 </View>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')} style={[styles.footerInfo, (this.props.active == "QUESTIONS") ? styles.footerActive : styles.footerDisActive]}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')} style={[styles.footerInfo, (this.props.active === "QUESTIONS") ? styles.footerActive : styles.footerDisActive]}>
                     <View style={{flexDirection: 'row'}}>
                         <Image source={require('../icons/ikony_BOTTOM_test.png')}/>
                         {this.props.testCount > 0 &&
@@ -45,7 +45,7 @@ export default class Footer extends React.Component {
                     <Text
                         style={{color: '#FFFFFF', fontSize: 11}}>TEST</Text>
                     }
-                    {this.props.testCount == 0 &&
+                    {this.props.testCount === 0 &&
                     <Text
                         style={{color: '#FFFFFF', fontSize: 11}}>TEST</Text>
                     }
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
         marginTop: -5,
         zIndex: 0,
         justifyContent: 'space-around',
-
+        position: 'absolute', left: 0, right: 0, bottom: 0
     },
     footerInfo: {
         alignItems: 'center',

@@ -1,6 +1,19 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    ImageBackground,
+    ScrollView,
+    Dimensions,
+    Image,
+    Switch,
+    ActivityIndicator,
+} from 'react-native';
 
 import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
@@ -22,6 +35,7 @@ export default class TestSummaryScreen extends React.Component {
             id: props.route.params.id,
             modalErrorVisible: false,
             error: '',
+            isLoading: true,
         }
     }
 
@@ -33,12 +47,14 @@ export default class TestSummaryScreen extends React.Component {
                 sum: this.props.route.params.sum,
                 model: this.props.route.params.model,
                 id: this.props.route.params.id,
-            })
+            },() => this.setState({isLoading: false}))
 
         });
 
         this.listenerBlur = this.props.navigation.addListener('blur', () => {
-
+            this.setState({
+                isLoading: true,
+            })
         });
     }
 
@@ -67,21 +83,28 @@ export default class TestSummaryScreen extends React.Component {
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
-    }
+    };
 
     render() {
         return(
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <HeaderBurger navigation={this.props.navigation}/>
-                <View style={[styles.knowledgeMain, {flex: 1}]}>
-                    <Text style={styles.knowledgeHeaderText}>PODSUMOWANIE TESTU</Text>
-                    <View style={[styles.shadow, styles.summaryView]}>
-                        {this.createTestSummaryList()}
+            <View style={{flex: 1}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <HeaderBurger navigation={this.props.navigation}/>
+                    <View style={[styles.knowledgeMain, {flex: 1}]}>
+                        <Text style={styles.knowledgeHeaderText}>PODSUMOWANIE TESTU</Text>
+                        <View style={[styles.shadow, styles.summaryView]}>
+                            {this.createTestSummaryList()}
+                        </View>
                     </View>
+                </ScrollView>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="QUESTIONS"/>
+                {this.state.isLoading &&
+                <View style={styles.loading}>
+                    <ActivityIndicator size='large' color='#0A3251'/>
                 </View>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"QUESTIONS"}/>
-            </ScrollView>
+                }
+            </View>
         )
     }
 }
@@ -170,5 +193,16 @@ const styles = StyleSheet.create({
         color: '#0A3251',
         fontSize: 16,
         fontWeight: '100',
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#A3A3A3',
+        opacity: 0.25
     }
-})
+});

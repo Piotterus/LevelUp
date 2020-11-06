@@ -1,6 +1,19 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    ImageBackground,
+    ScrollView,
+    Dimensions,
+    Image,
+    Switch,
+    ActivityIndicator,
+} from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
@@ -19,6 +32,7 @@ export default class StatuteScreen extends React.Component {
             content: '',
             modalErrorVisible: false,
             error: '',
+            isLoading: true,
         }
 
     }
@@ -40,6 +54,7 @@ export default class StatuteScreen extends React.Component {
             });
 
             let url = `https://levelup.verbum.com.pl/api/page/statute/pl_PL/?${queryString}`;
+            console.log("URL")
             console.log(url);
             fetch(url, {
                 method: 'GET',
@@ -49,10 +64,17 @@ export default class StatuteScreen extends React.Component {
             })
                 .then(response => response.json())
                 .then(responseJson => {
-                    this.setState({
-                        title: responseJson.article.title,
-                        content: responseJson.article.content,
-                    })
+                    if (responseJson.error.code === 0) {
+                        this.setState({
+                            title: responseJson.article.title,
+                            content: responseJson.article.content,
+                        }, () => this.setState({isLoading: false}))
+                    } else {
+                        this.setState({
+                            error: responseJson.error,
+                            isLoading: false,
+                        })
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
@@ -62,6 +84,7 @@ export default class StatuteScreen extends React.Component {
             this.setState({
                 title: '',
                 content: '',
+                isLoading: true,
             })
         });
     }
@@ -76,27 +99,35 @@ export default class StatuteScreen extends React.Component {
     }
 
     render() {
+        console.log("CONTENT")
         console.log(this.state.content);
         return(
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <HeaderBurger navigation={this.props.navigation}/>
-                <View style={[styles.knowledgeMain, {flex: 1}]}>
-                    <Text style={styles.knowledgeHeaderText}>{this.state.title}</Text>
-                    <View style={[styles.shadow, styles.myAccount, {flex: 1}]}>
-                        {/*this.state.content !== '' &&
-                            <HTML html={this.state.content}/>
-                        */}
-                        <WebView
-                            originWhitelist={['*']}
-                            source={{ html: this.state.content }}
-                            style={{width: Dimensions.get('window').width*0.85}}
-                            scalesPageToFit={false}
-                        />
+            <View style={{flex: 1}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <HeaderBurger navigation={this.props.navigation}/>
+                    <View style={[styles.knowledgeMain, {flex: 1}]}>
+                        <Text style={styles.knowledgeHeaderText}>{this.state.title}</Text>
+                        <View style={[styles.shadow, styles.myAccount, {flex: 1}]}>
+                            {/*this.state.content !== '' &&
+                                <HTML html={this.state.content}/>
+                            */}
+                            <WebView
+                                originWhitelist={['*']}
+                                source={{ html: this.state.content }}
+                                style={{width: Dimensions.get('window').width*0.85}}
+                                scalesPageToFit={false}
+                            />
+                        </View>
                     </View>
-                </View>
+                </ScrollView>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
-            </ScrollView>
+                {this.state.isLoading &&
+                <View style={styles.loading}>
+                    <ActivityIndicator size='large' color='#0A3251'/>
+                </View>
+                }
+            </View>
         )
     }
 }
@@ -212,5 +243,16 @@ const styles = StyleSheet.create({
         paddingLeft: 0,
         paddingBottom: 15,
         paddingTop: 5
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#A3A3A3',
+        opacity: 0.25
     }
 });

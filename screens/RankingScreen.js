@@ -15,12 +15,13 @@ export default class RankingScreen extends React.Component {
         this.state = {
             modalErrorVisible: false,
             error: '',
+            isLoading: true,
         }
     }
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
-    }
+    };
 
     render() {
         return(

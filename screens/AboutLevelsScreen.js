@@ -1,11 +1,9 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, ScrollView, Image} from "react-native";
 
-import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
-import Info from '../components/Info';
 import ErrorModal from '../components/ErrorModal';
 
 export default class AboutLevelsScreen extends React.Component {
@@ -24,39 +22,41 @@ export default class AboutLevelsScreen extends React.Component {
 
     render() {
         return(
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <HeaderBurger navigation={this.props.navigation}/>
-                <View style={[styles.knowledgeMain, {flex: 1}]}>
-                    <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
-                    <View style={[styles.shadow, styles.aboutLaps]}>
-                        <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251'}}>Punktacja</Text>
-                        <Text style={{fontSize: 16, color: '#0A3251'}}>Level.UP to dobra gra - na wyższych poziomach gry dostajesz więcej punktów za te same działania.</Text>
-                        <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 8}}>
-                            <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/Page-1.png')}/>
-                            <View style={{flex: 3}}>
-                                <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>STARTER</Text>
-                                <Text style={{fontSize: 14, color: '#0E395A'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
+            <View style={{flex: 1}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <HeaderBurger navigation={this.props.navigation}/>
+                    <View style={[styles.knowledgeMain, {flex: 1}]}>
+                        <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
+                        <View style={[styles.shadow, styles.aboutLaps]}>
+                            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251'}}>Punktacja</Text>
+                            <Text style={{fontSize: 16, color: '#0A3251'}}>Level.UP to dobra gra - na wyższych poziomach gry dostajesz więcej punktów za te same działania.</Text>
+                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 8}}>
+                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/Page-1.png')}/>
+                                <View style={{flex: 3}}>
+                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>STARTER</Text>
+                                    <Text style={{fontSize: 14, color: '#0E395A'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
+                                </View>
                             </View>
-                        </View>
-                        <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
-                            <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/001-scooter.png')}/>
-                            <View style={{flex: 3}}>
-                                <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>EXPERT</Text>
-                                <Text style={{fontSize: 14, color: '#0E395A'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
+                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/001-scooter.png')}/>
+                                <View style={{flex: 3}}>
+                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>EXPERT</Text>
+                                    <Text style={{fontSize: 14, color: '#0E395A'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
+                                </View>
                             </View>
-                        </View>
-                        <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
-                            <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/003-car.png')}/>
-                            <View style={{flex: 3}}>
-                                <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>CHAMPION</Text>
-                                <Text style={{fontSize: 14, color: '#0E395A'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
+                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10}}>
+                                <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/003-car.png')}/>
+                                <View style={{flex: 3}}>
+                                    <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>CHAMPION</Text>
+                                    <Text style={{fontSize: 14, color: '#0E395A'}}>Quickly reintermediate low-risk high-yield technology without turnkey technologies.</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
-                </View>
+                </ScrollView>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
-            </ScrollView>
+            </View>
         )
     }
 }

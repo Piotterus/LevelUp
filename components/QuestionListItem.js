@@ -121,7 +121,7 @@ export default class QuestionListItem extends React.Component {
             } else if (this.props.status.id === 2) {
                 return (
                     <View style={styles.questionOne}>
-                        <TouchableOpacity
+                        <TouchableOpacity onPress={() => this.props.getTestResults(this.props.id, this.props.model)}
                             style={[styles.buttonBase, styles.buttonSolved]}>
                             <Text style={styles.questionTextSolved}>TEST</Text>
                         </TouchableOpacity>
@@ -130,7 +130,7 @@ export default class QuestionListItem extends React.Component {
             }
         } else {
             return (
-                <View></View>
+                <View/>
             )
         }
     }

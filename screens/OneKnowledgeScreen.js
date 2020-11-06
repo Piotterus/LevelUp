@@ -1,6 +1,19 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    ImageBackground,
+    ScrollView,
+    Dimensions,
+    Image,
+    Switch,
+    ActivityIndicator,
+} from 'react-native';
 
 import WebView from 'react-native-webview'
 import HTML from 'react-native-render-html';
@@ -26,6 +39,7 @@ export default class OneKnowledgeScreen extends React.Component {
             showContent: 'short',
             modalErrorVisible: false,
             error: '',
+            isLoading: true,
         }
     }
 
@@ -56,12 +70,18 @@ export default class OneKnowledgeScreen extends React.Component {
             })
                 .then(response => response.json())
                 .then(responseJson => {
-                    this.setState({
-                        knowledgeItem: responseJson.page,
-                        longContent: responseJson.page.longContent,
-                        title: responseJson.page.title,
-                        shortContent: responseJson.page.shortContent,
-                    })
+                    if (responseJson.error.code === 0) {
+                        this.setState({
+                            knowledgeItem: responseJson.page,
+                            longContent: responseJson.page.longContent,
+                            title: responseJson.page.title,
+                            shortContent: responseJson.page.shortContent,
+                        },() => this.setState({isLoading: false,}))
+                    } else {
+                        this.setState({
+                            error: responseJson.error
+                        },() => this.setState({isLoading: false,}))
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
@@ -74,6 +94,7 @@ export default class OneKnowledgeScreen extends React.Component {
                     longContent: '',
                 },
                 showContent: 'short',
+                isLoading: true,
             })
         });
     }
@@ -87,7 +108,7 @@ export default class OneKnowledgeScreen extends React.Component {
         const {x, y, width, height} = layout;
         this.setState({
             htmlWidth: width-52,
-        })
+        });
         console.log("find")
         console.log(width)
     }
@@ -106,39 +127,46 @@ export default class OneKnowledgeScreen extends React.Component {
         console.log("longContent");
         console.log(this.state.longContent);
         return(
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <HeaderBurger navigation={this.props.navigation}/>
-                <View style={[styles.knowledgeMain, {flex: 1}]}>
-                    <Text style={styles.knowledgeHeaderText}>WIEDZA</Text>
-                    <View style={[styles.knowledgeOne, styles.shadow]}>
-                        <View style={styles.knowledgeDesc} onLayout={(event) => { this.findDimensionsView(event.nativeEvent.layout) }}>
-                            <Text style={[styles.knowledgeDescText, {fontSize: 18, marginTop: 5}]}>{this.state.title}</Text>
-                            {this.state.showContent == 'short' && this.state.shortContent !== '' &&
-                                <HTML html={this.state.shortContent} imagesMaxWidth={this.state.htmlWidth}/>
-                            }
-                            {this.state.showContent == 'long' && this.state.knowledgeItem.longContent !== '' &&
-                            /*<Text style={[styles.knowledgeDescText, {fontSize: 16, marginTop: 24}]}>*/
-                                <HTML html={this.state.longContent} imagesMaxWidth={this.state.htmlWidth}/>
-                            /*</Text>*/
-                            }
-                            {this.state.showContent == 'short' &&
-                                <TouchableOpacity onPress={() => this.showContent('long')} style={[styles.buttonBase, styles.shadow, {
-                                    backgroundColor: '#2592E6',
-                                    marginTop: 5,
-                                    marginBottom: 5
-                                }]}>
-                                    <Text style={{color: '#FFFFFF', fontSize: 13}}>POKAŻ WIĘCEJ</Text>
+            <View style={{flex: 1}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <HeaderBurger navigation={this.props.navigation}/>
+                    <View style={[styles.knowledgeMain, {flex: 1}]}>
+                        <Text style={styles.knowledgeHeaderText}>WIEDZA</Text>
+                        <View style={[styles.knowledgeOne, styles.shadow]}>
+                            <View style={styles.knowledgeDesc} onLayout={(event) => { this.findDimensionsView(event.nativeEvent.layout) }}>
+                                <Text style={[styles.knowledgeDescText, {fontSize: 18, marginTop: 5}]}>{this.state.title}</Text>
+                                {this.state.showContent === 'short' && this.state.shortContent !== '' &&
+                                    <HTML html={this.state.shortContent} imagesMaxWidth={this.state.htmlWidth}/>
+                                }
+                                {this.state.showContent === 'long' && this.state.knowledgeItem.longContent !== '' &&
+                                /*<Text style={[styles.knowledgeDescText, {fontSize: 16, marginTop: 24}]}>*/
+                                    <HTML html={this.state.longContent} imagesMaxWidth={this.state.htmlWidth}/>
+                                /*</Text>*/
+                                }
+                                {this.state.showContent === 'short' &&
+                                    <TouchableOpacity onPress={() => this.showContent('long')} style={[styles.buttonBase, styles.shadow, {
+                                        backgroundColor: '#2592E6',
+                                        marginTop: 5,
+                                        marginBottom: 5
+                                    }]}>
+                                        <Text style={{color: '#FFFFFF', fontSize: 13}}>POKAŻ WIĘCEJ</Text>
+                                    </TouchableOpacity>
+                                }
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6', marginTop: 30, marginBottom: 42}]}>
+                                    <Text style={{color: '#FFFFFF', fontSize: 13}}>PRZEJDŹ DO PYTAŃ</Text>
                                 </TouchableOpacity>
-                            }
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6', marginTop: 30, marginBottom: 42}]}>
-                                <Text style={{color: '#FFFFFF', fontSize: 13}}>PRZEJDŹ DO PYTAŃ</Text>
-                            </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
+                </ScrollView>
+                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="KNOWLEDGE"/>
+                {this.state.isLoading &&
+                <View style={styles.loading}>
+                    <ActivityIndicator size='large' color='#0A3251'/>
                 </View>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
-            </ScrollView>
+                }
+            </View>
         )
     }
 }
@@ -195,4 +223,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
     },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#A3A3A3',
+        opacity: 0.25
+    }
 })
