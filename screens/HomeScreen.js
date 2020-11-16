@@ -460,7 +460,7 @@ export default class HomeScreen extends  React.Component {
                                 </View>
                             </View>
                             <View style={styles.knowledgeView}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Results')} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6'}]}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Results', {content: "rundy"})} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6'}]}>
                                     <Text style={{color: '#FFFFFF', fontSize: 13}}>MAPA GRY</Text>
                                 </TouchableOpacity>
                             </View>

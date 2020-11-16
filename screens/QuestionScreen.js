@@ -225,10 +225,28 @@ export default class QuestionScreen extends React.Component {
     }
 
     nextQuestion() {
-        this.setState({
-            questionNumber: this.state.questionNumber + 1,
-        });
-        console.log("NEXT QUESTION-" + this.state.questionNumber);
+        let questionsAnswered = 0;
+        for (let i in poll) {
+            for (let j in poll[i].answers) {
+                if (poll[i].answers[j].value === true) {
+                    questionsAnswered++;
+                    break;
+                }
+            }
+        }
+        if (questionsAnswered === this.state.questionNumber) {
+            this.setState({
+                questionNumber: this.state.questionNumber + 1,
+            });
+            console.log("NEXT QUESTION-" + this.state.questionNumber);
+        } else {
+            let error = {
+                message: "Zaznacz odpowiedź aby przejść dalej"
+            };
+            this.setState({
+                error: error,
+            }, () => this.setModalErrorVisible(true))
+        }
     }
 
     prevQuestion() {

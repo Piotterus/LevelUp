@@ -41,6 +41,7 @@ import ResultsScreen from './screens/ResultsScreen';
 import QuestionSummaryScreen from './screens/QuestionSummaryScreen';
 import ContactScreen from './screens/ContactScreen';
 import StatuteScreen from './screens/StatuteScreen';
+import RegisterStatuteScreen from './screens/RegisterStatuteScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -395,6 +396,13 @@ export default class App extends  React.Component {
                                 </Drawer.Screen>
                                 <Drawer.Screen name="RemindPassword">
                                     {props => <RemindPasswordScreen
+                                        {...props}
+                                        token={this.state.token}
+                                        keyApp={this.state.key}
+                                    />}
+                                </Drawer.Screen>
+                                <Drawer.Screen name="RegisterStatute">
+                                    {props => <RegisterStatuteScreen
                                         {...props}
                                         token={this.state.token}
                                         keyApp={this.state.key}

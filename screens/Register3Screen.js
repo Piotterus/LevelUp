@@ -1,6 +1,19 @@
 import React from 'react';
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    ImageBackground,
+    ScrollView,
+    Dimensions,
+    Image,
+    Switch,
+    TouchableWithoutFeedback,
+} from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
 import Icon from 'react-native-vector-icons/Feather';
@@ -15,16 +28,9 @@ export default class Register3Screen extends React.Component {
         this.state = {
             firstname: this.props.route.params.firstname,
             lastname: this.props.route.params.lastname,
-            phone: this.props.route.params.phone,
             email: this.props.route.params.email,
-            firmName: this.props.route.params.firmName,
-            firmAddressStreet: this.props.route.params.firmAddressStreet,
-            firmAddressPostal: this.props.route.params.firmAddressPostal,
-            firmAddressCity: this.props.route.params.firmAddressCity,
+            firmName: this.props.route.params.firmNIP,
             agree1: false,
-            agree2: false,
-            agree3: false,
-            agree4: false,
             error: '',
         }
         console.log(this.state)
@@ -39,73 +45,57 @@ export default class Register3Screen extends React.Component {
     }
 
     registerUser() {
-        const queryString = this.objToQueryString({
-            key: this.props.keyApp,
-        });
-        let agree1;
-        let agree2;
-        let agree3;
-        let agree4;
-        if (this.state.agree1) {
-            agree1 = 1;
+        if (!this.state.agree1) {
+            let error = {
+                message: 'Musisz zaznaczyć zgodę'
+            };
+            this.setState({
+                error: error,
+            }, () => this.setModalErrorVisible(true))
         } else {
-            agree1 = 0;
-        }
-        if (this.state.agree2) {
-            agree2 = 1;
-        } else {
-            agree2 = 0;
-        }
-        if (this.state.agree3) {
-            agree3 = 1;
-        } else {
-            agree3 = 0;
-        }
-        if (this.state.agree4) {
-            agree4 = 1;
-        } else {
-            agree4 = 0;
-        }
-
-        let body = {
-            lang: "pl",
-            firstname: this.state.firstname,
-            lastname: this.state.lastname,
-            email: this.state.email,
-            firmName: this.state.firmName,
-            firmAdress: this.state.firmAddressStreet,
-            firmCity: this.state.firmAddressCity,
-            agree1: agree1,
-            agree2: agree2,
-            agree3: agree3,
-            agree4: agree4,
-            modalErrorVisible: false,
-            error: '',
-        }
-
-        let url = `https://levelup.verbum.com.pl/api/user/userRegister?${queryString}`;
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': "application/json",
-            },
-            body: JSON.stringify(body)
-        })
-            .then(response => response.json())
-            .then(responseJson => {
-                let title = 'Dziękujemy za rejestracje';
-                let message = 'Na Twój adres e-mail wysłaliśmy dane dostępowe.';
-                this.props.navigation.navigate('Login', {message: message, title: title});
-            })
-            .catch((error) => {
-                console.error(error);
+            const queryString = this.objToQueryString({
+                key: this.props.keyApp,
             });
+            let agree1;
+            if (this.state.agree1) {
+                agree1 = 1;
+            } else {
+                agree1 = 0;
+            }
+
+            let body = {
+                lang: "pl",
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email,
+                firmNIP: this.state.firmNIP,
+                agree1: agree1,
+            };
+
+            let url = `https://levelup.verbum.com.pl/api/user/userRegister?${queryString}`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+                body: JSON.stringify(body)
+            })
+                .then(response => response.json())
+                .then(responseJson => {
+                    let title = 'Dziękujemy za rejestracje';
+                    let message = 'Na Twój adres e-mail wysłaliśmy dane dostępowe.';
+                    this.props.navigation.navigate('Login', {message: message, title: title});
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
     }
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
-    }
+    };
 
     render() {
         return(
@@ -113,8 +103,8 @@ export default class Register3Screen extends React.Component {
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderNoLogin/>
                 <View style={styles.textView}>
-                    <Text style={styles.headerText}>Chcesz dołączyć do LEVEL UP?</Text>
-                    <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej LEVEL UP.</Text>
+                    <Text style={styles.headerText}>Chcesz dołączyć do Level.UP?</Text>
+                    <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej Level.UP.</Text>
                 </View>
                 <View style={styles.registerView}>
                     <Text style={styles.stepText}>Krok 3/3</Text>
@@ -124,7 +114,7 @@ export default class Register3Screen extends React.Component {
                             checked={this.state.agree1}
                             onPress={() => this.setState({agree1: !this.state.agree1})}
                             />
-                        <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy Regulaminu Konkursu „Gra Szkoleniowa GOOD GAME”. Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
+                        <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('RegisterStatute')}><Text style={[styles.consentText, {fontWeight: 'bold'}]}>Regulaminu Konkursu „Gra Edukacyjna LevelUP”.</Text></TouchableWithoutFeedback>. Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
                     </View>
                     {/*<View style={styles.consentRow}>
                         <Text style={styles.consentText}>Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z obowiązującymi przepisami prawa w celach komunikacji marketingowej, niezwiązanej z Konkursem następującymi kanałami:</Text>
@@ -237,6 +227,7 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 12,
         flex: 1,
+        marginRight: 10,
     },
     consentRow: {
         flexDirection: 'row',

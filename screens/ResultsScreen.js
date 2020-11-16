@@ -58,6 +58,8 @@ export default class ResultsScreen extends  React.Component {
             turbo: '',
             rankingList: '',
             isLoading: true,
+            name: '',
+            surname: '',
         }
     };
 
@@ -140,6 +142,8 @@ export default class ResultsScreen extends  React.Component {
                     if (responseJson.error.code === 0) {
                         this.setState({
                             rankingList: responseJson.data.rank,
+                            name: responseJson.data.userRank.name,
+                            surname: responseJson.data.userRank.surname,
                         },() => this.setState({isLoading: false}))
                     } else {
                         this.setState({
@@ -409,7 +413,7 @@ export default class ResultsScreen extends  React.Component {
                             <Ranking rankingList={this.state.rankingList}/>
                         }
                         {this.state.content === 'ranking' &&
-                            <MyRanking ranking={this.state.ranking} points={this.state.points}/>
+                            <MyRanking ranking={this.state.ranking} points={this.state.points} name={this.state.name} surname={this.state.surname}/>
                         }
                         {this.state.content === 'rundy' &&
                             <Laps createLapRows={this.createLapRows()}/>

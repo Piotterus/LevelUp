@@ -96,6 +96,10 @@ export default class TestSummaryScreen extends React.Component {
                         <View style={[styles.shadow, styles.summaryView]}>
                             {this.createTestSummaryList()}
                         </View>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Results', {content: "ranking"})}
+                                          style={[styles.buttonBase, styles.shadow, styles.buttonConsent, {backgroundColor: '#0E395A'}]}>
+                            <Text style={styles.buttonText}>RANKING</Text>
+                        </TouchableOpacity>
                     </View>
                 </ScrollView>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="QUESTIONS"/>

@@ -35,6 +35,24 @@ export default class Register2Screen extends React.Component {
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
+    };
+
+    goToNextScreen() {
+        if (this.state.firmNIP !== '') {
+            this.props.navigation.navigate('Register3' , {
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email,
+                firmNIP: this.state.firmNIP,
+            })
+        } else {
+            let error = {
+                message: 'Musisz wypełnić wszystkie pola'
+            };
+            this.setState({
+                error: error,
+            }, () => this.setModalErrorVisible(true))
+        }
     }
 
     render() {
@@ -43,8 +61,8 @@ export default class Register2Screen extends React.Component {
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <HeaderNoLogin/>
                 <View style={styles.textView}>
-                    <Text style={styles.headerText}>Chcesz dołączyć do LEVEL UP?</Text>
-                    <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej LEVEL UP.</Text>
+                    <Text style={styles.headerText}>Chcesz dołączyć do Level.UP?</Text>
+                    <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej Level.UP.</Text>
                 </View>
                 <View style={styles.registerView}>
                     <Text style={styles.stepText}>Krok 2/3</Text>
@@ -63,13 +81,7 @@ export default class Register2Screen extends React.Component {
                             <Icon name="chevron-left" size={50} color="#2592E6" />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Register3' , {
-                        firstname: this.state.firstname,
-                        lastname: this.state.lastname,
-                        phone: this.state.phone,
-                        email: this.state.email,
-                        firmNIP: this.state.firmNIP,
-                    })} style={styles.nextButton}>
+                    <TouchableOpacity onPress={() => this.goToNextScreen()} style={styles.nextButton}>
                         <Text style={{color: '#FFFFFF', fontSize: 16}}>DALEJ >>></Text>
                     </TouchableOpacity>
                 </View>

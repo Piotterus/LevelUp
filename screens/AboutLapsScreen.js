@@ -230,7 +230,7 @@ export default class AboutLapsScreen extends React.Component {
                                     </View>
                                 </View>
                                 <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, marginTop: 10, fontWeight: 'bold'}}>Pamiętaj!</Text>
-                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, marginTop: 10, paddingBottom: 10}}>WYŻSZE POZIOMY = WIĘCEJ PUNKTÓW</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10, marginTop: 10, paddingBottom: 20}}>WYŻSZE POZIOMY = WIĘCEJ PUNKTÓW</Text>
                             </View>
                         </View>
                         <View style={[styles.knowledgeMain, {flex: 1}]}>
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         paddingBottom: 26,
         marginBottom: -5,
-        zIndex: 3
+        zIndex: 3,
     },
     knowledgeHeaderText: {
         fontSize: 13,

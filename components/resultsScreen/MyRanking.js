@@ -29,7 +29,7 @@ export default class MyRanking extends React.Component {
                 <View style={{width: '90%', paddingLeft: 9, paddingRight: 9}}>
                     <View style={styles.rankingRow}>
                         <Text style={[styles.rankingText, {flex: 1}]}>{this.props.ranking}</Text>
-                        <Text style={[styles.rankingText, {flex: 5}]}>Twoja pozycja</Text>
+                        <Text style={[styles.rankingText, {flex: 5}]}>{this.props.name} {this.props.surname}</Text>
                         <Text style={[styles.rankingText, {flex: 1}]}>{this.props.points}</Text>
                     </View>
                 </View>
