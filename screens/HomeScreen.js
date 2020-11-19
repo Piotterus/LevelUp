@@ -37,6 +37,7 @@ export default class HomeScreen extends  React.Component {
             testCount: 0,
             level: "",
             date2Go: "",
+            date2GoType: "",
             modalErrorVisible: false,
             error: '',
             countdown: '',
@@ -110,6 +111,7 @@ export default class HomeScreen extends  React.Component {
                             testCount: responseJson.dashboard.testCount,
                             level: responseJson.dashboard.level,
                             date2Go: responseJson.dashboard.clock.date2Go,
+                            date2GoType: responseJson.dashboard.clock.type,
                         }, () => this.updateApp(this.state.knowledgeCount, this.state.testCount, this.state.week), this.setState({isLoading: false}))
                     } else {
                         this.setState({
@@ -348,7 +350,21 @@ export default class HomeScreen extends  React.Component {
                             </View>
                         </View>
                         <View style={[styles.shadow, styles.nextInfoView, {paddingBottom: 10, marginTop: 16, width: '90%'}]}>
-                            <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>NASTĘPNY TEST JUŻ ZA:</Text>
+                            {this.state.date2GoType === 'start' &&
+                                <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>
+                                    TWOJA GRA ROZPOCZNIE SIĘ ZA:
+                                </Text>
+                            }
+                            {this.state.date2GoType === 'wiedza' &&
+                            <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>
+                                TWÓJ CZAS NA PYTANIA:
+                            </Text>
+                            }
+                            {this.state.date2GoType === 'test' &&
+                            <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>
+                                TWÓJ CZAS NA TEST:
+                            </Text>
+                            }
                             <View style={styles.timeView}>
                                 <Image style={{marginTop: 12}} source={require('../icons/001-wall-clock_time.png')}/>
                                 <View style={styles.timeTextView}>

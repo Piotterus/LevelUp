@@ -40,9 +40,9 @@ export default class AboutLapsScreen extends React.Component {
                         <View style={[styles.knowledgeMain, {flex: 1}]}>
                             <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
                             <View style={[styles.shadow, styles.aboutLaps]}>
-                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10}}>Witaj w Level Up!</Text>
-                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10, marginTop: 10}}>Przed Tobą miesiąc pełen atrakcyjnej wiedzy, która poszerzy Ci horyzont i pokaże pełnię możliwości Level Up – narzędzia, które pomoże Ci zwiększyć wyniki sprzedażowe poprzez wzrost wiedzy oraz kompetencji.</Text>
-                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Zapoznaj się z poniższą instrukcją i przekonaj się, że zasady gry są proste i wygodne! Na dobry początek, zapamiętaj poniższą informację o kolorach, które odgrywają ważną rolę w Level Up!</Text>
+                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10}}>Witaj w Level.UP!</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10, marginTop: 10}}>Przed Tobą miesiąc pełen atrakcyjnej wiedzy, która poszerzy Ci horyzont i pokaże pełnię możliwości Level.UP – narzędzia, które pomoże Ci zwiększyć wyniki sprzedażowe poprzez wzrost wiedzy oraz kompetencji.</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Zapoznaj się z poniższą instrukcją i przekonaj się, że zasady gry są proste i wygodne! Na dobry początek, zapamiętaj poniższą informację o kolorach, które odgrywają ważną rolę w Level.UP!</Text>
                                 <View style={{flexDirection: 'row', marginTop: 20}}>
                                     <View style={{flex: 1, alignItems: 'center'}}>
                                         <Image style={{width: '100%', marginBottom: 10}} resizeMode="contain" source={require('../icons/rundaCurrent.png')}/>
@@ -68,7 +68,7 @@ export default class AboutLapsScreen extends React.Component {
                         <View style={[styles.knowledgeMain, {flex: 1}]}>
                             <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
                             <View style={[styles.shadow, styles.aboutLaps]}>
-                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Jaki jest plan gry w Level Up?</Text>
+                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Jaki jest plan gry w Level.UP?</Text>
                                 <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>1 tydzień = 1 runda</Text>
                                 <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}><Text style={{fontWeight: 'bold'}}>START</Text> rundy = poniedziałek 00:00</Text>
                                 <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}><Text style={{fontWeight: 'bold'}}>KONIEC</Text> rundy = niedziela 23:59</Text>
@@ -97,7 +97,7 @@ export default class AboutLapsScreen extends React.Component {
                         <View style={[styles.knowledgeMain, {flex: 1}]}>
                             <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
                             <View style={[styles.shadow, styles.aboutLaps]}>
-                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Jak działa Level Up?</Text>
+                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Jak działa Level.UPp?</Text>
                                 <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>1.	Gra składa się z 4 rund, a każda runda trwa tydzień</Text>
                                 <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>2.	W poniedziałek, wtorek i środę otrzymujesz Pigułkę Wiedzy, a każdej z nich towarzyszy jedno pytanie, odpowiedz na nie, by zdobyć punkty.</Text>
                                 <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>3.	W piątek aktywuje się test z zagadnień poruszonych w rundzie, rozwiąż go, by zdobyć punkty.</Text>
@@ -127,7 +127,7 @@ export default class AboutLapsScreen extends React.Component {
                             <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
                             <View style={[styles.shadow, styles.aboutLaps]}>
                                 <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Ranking i nagrody</Text>
-                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Śledź swoją pozycję w błyskawicznie aktualizowanym rankingu i walcz z innymi o jak najwyższe miejsce. W Level Up istnieją 3 poziomy zależne od Twojego dorobku punktowego. Zdobądź co najmniej poziom EXPERT, by cieszyć się nagrodą – Certyfikatem! Pamiętaj, że wyższy status = lepsza nagroda!</Text>
+                                <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Śledź swoją pozycję w błyskawicznie aktualizowanym rankingu i walcz z innymi o jak najwyższe miejsce. W Level.UP istnieją 3 poziomy zależne od Twojego dorobku punktowego. Zdobądź co najmniej poziom EXPERT, by cieszyć się nagrodą – Certyfikatem! Pamiętaj, że wyższy status = lepsza nagroda!</Text>
                                 <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 10}}>
                                     <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/Page-1.png')}/>
                                     <View style={{flex: 3}}>
@@ -140,7 +140,7 @@ export default class AboutLapsScreen extends React.Component {
                                     <View style={{flex: 3}}>
                                         <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>EXPERT</Text>
                                         <Text style={{fontSize: 14, color: '#0E395A'}}>od 24 do 71 pkt.</Text>
-                                        <Text style={{fontSize: 14, color: '#0E395A'}}>wygrywasz <Text style={{fontWeight: 'bold'}}>Srebrny Certyfikat EXPERT Level Up</Text></Text>
+                                        <Text style={{fontSize: 14, color: '#0E395A'}}>wygrywasz <Text style={{fontWeight: 'bold'}}>Srebrny Certyfikat EXPERT Level.UP</Text></Text>
                                     </View>
                                 </View>
                                 <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginBottom: 10}}>
@@ -148,7 +148,7 @@ export default class AboutLapsScreen extends React.Component {
                                     <View style={{flex: 3}}>
                                         <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>CHAMPION</Text>
                                         <Text style={{fontSize: 14, color: '#0E395A'}}>od 72 pkt.</Text>
-                                        <Text style={{fontSize: 14, color: '#0E395A'}}>wygrywasz <Text style={{fontWeight: 'bold'}}>Złoty Certyfikat CHAMPION Level Up</Text></Text>
+                                        <Text style={{fontSize: 14, color: '#0E395A'}}>wygrywasz <Text style={{fontWeight: 'bold'}}>Złoty Certyfikat CHAMPION Level.UP</Text></Text>
                                     </View>
                                 </View>
                             </View>
@@ -156,7 +156,7 @@ export default class AboutLapsScreen extends React.Component {
                         <View style={[styles.knowledgeMain, {flex: 1}]}>
                             <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
                             <View style={[styles.shadow, styles.aboutLaps]}>
-                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Punktacja i poziomy w Level Up</Text>
+                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Punktacja i poziomy w Level.UP</Text>
                                 <Text style={{fontSize: 14, color: '#0A3251', paddingLeft: 10}}>Punkty zdobywasz za odpowiedzi na pytania z Pigułek Wiedzy oraz za rozwiązanie TESTU WIEDZY. Przede wszystkim nagradzamy Twoje zaangażowanie, dlatego otrzymasz punkty nawet za błędną odpowiedź. Zobacz, jak wygląda punktacja względem poziomów:</Text>
                                 <View style={{flexDirection: 'row', borderBottomWidth: 1, borderTopWidth: 1, borderBottomColor: '#00000029', borderTopColor: '#00000029', paddingTop: 10, paddingBottom: 10, marginTop: 10, paddingLeft: 10}}>
                                     <Image style={{marginBottom: 10, flex: 2, alignSelf: 'center'}} resizeMode="contain" source={require('../icons/Page-1.png')}/>

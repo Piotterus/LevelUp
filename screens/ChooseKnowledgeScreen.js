@@ -12,6 +12,8 @@ import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import KnowledgeListItem from '../components/KnowledgeListItem';
 import ErrorModal from '../components/ErrorModal';
+import Icon from 'react-native-vector-icons/Feather';
+import moment from 'moment/moment.js';
 
 export default class ChooseKnowledgeScreen extends React.Component {
 
@@ -22,6 +24,10 @@ export default class ChooseKnowledgeScreen extends React.Component {
             modalErrorVisible: false,
             error: '',
             isLoading: true,
+            week: '',
+            weekList: '',
+            weekShow: '',
+            weekMax: '',
         }
 
     }
@@ -37,6 +43,11 @@ export default class ChooseKnowledgeScreen extends React.Component {
     componentDidMount() {
 
         this.listenerFocus = this.props.navigation.addListener('focus', () => {
+
+            this.setState({
+                week: this.props.week,
+                weekShow: this.props.week,
+            })
 
             const queryString = this.objToQueryString({
                 key: this.props.keyApp,
@@ -55,7 +66,32 @@ export default class ChooseKnowledgeScreen extends React.Component {
                     if (responseJson.error.code === 0) {
                         this.setState({
                             knowledgeList: responseJson.list,
-                        }, () => this.setState({isLoading: false}))
+                        })
+                    } else {
+                        this.setState({
+                            isLoading: false,
+                            error: responseJson.error
+                        })
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+            let url2 = `https://levelup.verbum.com.pl/api/page/news?${queryString}`;
+            fetch(url2, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+            })
+                .then(response => response.json())
+                .then(responseJson => {
+                    if (responseJson.error.code === 0) {
+                        console.log(responseJson)
+                        this.setState({
+                            weekList: responseJson.list
+                        }, () => {this.setState({isLoading: false}); this.getMaxWeek()})
                     } else {
                         this.setState({
                             isLoading: false,
@@ -82,19 +118,67 @@ export default class ChooseKnowledgeScreen extends React.Component {
 
     createKnowledgeList() {
         let knowledgeList = [];
-        for (let i in this.state.knowledgeList) {
-            knowledgeList.push(<KnowledgeListItem
-                key={i}
-                navigation={this.props.navigation}
-                id={this.state.knowledgeList[i].id}
-                active={this.state.knowledgeList[i].isActive}
-                knowledgeTitle={this.state.knowledgeList[i].title}
-                activeText={this.state.knowledgeList[i].status.title}
-                shortContent={this.state.knowledgeList[i].shortContent}
-                status={this.state.knowledgeList[i].status}
-                day={this.state.knowledgeList[i].day}
-                date={this.state.knowledgeList[i].dateFrom}
-            />)
+        if (this.state.weekShow === this.state.week) {
+            for (let i in this.state.knowledgeList) {
+                knowledgeList.push(<KnowledgeListItem
+                    key={i}
+                    navigation={this.props.navigation}
+                    id={this.state.knowledgeList[i].id}
+                    active={this.state.knowledgeList[i].isActive}
+                    knowledgeTitle={this.state.knowledgeList[i].title}
+                    activeText={this.state.knowledgeList[i].status.title}
+                    shortContent={this.state.knowledgeList[i].shortContent}
+                    status={this.state.knowledgeList[i].status}
+                    day={this.state.knowledgeList[i].day}
+                    date={this.state.knowledgeList[i].dateFrom}
+                />)
+            }
+        } else {
+            let knowledgeListIndex = 0;
+            const status = {
+                id: 1,
+                title: "PRZECZYTAJ JESZCZE RAZ"
+            };
+            let day = '';
+            let daysToAdd = (this.state.weekShow - this.state.week) * 7;
+            for (let i in this.state.weekList) {
+                if (parseInt(this.state.weekList[i].idRound) === this.state.weekShow) {
+                    let date = moment(this.state.knowledgeList[knowledgeListIndex].dateFrom);
+                    date.add({days: daysToAdd})
+                    if (knowledgeListIndex === 0) {
+                        day = "PONIEDZIAŁEK"
+                    } else if (knowledgeListIndex === 1) {
+                        day = "WTOREK"
+                    } else if (knowledgeListIndex === 2) {
+                        day =  "ŚRODA"
+                    }
+                    knowledgeList.push(<KnowledgeListItem
+                        key={i}
+                        navigation={this.props.navigation}
+                        id={this.state.weekList[i].id}
+                        active={true}
+                        knowledgeTitle={this.state.weekList[i].title}
+                        activeText="PRZECZYTAJ JESZCZE RAZ"
+                        shortContent={this.state.weekList[i].shortContent}
+                        status={status}
+                        day={day}
+                        date={date}
+                    />)
+                    knowledgeListIndex++;
+                }
+                /*knowledgeList.push(<KnowledgeListItem
+                    key={i}
+                    navigation={this.props.navigation}
+                    id={this.state.knowledgeList[i].id}
+                    active={this.state.knowledgeList[i].isActive}
+                    knowledgeTitle={this.state.knowledgeList[i].title}
+                    activeText={this.state.knowledgeList[i].status.title}
+                    shortContent={this.state.knowledgeList[i].shortContent}
+                    status={this.state.knowledgeList[i].status}
+                    day={this.state.knowledgeList[i].day}
+                    date={this.state.knowledgeList[i].dateFrom}
+                />)*/
+            }
         }
         return knowledgeList;
     }
@@ -102,6 +186,35 @@ export default class ChooseKnowledgeScreen extends React.Component {
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
     };
+
+    addWeek() {
+        if (this.state.weekShow < this.state.weekMax) {
+            this.setState({
+                weekShow: this.state.weekShow + 1,
+            })
+        }
+    }
+
+    subtractWeek() {
+        if (this.state.weekShow > 1) {
+            this.setState({
+                weekShow: this.state.weekShow - 1,
+            })
+        }
+    }
+
+    getMaxWeek() {
+        let maxWeek = 0;
+        for (let i in this.state.weekList) {
+            if (maxWeek < this.state.weekList[i].idRound) {
+                maxWeek = this.state.weekList[i].idRound
+            }
+        }
+        this.setState({
+            weekMax: maxWeek,
+            weekList: this.state.weekList.reverse()
+        })
+    }
 
     render() {
         return(
@@ -111,6 +224,13 @@ export default class ChooseKnowledgeScreen extends React.Component {
                     <HeaderBurger navigation={this.props.navigation}/>
                     <View style={[styles.knowledgeMain, {flex: 1}]}>
                         <Text style={styles.knowledgeHeaderText}>WIEDZA</Text>
+                        <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginBottom: 15, alignItems: 'center'}}>
+                            <Icon onPress={()=> this.subtractWeek()} name="arrow-left" size={30} color="#5E6367" />
+                            <Text style={{color: '#0A3251'}}>
+                                {this.state.weekShow} tydzień
+                            </Text>
+                            <Icon onPress={()=> this.addWeek()} name="arrow-right" size={30} color="#5E6367" />
+                        </View>
                         {this.createKnowledgeList()}
                     </View>
                 </ScrollView>

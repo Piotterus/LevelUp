@@ -216,6 +216,7 @@ export default class App extends  React.Component {
                                         keyApp={this.state.key}
                                         knowledgeCount={this.state.knowledgeCount}
                                         testCount={this.state.testCount}
+                                        week={this.state.week}
                                     />}
                                 </Drawer.Screen>
                                 <Drawer.Screen name="OneKnowledge">

@@ -15,10 +15,6 @@ import {
     TouchableHighlight,
 } from 'react-native';
 
-import HTML from "react-native-render-html";
-import {CheckBox} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/Feather';
-
 export default class CurrentRound extends React.Component {
 
     render() {
