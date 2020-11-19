@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -86,7 +86,6 @@ export default class LoginScreen extends React.Component {
                         message: this.props.route.params.message,
                     }
                 }, () => this.setModalErrorVisible(true))
-                console.log("fff");
             }
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {

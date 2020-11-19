@@ -1,8 +1,7 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, Image} from "react-native";
 
-import HTML from "react-native-render-html";
 import {CheckBox} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -124,4 +123,4 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#0A3251'
     }
-})
+});

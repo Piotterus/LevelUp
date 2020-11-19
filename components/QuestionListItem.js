@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
 
 export default class QuestionListItem extends React.Component {
 
@@ -216,4 +216,4 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 13,
     },
-})
+});

@@ -3,15 +3,10 @@ import React from 'react'
 import {
     Text,
     View,
-    Button,
     StyleSheet,
-    TextInput,
     TouchableOpacity,
-    ImageBackground,
     ScrollView,
     Dimensions,
-    Image,
-    Switch,
     ActivityIndicator,
 } from 'react-native';
 
@@ -50,8 +45,7 @@ export default class RegisterStatuteScreen extends React.Component {
             });
 
             let url = `https://levelup.verbum.com.pl/api/page/statute/pl_PL/?${queryString}`;
-            console.log("URL")
-            console.log(url);
+
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -95,8 +89,6 @@ export default class RegisterStatuteScreen extends React.Component {
     };
 
     render() {
-        console.log("CONTENT")
-        console.log(this.state.content);
         return(
             <View style={{flex: 1, backgroundColor: '#0A3251'}}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

@@ -3,22 +3,13 @@ import React from 'react'
 import {
     Text,
     View,
-    Button,
     StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    ImageBackground,
     ScrollView,
-    Dimensions,
-    Image,
-    Switch,
     TouchableWithoutFeedback, ActivityIndicator,
 } from 'react-native';
 
-import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
-import Info from '../components/Info';
 import ErrorModal from '../components/ErrorModal';
 import {CheckBox} from 'react-native-elements';
 

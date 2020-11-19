@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 
 export default class QuestionSummaryItem extends React.Component {
@@ -121,5 +121,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '100',
     }
-})
+});
 

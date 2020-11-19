@@ -3,16 +3,8 @@ import React from 'react'
 import {
     Text,
     View,
-    Button,
     StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    ImageBackground,
-    ScrollView,
-    Dimensions,
     Image,
-    Switch,
-    TouchableHighlight,
 } from 'react-native';
 
 export default class CurrentRound extends React.Component {

@@ -1,11 +1,11 @@
 import React from 'react'
 
-import {Text, View, Image, StyleSheet, Dimensions} from 'react-native';
+import {View, Image, StyleSheet, Dimensions} from 'react-native';
 
 export default class SplashScreen extends React.Component {
 
     constructor(props) {
-        super();
+        super(props);
     }
 
     render () {

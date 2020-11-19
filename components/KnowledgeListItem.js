@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, TouchableOpacity, Image} from "react-native";
 
 import Icon from 'react-native-vector-icons/Entypo';
 import moment from 'moment/moment.js';
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontWeight: 'bold'
     },
-})
+});

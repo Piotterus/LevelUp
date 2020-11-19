@@ -1,14 +1,11 @@
 import React from 'react';
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ScrollView} from "react-native";
-
-const BLUE = "#428AF8";
-const LIGHT_GRAY = "#F3F3F3";
+import {Text, View, Button} from "react-native";
 
 export default class MainScreen extends React.Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             kids: '',
             myID: global.myID,

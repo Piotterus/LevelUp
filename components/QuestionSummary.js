@@ -1,16 +1,14 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet} from "react-native";
 
 import HTML from "react-native-render-html";
-import Answer from './Answer';
 import AnswerSummary from './AnswerSummary';
 
 export default class QuestionSummary extends React.Component {
 
     createAnswersList() {
-        let answersList = []
-        //console.log("ANSWERS LIST: " + JSON.stringify(this.props.answers))
+        let answersList = [];
         for (let i in this.props.answers) {
             answersList.push(<AnswerSummary
                 key={i}
@@ -142,4 +140,4 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#0A3251'
     }
-})
+});

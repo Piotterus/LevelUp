@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, Image} from "react-native";
 
 export default class Info extends React.Component {
 

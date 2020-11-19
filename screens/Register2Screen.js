@@ -1,8 +1,7 @@
 import React from 'react';
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView, Dimensions} from "react-native";
 
-import HeaderBurger from '../components/HeaderBurger';
 import Icon from 'react-native-vector-icons/Feather';
 import HeaderNoLogin from '../components/HeaderNoLogin';
 import ErrorModal from '../components/ErrorModal';
@@ -10,7 +9,7 @@ import ErrorModal from '../components/ErrorModal';
 export default class Register2Screen extends React.Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             firstname: this.props.route.params.firstname,
             lastname: this.props.route.params.lastname,
@@ -19,7 +18,7 @@ export default class Register2Screen extends React.Component {
             firmNIP: '',
             modalErrorVisible: false,
             error: '',
-        }
+        };
         console.log(this.state);
         //console.log(this.props.navigation.state.params);
         console.log(this.props.route.params)
@@ -151,4 +150,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     }
-})
+});

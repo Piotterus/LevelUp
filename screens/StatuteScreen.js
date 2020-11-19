@@ -3,24 +3,15 @@ import React from 'react'
 import {
     Text,
     View,
-    Button,
     StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    ImageBackground,
     ScrollView,
     Dimensions,
-    Image,
-    Switch,
     ActivityIndicator,
 } from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
-import Info from '../components/Info';
 import ErrorModal from '../components/ErrorModal';
-import {CheckBox} from 'react-native-elements';
-import HTML from 'react-native-render-html';
 import { WebView } from 'react-native-webview';
 
 export default class StatuteScreen extends React.Component {
@@ -96,11 +87,9 @@ export default class StatuteScreen extends React.Component {
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
-    }
+    };
 
     render() {
-        console.log("CONTENT")
-        console.log(this.state.content);
         return(
             <View style={{flex: 1}}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>

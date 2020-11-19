@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
-import Info from '../components/Info';
 import Modal from 'react-native-modal';
 import ErrorModal from '../components/ErrorModal';
 import LapRow from '../components/LapRow';

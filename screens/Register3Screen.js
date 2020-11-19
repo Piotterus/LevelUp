@@ -3,19 +3,12 @@ import React from 'react';
 import {
     Text,
     View,
-    Button,
     StyleSheet,
-    TextInput,
     TouchableOpacity,
-    ImageBackground,
     ScrollView,
     Dimensions,
-    Image,
-    Switch,
     TouchableWithoutFeedback,
 } from 'react-native';
-
-import HeaderBurger from '../components/HeaderBurger';
 import Icon from 'react-native-vector-icons/Feather';
 import HeaderNoLogin from '../components/HeaderNoLogin';
 import { CheckBox } from 'react-native-elements'
@@ -24,7 +17,7 @@ import ErrorModal from '../components/ErrorModal';
 export default class Register3Screen extends React.Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             firstname: this.props.route.params.firstname,
             lastname: this.props.route.params.lastname,
@@ -32,7 +25,7 @@ export default class Register3Screen extends React.Component {
             firmName: this.props.route.params.firmNIP,
             agree1: false,
             error: '',
-        }
+        };
         console.log(this.state)
     }
 
@@ -83,9 +76,15 @@ export default class Register3Screen extends React.Component {
             })
                 .then(response => response.json())
                 .then(responseJson => {
-                    let title = 'Dziękujemy za rejestracje';
-                    let message = 'Na Twój adres e-mail wysłaliśmy dane dostępowe.';
-                    this.props.navigation.navigate('Login', {message: message, title: title});
+                    if (responseJson.error.code === 0) {
+                        let title = 'Dziękujemy za rejestracje';
+                        let message = 'Na Twój adres e-mail wysłaliśmy dane dostępowe.';
+                        this.props.navigation.navigate('Login', {message: message, title: title});
+                    } else {
+                        this.setState({
+                            error: responseJson.error,
+                        }, () => this.setModalErrorVisible(true))
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
@@ -237,4 +236,4 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         paddingLeft: 20
     }
-})
+});

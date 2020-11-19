@@ -1,8 +1,7 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, ScrollView, Image} from "react-native";
 
-import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import ErrorModal from '../components/ErrorModal';
@@ -19,7 +18,7 @@ export default class MainKnowledgeScreen extends React.Component {
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
-    }
+    };
 
     render() {
         return(

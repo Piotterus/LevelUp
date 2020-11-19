@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, TouchableOpacity, Image} from "react-native";
 
 export default class LapItem extends React.Component {
 
@@ -41,9 +41,7 @@ export default class LapItem extends React.Component {
                 }
         } else {
             return (
-                <View style={styles.lapView}>
-
-                </View>
+                <View style={styles.lapView}/>
             )
         }
     }

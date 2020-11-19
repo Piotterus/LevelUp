@@ -3,28 +3,15 @@ import React from 'react'
 import {
     Text,
     View,
-    Button,
     StyleSheet,
-    TextInput,
     TouchableOpacity,
-    ImageBackground,
     ScrollView,
-    Dimensions,
-    Image,
-    Switch,
     ActivityIndicator,
 } from 'react-native';
 
-import WebView from 'react-native-webview'
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
-import Info from '../components/Info';
-import { CheckBox } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/Feather';
-import HTML from "react-native-render-html";
-import QuestionListItem from '../components/QuestionListItem';
 import Question from '../components/Question';
-import Answer from '../components/Answer';
 import ErrorModal from '../components/ErrorModal';
 
 export default class QuestionScreen extends React.Component {
@@ -68,11 +55,8 @@ export default class QuestionScreen extends React.Component {
         });
         console.log("COMPONENT DID MOUNT-" + this.state.questionNumber)
         this.listenerFocus = this.props.navigation.addListener('focus', () => {
-            //console.log("PARAM FOCUS");
-            //console.log(this.props.route.params.id);
-            //console.log("END PARAM FOCUS");
+
             let url = `https://levelup.verbum.com.pl/api/challenge/actionId/${this.props.route.params.model}/${this.props.route.params.id}?${queryString}`;
-            //console.log(url);
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -109,9 +93,7 @@ export default class QuestionScreen extends React.Component {
                 });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {
-            //console.log("PARAM BLUR");
-            //console.log(this.props.route.params.id);
-            //console.log("END PARAM BLUR");
+
             this.setState( {
                 model: '',
                 id: '',
@@ -142,7 +124,7 @@ export default class QuestionScreen extends React.Component {
             token: this.props.token,
         });
         let url = `https://levelup.verbum.com.pl/api/challenge/sendAction/${this.props.route.params.model}/${this.props.route.params.id}?${queryString}`;
-        //console.log(url);
+
         fetch(url, {
             method: 'POST',
             headers: {
@@ -167,10 +149,7 @@ export default class QuestionScreen extends React.Component {
     createPoll() {
         let questions = [];
         let answers = [];
-        console.log("createPoll");
-        console.log(this.state.question);
         for (let i in this.state.question) {
-            console.log(i)
             for (let j in this.state.question[i].answers) {
                 answers.push({
                     id: this.state.question[i].answers[j].id,
@@ -190,25 +169,14 @@ export default class QuestionScreen extends React.Component {
                 modelId: this.state.model,
                 poll: questions
             }
-        }
-        console.log("FINAL POLL: " + JSON.stringify(poll))
+        };
         return poll;
-        /*console.log("BEFORE SET POLL.POLL: " + JSON.stringify(questions))
-        this.setState({
-            poll: {
-                poll: questions,
-            },
-            //questionsLoaded: true,
-        })*/
-        //, this.selectAnswer(12,34)
     }
 
     createQuestionList() {
         let number = 0;
         let questionList = [];
-        console.log("createQuestion");
         for (let i in this.state.question) {
-            //console.log("CREATE QUESTION LIST PUSH: " + JSON.stringify(this.state.question[i].answers))
             number++;
             questionList.push(<Question key={i}
                                         navigation={this.props.navigation}
@@ -257,36 +225,21 @@ export default class QuestionScreen extends React.Component {
     }
 
     selectAnswer(idQuestion, idAnswer) {
-        console.log("selectAnswer: " + idQuestion + " " + idAnswer);
-        console.log("this.state.poll:" + JSON.stringify(this.state.question))
-        //let poll = this.state.poll.poll;
         let poll = this.state.question;
-        console.log(JSON.stringify(poll));
         for (let i in poll) {
-            console.log("POLL ID: " + poll[i].id);
-            console.log("QUESTION ID: " + idQuestion);
-            console.log("QUESTION TYPE: " + poll[i].type);
             if (poll[i].id === idQuestion) {
                 if (poll[i].type === "radio") {
                     for (let j in poll[i].answers) {
-                        console.log("POLL ANSWER ID: " + poll[i].id)
-                        console.log("ANSWER ID: " + idAnswer)
                         if (poll[i].answers[j].id === idAnswer) {
-                            console.log("VALUE BEFORE: " + poll[i].answers[j].value)
                             poll[i].answers[j].value = !poll[i].answers[j].value;
-                            console.log("VALUE AFTER: " + poll[i].answers[j].value)
                         } else {
                             poll[i].answers[j].value = false;
                         }
                     }
                 } else if (poll[i].type === "check") {
                     for (let j in poll[i].answers) {
-                        console.log("POLL ANSWER ID: " + poll[i].id)
-                        console.log("ANSWER ID: " + idAnswer)
                         if (poll[i].answers[j].id === idAnswer) {
-                            console.log("VALUE BEFORE: " + poll[i].answers[j].value)
                             poll[i].answers[j].value = !poll[i].answers[j].value;
-                            console.log("VALUE AFTER: " + poll[i].answers[j].value)
                         }
                     }
                 }

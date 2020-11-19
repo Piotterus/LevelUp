@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch, SafeAreaView} from "react-native";
+import {Text, View, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView} from "react-native";
 
 export default class CustomDrawer extends React.Component {
 

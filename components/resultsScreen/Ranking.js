@@ -3,22 +3,9 @@ import React from 'react'
 import {
     Text,
     View,
-    Button,
     StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    ImageBackground,
-    ScrollView,
-    Dimensions,
-    Image,
-    Switch,
-    TouchableHighlight,
 } from 'react-native';
 
-import HTML from "react-native-render-html";
-import {CheckBox} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/Feather';
-import TestSummaryItem from '../TestSummaryItem';
 import RankingRow from './RankingRow';
 
 export default class Ranking extends React.Component {
@@ -39,7 +26,6 @@ export default class Ranking extends React.Component {
     }
 
     render() {
-        //console.log(this.props.rankingList)
         return(
             <View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
                 <View style={[styles.rankingView]}>

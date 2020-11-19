@@ -3,23 +3,15 @@ import React from 'react'
 import {
     Text,
     View,
-    Button,
     StyleSheet,
-    TextInput,
     TouchableOpacity,
-    ImageBackground,
     ScrollView,
-    Dimensions,
-    Image,
-    Switch,
     ActivityIndicator,
 } from 'react-native';
 
-import WebView from 'react-native-webview'
 import HTML from 'react-native-render-html';
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
-import Info from '../components/Info';
 import ErrorModal from '../components/ErrorModal';
 
 export default class OneKnowledgeScreen extends React.Component {
@@ -109,8 +101,6 @@ export default class OneKnowledgeScreen extends React.Component {
         this.setState({
             htmlWidth: width-52,
         });
-        console.log("find")
-        console.log(width)
     }
 
     showContent(contentType){
@@ -121,7 +111,7 @@ export default class OneKnowledgeScreen extends React.Component {
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
-    }
+    };
 
     render() {
         console.log("longContent");
@@ -234,4 +224,4 @@ const styles = StyleSheet.create({
         backgroundColor: '#A3A3A3',
         opacity: 0.25
     }
-})
+});

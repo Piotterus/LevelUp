@@ -30,11 +30,11 @@ export default class AboutPointsScreen extends React.Component {
 
     setModalVisible = (visible) => {
         this.setState({ modalVisible: visible });
-    }
+    };
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
-    }
+    };
 
     render() {
         const { modalVisible } = this.state;
@@ -242,4 +242,4 @@ const styles = StyleSheet.create({
         marginRight: 7,
         marginLeft: 7,
     },
-})
+});

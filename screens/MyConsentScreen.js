@@ -65,7 +65,7 @@ export default class MyConsentScreen extends React.Component {
             });
     }
 
-    toggleAgree(agreeNumber) {
+    /*toggleAgree(agreeNumber) {
         let agree = this.state.user.agreeNumber;
         this.setState(
             {
@@ -74,7 +74,7 @@ export default class MyConsentScreen extends React.Component {
                 }
             }
         )
-    }
+    }*/
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
@@ -218,4 +218,4 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         paddingLeft: 0
     }
-})
+});

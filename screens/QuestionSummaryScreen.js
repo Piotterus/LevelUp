@@ -3,28 +3,12 @@ import React from 'react'
 import {
     Text,
     View,
-    Button,
     StyleSheet,
-    TextInput,
     TouchableOpacity,
-    ImageBackground,
     ScrollView,
-    Dimensions,
-    Image,
-    Switch,
     ActivityIndicator,
 } from 'react-native';
 
-import WebView from 'react-native-webview'
-import HeaderBurger from '../components/HeaderBurger';
-import Footer from '../components/Footer';
-import Info from '../components/Info';
-import { CheckBox } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/Feather';
-import HTML from "react-native-render-html";
-import QuestionListItem from '../components/QuestionListItem';
-import Question from '../components/Question';
-import Answer from '../components/Answer';
 import ErrorModal from '../components/ErrorModal';
 import QuestionSummary from '../components/QuestionSummary';
 
@@ -80,11 +64,8 @@ export default class QuestionSummaryScreen extends React.Component {
                 points: this.props.route.params.points,
             });
 
-            //console.log("PARAM FOCUS");
-            //console.log(this.props.route.params.id);
-            //console.log("END PARAM FOCUS");
             let url = `https://levelup.verbum.com.pl/api/challenge/actionId/${this.props.route.params.model}/${this.props.route.params.id}?${queryString}`;
-            console.log(url);
+
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -93,7 +74,6 @@ export default class QuestionSummaryScreen extends React.Component {
             })
                 .then(response => response.json())
                 .then(responseJson => {
-                    console.log(JSON.stringify(responseJson));
                     if (responseJson.error.code === 0) {
                         this.setState({
                             model: responseJson.poll.modelId,
@@ -120,9 +100,7 @@ export default class QuestionSummaryScreen extends React.Component {
                 });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {
-            //console.log("PARAM BLUR");
-            //console.log(this.props.route.params.id);
-            //console.log("END PARAM BLUR");
+
             this.setState( {
                 model: '',
                 id: '',
@@ -150,9 +128,8 @@ export default class QuestionSummaryScreen extends React.Component {
     createQuestionList() {
         let number = 0;
         let questionList = [];
-        console.log("createQuestion");
         for (let i in this.state.question) {
-            number = parseInt(this.state.pollId) + 1
+            number = parseInt(this.state.pollId) + 1;
             questionList.push(<QuestionSummary
                 key={i}
                 navigation={this.props.navigation}
@@ -171,10 +148,8 @@ export default class QuestionSummaryScreen extends React.Component {
     createTestList() {
         let number = 0;
         let questionList = [];
-        console.log("createTestQuestion");
         for (let i in this.state.question) {
             number++;
-            console.log(this.state.pollId)
             if (i === this.state.pollId) {
                 questionList.push(<QuestionSummary
                     key={i}
@@ -343,4 +318,4 @@ const styles = StyleSheet.create({
         backgroundColor: '#A3A3A3',
         opacity: 0.25
     }
-})
+});

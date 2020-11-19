@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet} from "react-native";
 
 import HTML from "react-native-render-html";
 import Answer from './Answer';
@@ -8,7 +8,7 @@ import Answer from './Answer';
 export default class Question extends React.Component {
 
     createAnswersList() {
-        let answersList = []
+        let answersList = [];
         //console.log("ANSWERS LIST: " + JSON.stringify(this.props.answers))
         for (let i in this.props.answers) {
             answersList.push(<Answer key={i}
@@ -32,10 +32,10 @@ export default class Question extends React.Component {
                     <Text style={styles.questionHeaderText}>PYTANIE {this.props.number}<Text
                         style={{fontSize: 19}}>/{this.props.questionCount}</Text></Text>
                     <HTML html={this.props.text}/>
-                    {this.props.type == "radio" &&
+                    {this.props.type === "radio" &&
                     <Text style={styles.questionHint}>Odpowiedź jednokrotnego wyboru</Text>
                     }
-                    {this.props.type == "check" &&
+                    {this.props.type === "check" &&
                     <Text style={styles.questionHint}>Odpowiedź wielokrotnego wyboru</Text>
                     }
                     {this.createAnswersList()}
@@ -43,7 +43,7 @@ export default class Question extends React.Component {
             )
         } else {
             return (
-                <View></View>
+                <View/>
             )
         }
     }
@@ -145,4 +145,4 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#0A3251'
     }
-})
+});

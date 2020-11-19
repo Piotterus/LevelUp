@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {StyleSheet, TouchableOpacity, Image} from "react-native";
 
 export default class QuestionTurbo extends React.Component {
 
@@ -110,4 +110,4 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 13,
     },
-})
+});

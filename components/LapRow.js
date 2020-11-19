@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {View, StyleSheet} from "react-native";
 import LapItem from './LapItem';
 
 export default class LapRow extends React.Component {

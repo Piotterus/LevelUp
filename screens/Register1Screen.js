@@ -1,8 +1,6 @@
 import React from 'react';
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
-
-import HeaderBurger from '../components/HeaderBurger';
+import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ScrollView, Dimensions} from "react-native";
 
 import Icon from 'react-native-vector-icons/Feather';
 import HeaderNoLogin from '../components/HeaderNoLogin';
@@ -169,4 +167,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     }
-})
+});

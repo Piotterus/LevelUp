@@ -1,7 +1,6 @@
 import React from 'react'
 import {Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
 import Modal from 'react-native-modal';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class ErrorModal extends React.Component {
 
@@ -10,11 +9,11 @@ export default class ErrorModal extends React.Component {
         let errorMessage = '';
         switch (this.props.error.code) {
             case 9:
-                errorTitle="LOGIN"
-                errorMessage="Użytkownik o podanym loginie nie istnieje."
+                errorTitle="LOGIN";
+                errorMessage="Użytkownik o podanym loginie nie istnieje.";
             default:
-                errorTitle=this.props.error.code
-                errorMessage=this.props.error.message
+                errorTitle=this.props.error.code;
+                errorMessage=this.props.error.message;
         }
         return (
             <Modal isVisible={this.props.visible}>

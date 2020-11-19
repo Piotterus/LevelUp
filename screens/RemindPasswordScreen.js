@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView, Dimensions} from "react-native";
 
-import Icon from 'react-native-vector-icons/Feather';
+
 import HeaderNoLogin from '../components/HeaderNoLogin';
 import ErrorModal from '../components/ErrorModal';
 
@@ -33,7 +33,7 @@ export default class RemindPasswordScreen extends React.Component {
 
         let body = {
             email: this.state.email,
-        }
+        };
 
         let url = `https://levelup.verbum.com.pl/api/user/remind?${queryString}`;
 
@@ -77,7 +77,7 @@ export default class RemindPasswordScreen extends React.Component {
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
-    }
+    };
 
     render() {
         return(
@@ -192,4 +192,4 @@ const styles = StyleSheet.create({
         color: '#0A3251',
         fontSize: 16,
     },
-})
+});

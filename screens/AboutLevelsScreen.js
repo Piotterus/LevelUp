@@ -18,7 +18,7 @@ export default class AboutLevelsScreen extends React.Component {
 
     setModalErrorVisible = (visible) => {
         this.setState({ modalErrorVisible: visible });
-    }
+    };
 
     render() {
         return(
@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
         marginRight: 7,
         marginLeft: 7,
     }
-})
+});

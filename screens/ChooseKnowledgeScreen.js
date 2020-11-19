@@ -47,7 +47,7 @@ export default class ChooseKnowledgeScreen extends React.Component {
             this.setState({
                 week: this.props.week,
                 weekShow: this.props.week,
-            })
+            });
 
             const queryString = this.objToQueryString({
                 key: this.props.keyApp,
@@ -88,7 +88,6 @@ export default class ChooseKnowledgeScreen extends React.Component {
                 .then(response => response.json())
                 .then(responseJson => {
                     if (responseJson.error.code === 0) {
-                        console.log(responseJson)
                         this.setState({
                             weekList: responseJson.list
                         }, () => {this.setState({isLoading: false}); this.getMaxWeek()})
@@ -298,4 +297,4 @@ const styles = StyleSheet.create({
         backgroundColor: '#A3A3A3',
         opacity: 0.25
     }
-})
+});
