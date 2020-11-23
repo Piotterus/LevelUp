@@ -139,7 +139,7 @@ export default class LoginScreen extends React.Component {
                                 autoCapitalize="none"
                             />
                             <TouchableOpacity onPress={() => this.props.navigation.navigate("RemindPassword")} style={styles.remindMeView}>
-                                <Text style={styles.remindMeText}>Nie pamiętasz ?</Text>
+                                <Text style={styles.remindMeText}>Nie pamiętasz ha?</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Text style={styles.remindMeText}>Zapamiętaj mnie</Text>
                                     <Switch
@@ -167,7 +167,7 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
     imageBackground: {
         width: Dimensions.get("window").width, //for full screen
-        //height: Dimensions.get("window").height, //for full screen
+        height: Dimensions.get("window").height, //for full screen
         //width: '100%',
         alignItems: 'center',
     },
