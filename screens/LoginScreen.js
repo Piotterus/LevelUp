@@ -166,9 +166,9 @@ export default class LoginScreen extends React.Component {
 
 const styles = StyleSheet.create({
     imageBackground: {
-        width: Dimensions.get("window").width, //for full screen
+        //width: Dimensions.get("window").width, //for full screen
         //height: Dimensions.get("window").height, //for full screen
-        //width: '100%',
+        width: '100%',
         alignItems: 'center',
     },
     view: {
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
         //marginTop: 20,
     },
     scrollView: {
-        //backgroundColor: 'white',
+        backgroundColor: 'red',
         flex: 1,
     },
     text: {
