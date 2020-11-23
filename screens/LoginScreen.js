@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
         //marginTop: 20,
     },
     scrollView: {
-        backgroundColor: 'blue',
+        //backgroundColor: 'blue',
         flex: 1,
     },
     text: {
