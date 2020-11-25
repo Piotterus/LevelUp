@@ -41,64 +41,6 @@ export default class QuestionListItem extends React.Component {
                     </View>
                 )
             }
-        } else if (this.props.model === 2) {
-            if (this.props.active) {
-                return (
-                    <View style={styles.questionOne}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Question', {id: this.props.id, model: this.props.model})}
-                                          style={[styles.buttonBase, styles.shadow, styles.buttonActive]}>
-                            <Text style={styles.questionTextActive}>TURBO</Text>
-                        </TouchableOpacity>
-                    </View>
-                )
-            } else if (this.props.status.id === 4){
-                return (
-                    <View style={styles.questionOne}>
-                        <TouchableOpacity
-                            style={[styles.buttonBase, styles.buttonPending]}>
-                            <Text style={styles.questionTextPending}>TURBO</Text>
-                        </TouchableOpacity>
-                    </View>
-                )
-            } else if (this.props.status.id === 2) {
-                return (
-                    <View style={styles.questionOne}>
-                        <TouchableOpacity
-                            style={[styles.buttonBase, styles.buttonSolved]}>
-                            <Text style={styles.questionTextSolved}>TURBO</Text>
-                        </TouchableOpacity>
-                    </View>
-                )
-            }
-        } else if (this.props.model === 3) {
-            if (this.props.active) {
-                return (
-                    <View style={styles.questionOne}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Question', {id: this.props.id, model: this.props.model})}
-                                          style={[styles.buttonBase, styles.shadow, styles.buttonActive]}>
-                            <Text style={styles.questionTextActive}>KOŁO RATUNKOWE</Text>
-                        </TouchableOpacity>
-                    </View>
-                )
-            } else if (this.props.status.id === 4){
-                return (
-                    <View style={styles.questionOne}>
-                        <TouchableOpacity
-                            style={[styles.buttonBase, styles.buttonPending]}>
-                            <Text style={styles.questionTextPending}>KOŁO RATUNKOWE</Text>
-                        </TouchableOpacity>
-                    </View>
-                )
-            } else if (this.props.status.id === 2) {
-                return (
-                    <View style={styles.questionOne}>
-                        <TouchableOpacity
-                            style={[styles.buttonBase, styles.buttonSolved]}>
-                            <Text style={styles.questionTextSolved}>KOŁO RATUNKOWE</Text>
-                        </TouchableOpacity>
-                    </View>
-                )
-            }
         } else if (this.props.model === 4) {
             if (this.props.active) {
                 return (

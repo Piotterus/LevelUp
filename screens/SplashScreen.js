@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {View, Image, StyleSheet, Dimensions} from 'react-native';
+import {View, Image, StyleSheet, Dimensions, SafeAreaView} from 'react-native';
 
 export default class SplashScreen extends React.Component {
 
@@ -10,9 +10,9 @@ export default class SplashScreen extends React.Component {
 
     render () {
         return (
-            <View>
+            <SafeAreaView>
                 <Image source={require('../images/levelup_startx2.png')} style={styles.imageBackground}/>
-            </View>
+            </SafeAreaView>
         );
     }
 }

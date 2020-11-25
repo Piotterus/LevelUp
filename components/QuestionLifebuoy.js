@@ -7,7 +7,7 @@ export default class QuestionLifebuoy extends React.Component {
     render() {
         if (this.props.active) {
             return (
-                <TouchableOpacity style={{flex: 1}}>
+                <TouchableOpacity style={{flex: 1}} onPress={() => this.props.navigation.navigate('Question', {id: this.props.id, model: this.props.model})}>
                     <Image resizeMode='contain' style={{width: '100%'}} source={require('../images/Group_177.png')}/>
                 </TouchableOpacity>
             )

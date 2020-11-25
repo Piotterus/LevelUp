@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     ScrollView,
     Dimensions,
-    ActivityIndicator,
+    ActivityIndicator, SafeAreaView,
 } from 'react-native';
 
 import ErrorModal from '../components/ErrorModal';
@@ -90,7 +90,7 @@ export default class RegisterStatuteScreen extends React.Component {
 
     render() {
         return(
-            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+            <SafeAreaView style={{flex: 1, backgroundColor: '#0A3251'}}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                     <HeaderNoLogin navigation={this.props.navigation}/>
@@ -117,7 +117,7 @@ export default class RegisterStatuteScreen extends React.Component {
                     <ActivityIndicator size='large' color='#0A3251'/>
                 </View>
                 }
-            </View>
+            </SafeAreaView>
         )
     }
 }

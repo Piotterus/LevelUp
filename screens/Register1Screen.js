@@ -1,6 +1,16 @@
 import React from 'react';
 
-import {Text, View, Button, StyleSheet, TextInput, TouchableOpacity, ScrollView, Dimensions} from "react-native";
+import {
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    ScrollView,
+    Dimensions,
+    SafeAreaView,
+} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 import HeaderNoLogin from '../components/HeaderNoLogin';
@@ -59,49 +69,51 @@ export default class Register1Screen extends React.Component {
 
     render() {
         return(
-            <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <HeaderNoLogin/>
-                <View style={styles.textView}>
-                    <Text style={styles.headerText}>Chcesz dołączyć do Level.UP?</Text>
-                    <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej Level.UP.</Text>
-                </View>
-                <View style={styles.registerView}>
-                    <Text style={styles.stepText}>Krok 1/3</Text>
-                    <Text style={styles.stepText}>Dane uczestnika</Text>
-                    <TextInput
-                        placeholder="IMIĘ"
-                        placeholderTextColor="#FFFFFF33"
-                        textAlign='center'
-                        style={styles.textInput}
-                        onChangeText = {(text) => this.updateValue(text,'firstname')}
-                    />
-                    <TextInput
-                        placeholder="NAZWISKO"
-                        placeholderTextColor="#FFFFFF33"
-                        textAlign='center'
-                        style={styles.textInput}
-                        onChangeText = {(text) => this.updateValue(text,'lastname')}
-                    />
-                    <TextInput
-                        placeholder="EMAIL"
-                        placeholderTextColor="#FFFFFF33"
-                        textAlign='center'
-                        style={styles.textInput}
-                        onChangeText = {(text) => this.updateValue(text,'email')}
-                    />
-                </View>
-                <View style={styles.bottomView}>
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.backButton}>
-                        <View style={{flex: 1}}>
-                            <Icon name="chevron-left" size={50} color="#2592E6" />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.goToNextScreen()} style={styles.nextButton}>
-                        <Text style={{color: '#FFFFFF', fontSize: 16}}>DALEJ >>></Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+            <SafeAreaView style={{flex: 1}}>
+                <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <HeaderNoLogin/>
+                    <View style={styles.textView}>
+                        <Text style={styles.headerText}>Chcesz dołączyć do Level.UP?</Text>
+                        <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej Level.UP.</Text>
+                    </View>
+                    <View style={styles.registerView}>
+                        <Text style={styles.stepText}>Krok 1/3</Text>
+                        <Text style={styles.stepText}>Dane uczestnika</Text>
+                        <TextInput
+                            placeholder="IMIĘ"
+                            placeholderTextColor="#FFFFFF33"
+                            textAlign='center'
+                            style={styles.textInput}
+                            onChangeText = {(text) => this.updateValue(text,'firstname')}
+                        />
+                        <TextInput
+                            placeholder="NAZWISKO"
+                            placeholderTextColor="#FFFFFF33"
+                            textAlign='center'
+                            style={styles.textInput}
+                            onChangeText = {(text) => this.updateValue(text,'lastname')}
+                        />
+                        <TextInput
+                            placeholder="EMAIL"
+                            placeholderTextColor="#FFFFFF33"
+                            textAlign='center'
+                            style={styles.textInput}
+                            onChangeText = {(text) => this.updateValue(text,'email')}
+                        />
+                    </View>
+                    <View style={styles.bottomView}>
+                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.backButton}>
+                            <View style={{flex: 1}}>
+                                <Icon name="chevron-left" size={50} color="#2592E6" />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.goToNextScreen()} style={styles.nextButton}>
+                            <Text style={{color: '#FFFFFF', fontSize: 16}}>DALEJ >>></Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
         )
     }
 }

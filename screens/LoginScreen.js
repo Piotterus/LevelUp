@@ -1,6 +1,18 @@
 import React from 'react';
 
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, Dimensions, Image, Switch} from "react-native";
+import {
+    Text,
+    View,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    ImageBackground,
+    ScrollView,
+    Dimensions,
+    Image,
+    Switch,
+    SafeAreaView,
+} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -32,10 +44,10 @@ export default class LoginScreen extends React.Component {
     login(login,password) {
 
         if (login === "") {
-            login = "PL22"
+            login = "PL42"//"PL22"
         }
         if (password === "") {
-            password = "9LB92F3D"
+            password = "3DG61B7L"//"9LB92F3D"
         }
 
         const queryString = this.objToQueryString({
@@ -116,7 +128,7 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return(
-            <View style={styles.view}>
+            <SafeAreaView style={styles.view}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scrollView}>
                     <ImageBackground source={require('../images/levelup_start_v2.png')} resizeMode='contain' style={styles.imageBackground}>
@@ -139,7 +151,7 @@ export default class LoginScreen extends React.Component {
                                 autoCapitalize="none"
                             />
                             <TouchableOpacity onPress={() => this.props.navigation.navigate("RemindPassword")} style={styles.remindMeView}>
-                                <Text style={styles.remindMeText}>Nie pamiętasz ha?</Text>
+                                <Text style={styles.remindMeText}>Nie pamiętasz hasła?</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Text style={styles.remindMeText}>Zapamiętaj mnie</Text>
                                     <Switch
@@ -158,7 +170,7 @@ export default class LoginScreen extends React.Component {
                         </View>
                     </ImageBackground>
                 </ScrollView>
-            </View>
+            </SafeAreaView>
         )
 
     }
@@ -170,6 +182,7 @@ const styles = StyleSheet.create({
         //height: Dimensions.get("window").height, //for full screen
         //width: '100%',
         height: '100%',
+
         alignItems: 'center',
     },
     view: {

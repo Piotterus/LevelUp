@@ -5,7 +5,7 @@ import {
     View,
     StyleSheet,
     ScrollView,
-    ActivityIndicator,
+    ActivityIndicator, SafeAreaView,
 } from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
@@ -217,7 +217,7 @@ export default class ChooseKnowledgeScreen extends React.Component {
 
     render() {
         return(
-            <View style={{flex: 1}}>
+            <SafeAreaView style={{flex: 1}}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
                     <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                     <HeaderBurger navigation={this.props.navigation}/>
@@ -239,7 +239,7 @@ export default class ChooseKnowledgeScreen extends React.Component {
                     <ActivityIndicator size='large' color='#0A3251'/>
                 </View>
                 }
-            </View>
+            </SafeAreaView>
         )
     }
 }

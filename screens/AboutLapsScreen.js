@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     ScrollView,
     Image,
-    TouchableHighlight,
+    TouchableHighlight, SafeAreaView,
 } from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
@@ -32,7 +32,7 @@ export default class AboutLapsScreen extends React.Component {
 
     render() {
         return(
-            <View style={{flex: 1}}>
+            <SafeAreaView style={{flex: 1}}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
                     <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                     <HeaderBurger navigation={this.props.navigation}/>
@@ -255,7 +255,7 @@ export default class AboutLapsScreen extends React.Component {
 
                 </ScrollView>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
-            </View>
+            </SafeAreaView>
         )
     }
 }

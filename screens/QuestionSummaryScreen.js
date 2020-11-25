@@ -6,7 +6,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     ScrollView,
-    ActivityIndicator,
+    ActivityIndicator, SafeAreaView,
 } from 'react-native';
 
 import ErrorModal from '../components/ErrorModal';
@@ -175,38 +175,40 @@ export default class QuestionSummaryScreen extends React.Component {
 
     render() {
         return(
-            <ScrollView style={{backgroundColor: '#FFFFFF'}} contentContainerStyle={{ flexGrow: 1 }}>
-                <View style={{marginBottom: 55}}>
-                </View>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <View style={[styles.knowledgeMain, {flex: 1}]}>
-                    <View style={[styles.questionView]}>
-                        {this.props.route.params.model === 1 &&
-                            this.createQuestionList()
-                        }
-                        {this.props.route.params.model === 4 &&
-                            this.createTestList()
-                        }
-
-                        <Text style={{color: '#0A3251', fontSize: 24, textAlign: 'center'}}>Zdobyte punkty:</Text>
-                        {(this.props.route.params.model === 1 && this.state.question !== '') &&
-                            <Text style={{color: '#0A3251', fontSize: 47, textAlign: 'center', fontWeight: 'bold', marginBottom: 30}}>{this.state.question['0'].points}<Text style={{fontSize: 24}}>pkt</Text></Text>
-                        }
-                        {(this.props.route.params.model === 4 && this.state.question !== '') &&
-                            <Text style={{color: '#0A3251', fontSize: 47, textAlign: 'center', fontWeight: 'bold', marginBottom: 30}}>{this.state.question[this.state.pollId].points}<Text style={{fontSize: 24}}>pkt</Text></Text>
-                        }
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()}
-                                          style={[styles.buttonBase, styles.shadow, styles.buttonConsent]}>
-                            <Text style={styles.buttonText}>OK</Text>
-                        </TouchableOpacity>
+            <SafeAreaView style={{flex: 1}}>
+                <ScrollView style={{backgroundColor: '#FFFFFF'}} contentContainerStyle={{ flexGrow: 1 }}>
+                    <View style={{marginBottom: 55}}>
                     </View>
-                </View>
-                {this.state.isLoading &&
-                <View style={styles.loading}>
-                    <ActivityIndicator size='large' color='#0A3251'/>
-                </View>
-                }
-            </ScrollView>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <View style={[styles.knowledgeMain, {flex: 1}]}>
+                        <View style={[styles.questionView]}>
+                            {this.props.route.params.model === 1 &&
+                                this.createQuestionList()
+                            }
+                            {this.props.route.params.model === 4 &&
+                                this.createTestList()
+                            }
+
+                            <Text style={{color: '#0A3251', fontSize: 24, textAlign: 'center'}}>Zdobyte punkty:</Text>
+                            {(this.props.route.params.model === 1 && this.state.question !== '') &&
+                                <Text style={{color: '#0A3251', fontSize: 47, textAlign: 'center', fontWeight: 'bold', marginBottom: 30}}>{this.state.question['0'].points}<Text style={{fontSize: 24}}>pkt</Text></Text>
+                            }
+                            {(this.props.route.params.model === 4 && this.state.question !== '') &&
+                                <Text style={{color: '#0A3251', fontSize: 47, textAlign: 'center', fontWeight: 'bold', marginBottom: 30}}>{this.state.question[this.state.pollId].points}<Text style={{fontSize: 24}}>pkt</Text></Text>
+                            }
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack()}
+                                              style={[styles.buttonBase, styles.shadow, styles.buttonConsent]}>
+                                <Text style={styles.buttonText}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    {this.state.isLoading &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' color='#0A3251'/>
+                    </View>
+                    }
+                </ScrollView>
+            </SafeAreaView>
         )
     }
 }

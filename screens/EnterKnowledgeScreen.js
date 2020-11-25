@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Text, View, StyleSheet, TouchableOpacity, ScrollView, Image} from "react-native";
+import {Text, View, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView} from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
@@ -22,7 +22,7 @@ export default class EnterKnowledgeScreen extends React.Component {
 
     render() {
         return(
-            <View style={{flex: 1}}>
+            <SafeAreaView style={{flex: 1}}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75, backgroundColor: '#FFFFFF'}}>
                     <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                     <HeaderBurger navigation={this.props.navigation}/>
@@ -43,7 +43,7 @@ export default class EnterKnowledgeScreen extends React.Component {
                     </View>
                 </ScrollView>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="KNOWLEDGE"/>
-            </View>
+            </SafeAreaView>
         )
     }
 }

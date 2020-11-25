@@ -8,7 +8,7 @@ import {
     TouchableHighlight,
     ScrollView,
     Image,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback, SafeAreaView,
 } from 'react-native';
 
 import Modal from 'react-native-modal';
@@ -39,7 +39,7 @@ export default class AboutPointsScreen extends React.Component {
     render() {
         const { modalVisible } = this.state;
         return(
-            <View style={{flex: 1}}>
+            <SafeAreaView style={{flex: 1}}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
                     <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                     <HeaderBurger navigation={this.props.navigation}/>
@@ -168,7 +168,7 @@ export default class AboutPointsScreen extends React.Component {
                     </View>
                 </ScrollView>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
-            </View>
+            </SafeAreaView>
         )
     }
 }
