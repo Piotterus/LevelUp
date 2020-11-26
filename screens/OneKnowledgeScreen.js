@@ -76,6 +76,7 @@ export default class OneKnowledgeScreen extends React.Component {
                     }
                 })
                 .catch((error) => {
+                    this.setState({isLoading: false});
                     console.error(error);
                 });
         });

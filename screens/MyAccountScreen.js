@@ -69,6 +69,7 @@ export default class MyAccountScreen extends React.Component {
                 }
             })
             .catch((error) => {
+                this.setState({isLoading: false});
                 console.error(error);
             });
         });

@@ -68,6 +68,7 @@ export default class EnterQuestionsScreen extends React.Component {
                     }
                 })
                 .catch((error) => {
+                    this.setState({isLoading: false});
                     console.error(error);
                 });
 

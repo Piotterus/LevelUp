@@ -151,6 +151,7 @@ export default class ResultsScreen extends  React.Component {
                     }
                 })
                 .catch((error) => {
+                    this.setState({isLoading: false});
                     console.error(error);
                 });
         });

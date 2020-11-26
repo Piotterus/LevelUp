@@ -99,6 +99,7 @@ export default class ChooseKnowledgeScreen extends React.Component {
                     }
                 })
                 .catch((error) => {
+                    this.setState({isLoading: false});
                     console.error(error);
                 });
         });
@@ -224,11 +225,21 @@ export default class ChooseKnowledgeScreen extends React.Component {
                     <View style={[styles.knowledgeMain, {flex: 1}]}>
                         <Text style={styles.knowledgeHeaderText}>WIEDZA</Text>
                         <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginBottom: 15, alignItems: 'center'}}>
-                            <Icon onPress={()=> this.subtractWeek()} name="arrow-left" size={30} color="#5E6367" />
+                            {this.state.weekShow > 1 &&
+                            <Icon onPress={() => this.subtractWeek()} name="arrow-left" size={30} color="#5E6367"/>
+                            }
+                            {this.state.weekShow <= 1 &&
+                            <Icon onPress={() => this.subtractWeek()} name="arrow-left" size={30} color="#5E636700"/>
+                            }
                             <Text style={{color: '#0A3251'}}>
                                 {this.state.weekShow} tydzień
                             </Text>
-                            <Icon onPress={()=> this.addWeek()} name="arrow-right" size={30} color="#5E6367" />
+                            {this.state.weekShow < this.state.weekMax &&
+                            <Icon onPress={() => this.addWeek()} name="arrow-right" size={30} color="#5E6367"/>
+                            }
+                            {this.state.weekShow >= this.state.weekMax &&
+                            <Icon onPress={() => this.addWeek()} name="arrow-right" size={30} color="#5E636700"/>
+                            }
                         </View>
                         {this.createKnowledgeList()}
                     </View>

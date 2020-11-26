@@ -52,7 +52,7 @@ export default class QuestionSummaryScreen extends React.Component {
             key: this.props.keyApp,
             token: this.props.token,
         });
-        console.log("COMPONENT DID MOUNT-" + this.state.questionNumber)
+
         this.listenerFocus = this.props.navigation.addListener('focus', () => {
 
             this.setState({
@@ -96,6 +96,7 @@ export default class QuestionSummaryScreen extends React.Component {
                     }
                 })
                 .catch((error) => {
+                    this.setState({isLoading: false});
                     console.error(error);
                 });
         });
@@ -268,7 +269,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#2592E6',
         borderRadius: 25,
         height: 34,
-        width: 305,
+        //width: 305,
         marginBottom: 15,
         marginTop: 5
     },

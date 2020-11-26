@@ -44,10 +44,10 @@ export default class LoginScreen extends React.Component {
     login(login,password) {
 
         if (login === "") {
-            login = "PL42"//"PL22"
+            login = "PL22"//"PL42"//"PL22"
         }
         if (password === "") {
-            password = "3DG61B7L"//"9LB92F3D"
+            password = "9LB92F3D"//"3DG61B7L"//"9LB92F3D"
         }
 
         const queryString = this.objToQueryString({

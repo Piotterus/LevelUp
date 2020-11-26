@@ -112,14 +112,16 @@ export default class HomeScreen extends  React.Component {
                             level: responseJson.dashboard.level,
                             date2Go: responseJson.dashboard.clock.date2Go,
                             date2GoType: responseJson.dashboard.clock.type,
-                        }, () => this.updateApp(this.state.knowledgeCount, this.state.testCount, this.state.week), this.setState({isLoading: false}))
+                        }, () => {this.updateApp(this.state.knowledgeCount, this.state.testCount, this.state.week); this.setState({isLoading: false})})
                     } else {
                         this.setState({
+                            isLoading: false,
                             error: responseJson.error,
                         }, () => this.setModalErrorVisible(true))
                     }
                 })
                 .catch((error) => {
+                    this.setState({isLoading: false});
                     //console.error(error);
                 });
 
@@ -355,15 +357,15 @@ export default class HomeScreen extends  React.Component {
                                     TWOJA GRA ROZPOCZNIE SIĘ ZA:
                                 </Text>
                             }
-                            {this.state.date2GoType === 'wiedza' &&
-                            <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>
-                                TWÓJ CZAS NA PYTANIA:
-                            </Text>
+                            {this.state.date2GoType === 'endQuestion' &&
+                                <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>
+                                    TWÓJ CZAS NA PYTANIA:
+                                </Text>
                             }
-                            {this.state.date2GoType === 'test' &&
-                            <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>
-                                TWÓJ CZAS NA TEST:
-                            </Text>
+                            {this.state.date2GoType === 'endTest' &&
+                                <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>
+                                    TWÓJ CZAS NA TEST:
+                                </Text>
                             }
                             <View style={styles.timeView}>
                                 <Image style={{marginTop: 12}} source={require('../icons/001-wall-clock_time.png')}/>

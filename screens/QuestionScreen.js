@@ -53,7 +53,6 @@ export default class QuestionScreen extends React.Component {
             key: this.props.keyApp,
             token: this.props.token,
         });
-        console.log("COMPONENT DID MOUNT-" + this.state.questionNumber)
         this.listenerFocus = this.props.navigation.addListener('focus', () => {
 
             let url = `https://levelup.verbum.com.pl/api/challenge/actionId/${this.props.route.params.model}/${this.props.route.params.id}?${queryString}`;
@@ -89,6 +88,7 @@ export default class QuestionScreen extends React.Component {
                     }
                 })
                 .catch((error) => {
+                    this.setState({isLoading: false});
                     console.error(error);
                 });
         });
