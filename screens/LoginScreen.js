@@ -11,10 +11,10 @@ import {
     Dimensions,
     Image,
     Switch,
-    SafeAreaView,
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import ErrorModal from '../components/ErrorModal';
 

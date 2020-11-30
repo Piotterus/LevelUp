@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-    SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
@@ -11,6 +10,7 @@ import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import ErrorModal from '../components/ErrorModal';
 import 'moment-countdown';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class ContactScreen extends  React.Component {
 

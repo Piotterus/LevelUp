@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     ScrollView,
     Image,
-    ActivityIndicator, SafeAreaView,
+    ActivityIndicator,
 } from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
@@ -16,6 +16,7 @@ import QuestionListItem from '../components/QuestionListItem';
 import ErrorModal from '../components/ErrorModal';
 import QuestionTurbo from '../components/QuestionTurbo';
 import QuestionLifebuoy from '../components/QuestionLifebuoy';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class EnterQuestionsScreen extends React.Component {
 

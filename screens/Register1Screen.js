@@ -3,18 +3,17 @@ import React from 'react';
 import {
     Text,
     View,
-    Button,
     StyleSheet,
     TextInput,
     TouchableOpacity,
     ScrollView,
     Dimensions,
-    SafeAreaView,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 import HeaderNoLogin from '../components/HeaderNoLogin';
 import ErrorModal from '../components/ErrorModal';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class Register1Screen extends React.Component {
 

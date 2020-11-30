@@ -7,12 +7,13 @@ import {
     TouchableOpacity,
     ScrollView,
     Dimensions,
-    TouchableWithoutFeedback, SafeAreaView,
+    TouchableWithoutFeedback,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import HeaderNoLogin from '../components/HeaderNoLogin';
 import { CheckBox } from 'react-native-elements'
 import ErrorModal from '../components/ErrorModal';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class Register3Screen extends React.Component {
 

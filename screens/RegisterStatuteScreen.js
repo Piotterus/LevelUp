@@ -7,12 +7,13 @@ import {
     TouchableOpacity,
     ScrollView,
     Dimensions,
-    ActivityIndicator, SafeAreaView,
+    ActivityIndicator,
 } from 'react-native';
 
 import ErrorModal from '../components/ErrorModal';
 import { WebView } from 'react-native-webview';
 import HeaderNoLogin from '../components/HeaderNoLogin';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class RegisterStatuteScreen extends React.Component {
 

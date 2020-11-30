@@ -1,10 +1,11 @@
 import React from 'react'
 
-import {Text, View, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, ScrollView, Image} from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import ErrorModal from '../components/ErrorModal';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class EnterKnowledgeScreen extends React.Component {
 

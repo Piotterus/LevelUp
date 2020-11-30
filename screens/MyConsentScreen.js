@@ -1,11 +1,12 @@
 import React from 'react'
 
-import {Text, View, StyleSheet, ScrollView, SafeAreaView} from 'react-native';
+import {Text, View, StyleSheet, ScrollView,} from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import { CheckBox } from 'react-native-elements'
 import ErrorModal from '../components/ErrorModal';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class MyConsentScreen extends React.Component {
 

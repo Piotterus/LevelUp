@@ -5,7 +5,7 @@ import {
     View,
     StyleSheet,
     ScrollView,
-    ActivityIndicator, SafeAreaView,
+    ActivityIndicator,
 } from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
@@ -14,6 +14,7 @@ import KnowledgeListItem from '../components/KnowledgeListItem';
 import ErrorModal from '../components/ErrorModal';
 import Icon from 'react-native-vector-icons/Feather';
 import moment from 'moment/moment.js';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class ChooseKnowledgeScreen extends React.Component {
 
@@ -118,7 +119,10 @@ export default class ChooseKnowledgeScreen extends React.Component {
 
     createKnowledgeList() {
         let knowledgeList = [];
-        if (this.state.weekShow === this.state.week) {
+        console.log("WeekShow " + this.state.weekShow);
+        console.log("Week " + this.state.week);
+        if (parseInt(this.state.weekShow) === parseInt(this.state.week)) {
+            console.log("TEN WEEK");
             for (let i in this.state.knowledgeList) {
                 knowledgeList.push(<KnowledgeListItem
                     key={i}
@@ -134,6 +138,7 @@ export default class ChooseKnowledgeScreen extends React.Component {
                 />)
             }
         } else {
+            console.log("INNY WEEK");
             let knowledgeListIndex = 0;
             const status = {
                 id: 1,

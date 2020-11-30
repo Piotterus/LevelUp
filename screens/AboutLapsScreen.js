@@ -7,13 +7,14 @@ import {
     TouchableOpacity,
     ScrollView,
     Image,
-    TouchableHighlight, SafeAreaView,
+    TouchableHighlight,
 } from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import ErrorModal from '../components/ErrorModal';
 import Swiper from 'react-native-swiper'
+import SafeAreaView from 'react-native-safe-area-view';
 
 
 export default class AboutLapsScreen extends React.Component {

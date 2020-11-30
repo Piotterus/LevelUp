@@ -1,10 +1,11 @@
 import React from 'react';
 
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView, Dimensions, SafeAreaView} from 'react-native';
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView, Dimensions} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 import HeaderNoLogin from '../components/HeaderNoLogin';
 import ErrorModal from '../components/ErrorModal';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class Register2Screen extends React.Component {
 

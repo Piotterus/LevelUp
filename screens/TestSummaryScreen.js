@@ -6,13 +6,14 @@ import {
     StyleSheet,
     TouchableOpacity,
     ScrollView,
-    ActivityIndicator, SafeAreaView,
+    ActivityIndicator,
 } from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import TestSummaryItem from '../components/TestSummaryItem';
 import ErrorModal from '../components/ErrorModal';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class TestSummaryScreen extends React.Component {
 

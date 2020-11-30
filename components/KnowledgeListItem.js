@@ -40,8 +40,7 @@ export default class KnowledgeListItem extends React.Component {
                         onPress={() => this.props.navigation.navigate('OneKnowledge', {id: this.props.id})}
                         style={[styles.knowledgeOne, styles.shadow, {backgroundColor: '#E20000'}]}>
                         <View style={[styles.knowledgeDesc]}>
-                            <Text style={[styles.knowledgeDescText, styles.knowledgeTextNotRead, {fontSize: 12, fontWeight: 'normal'}]}>DZIEŃ TYGODNIA -
-                                DATA {this.props.status.id}</Text>
+                            <Text style={[styles.knowledgeDescText, styles.knowledgeTextNotRead, {fontSize: 12, fontWeight: 'normal'}]}>{this.props.day.toUpperCase()} - {date.format('DD-M-Y')}</Text>
                             <View style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
@@ -65,8 +64,7 @@ export default class KnowledgeListItem extends React.Component {
                 <TouchableOpacity
                     style={[styles.knowledgeOne, {borderColor: '#2592E6', borderWidth: 1, borderRadius: 9, opacity: 0.25}]}>
                     <View style={styles.knowledgeDesc}>
-                        <Text style={[styles.knowledgeDescText, styles.knowledgeTextRead, {fontSize: 12, fontWeight: 'normal'}]}>DZIEŃ TYGODNIA -
-                            DATA</Text>
+                        <Text style={[styles.knowledgeDescText, styles.knowledgeTextRead, {fontSize: 12, fontWeight: 'normal'}]}>{this.props.day.toUpperCase()} - {date.format('DD-M-Y')}</Text>
                         <View style={{
                             flexDirection: 'row',
                             alignItems: 'center',

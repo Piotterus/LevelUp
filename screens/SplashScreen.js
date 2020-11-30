@@ -1,6 +1,7 @@
 import React from 'react'
 
-import {View, Image, StyleSheet, Dimensions, SafeAreaView} from 'react-native';
+import {Image, StyleSheet, Dimensions,} from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class SplashScreen extends React.Component {
 

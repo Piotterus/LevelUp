@@ -6,13 +6,14 @@ import {
     StyleSheet,
     TouchableOpacity,
     ScrollView,
-    TouchableWithoutFeedback, SafeAreaView,
+    TouchableWithoutFeedback,
 } from 'react-native';
 
 import Modal from 'react-native-modal';
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import ErrorModal from '../components/ErrorModal';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class AboutQuestionsScreen extends React.Component {
 

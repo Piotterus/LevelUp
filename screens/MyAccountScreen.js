@@ -5,13 +5,14 @@ import {
     View,
     StyleSheet,
     ScrollView,
-    TouchableWithoutFeedback, ActivityIndicator, SafeAreaView,
+    TouchableWithoutFeedback, ActivityIndicator,
 } from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import ErrorModal from '../components/ErrorModal';
 import {CheckBox} from 'react-native-elements';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class MyAccountScreen extends React.Component {
 

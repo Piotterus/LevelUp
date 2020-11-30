@@ -11,6 +11,7 @@ import React, {Fragment} from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import MainScreen from "./screens/MainScreen";
 import LoginScreen from "./screens/LoginScreen";
@@ -150,7 +151,7 @@ export default class App extends  React.Component {
             return (<SplashScreen/>)
         }
         return (
-            //<Provider>
+            <SafeAreaProvider>
                 <NavigationContainer>
                     <Drawer.Navigator initialRouteName="Home"
                         screenOptions={{
@@ -413,7 +414,7 @@ export default class App extends  React.Component {
                         )}
                     </Drawer.Navigator>
                 </NavigationContainer>
-            //</Provider>
+            </SafeAreaProvider>
         )
     }
 }

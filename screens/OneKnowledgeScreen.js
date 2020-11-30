@@ -6,13 +6,14 @@ import {
     StyleSheet,
     TouchableOpacity,
     ScrollView,
-    ActivityIndicator, SafeAreaView,
+    ActivityIndicator,
 } from 'react-native';
 
 import HTML from 'react-native-render-html';
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import ErrorModal from '../components/ErrorModal';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class OneKnowledgeScreen extends React.Component {
 

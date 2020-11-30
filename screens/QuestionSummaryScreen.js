@@ -6,11 +6,12 @@ import {
     StyleSheet,
     TouchableOpacity,
     ScrollView,
-    ActivityIndicator, SafeAreaView,
+    ActivityIndicator,
 } from 'react-native';
 
 import ErrorModal from '../components/ErrorModal';
 import QuestionSummary from '../components/QuestionSummary';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class QuestionSummaryScreen extends React.Component {
 

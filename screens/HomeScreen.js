@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
     ActivityIndicator,
-    Image, SafeAreaView,
+    Image,
     ScrollView,
     StyleSheet,
     Text,
@@ -18,6 +18,7 @@ import Modal from 'react-native-modal';
 import ErrorModal from '../components/ErrorModal';
 import moment from 'moment/moment.js';
 import 'moment-countdown';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class HomeScreen extends  React.Component {
 

@@ -6,13 +6,14 @@ import {
     StyleSheet,
     ScrollView,
     Dimensions,
-    ActivityIndicator, SafeAreaView,
+    ActivityIndicator,
 } from 'react-native';
 
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import ErrorModal from '../components/ErrorModal';
 import { WebView } from 'react-native-webview';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class StatuteScreen extends React.Component {
 

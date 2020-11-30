@@ -1,10 +1,11 @@
 import React from 'react';
 
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView, Dimensions, SafeAreaView} from 'react-native';
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView, Dimensions,} from 'react-native';
 
 
 import HeaderNoLogin from '../components/HeaderNoLogin';
 import ErrorModal from '../components/ErrorModal';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class RemindPasswordScreen extends React.Component {
 
