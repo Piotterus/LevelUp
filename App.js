@@ -148,7 +148,11 @@ export default class App extends  React.Component {
 
     render() {
         if (this.state.isSettingUp) {
-            return (<SplashScreen/>)
+            return (
+                <SafeAreaProvider>
+                    <SplashScreen/>
+                </SafeAreaProvider>
+            )
         }
         return (
             <SafeAreaProvider>
