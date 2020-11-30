@@ -131,7 +131,7 @@ export default class LoginScreen extends React.Component {
             <SafeAreaView style={styles.view} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
                 <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scrollView}>
-                    <ImageBackground source={require('../images/levelup_start_v2.png')} resizeMode='contain' style={styles.imageBackground}>
+                    <ImageBackground source={require('../images/levelup_start_v2.png')} resizeMode='cover' style={styles.imageBackground}>
                         <View style={[styles.insideView, {flex: 1}]}>
                             <TextInput
                                 placeholder="LOGIN"
