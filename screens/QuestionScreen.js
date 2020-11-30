@@ -315,7 +315,7 @@ export default class QuestionScreen extends React.Component {
                             </View>
                             {this.state.questionNumber >= this.state.questionCount &&
                                 <TouchableOpacity onPress={() => this.sendPoll()}
-                                                  style={[styles.buttonBase, styles.shadow, styles.buttonConsent, {backgroundColor: '#0E395A'}]}>
+                                                  style={[styles.buttonBase, styles.shadow, styles.buttonConsent, {backgroundColor: '#0E395A', alignSelf: 'center'}]}>
                                     <Text style={styles.buttonText}>ZAKOŃCZ</Text>
                                 </TouchableOpacity>
                             }
