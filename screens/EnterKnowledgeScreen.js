@@ -23,7 +23,7 @@ export default class EnterKnowledgeScreen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}}>
+            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75, backgroundColor: '#FFFFFF'}}>
                     <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                     <HeaderBurger navigation={this.props.navigation}/>

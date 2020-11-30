@@ -68,7 +68,7 @@ export default class Register1Screen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}}>
+            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
                 <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
                     <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                     <HeaderNoLogin/>
