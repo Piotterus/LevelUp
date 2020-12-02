@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         marginTop: -5,
-        paddingBottom: 10,
+        //paddingBottom: 10,
         zIndex: 1,
     },
     levelText: {
