@@ -237,7 +237,7 @@ export default class ChooseKnowledgeScreen extends React.Component {
                             <Icon onPress={() => this.subtractWeek()} name="arrow-left" size={30} color="#5E636700"/>
                             }
                             <Text style={{color: '#0A3251'}}>
-                                {this.state.weekShow} tydzień
+                                {this.state.weekShow} runda
                             </Text>
                             {this.state.weekShow < this.state.weekMax &&
                             <Icon onPress={() => this.addWeek()} name="arrow-right" size={30} color="#5E6367"/>

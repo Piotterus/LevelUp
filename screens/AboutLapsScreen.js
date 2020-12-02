@@ -98,7 +98,7 @@ export default class AboutLapsScreen extends React.Component {
                         <View style={[styles.knowledgeMain, {flex: 1}]}>
                             <Text style={styles.knowledgeHeaderText}>O GRZE</Text>
                             <View style={[styles.shadow, styles.aboutLaps]}>
-                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Jak działa Level.UPp?</Text>
+                                <Text style={{fontSize: 18, fontWeight: 'bold', color: '#0A3251', paddingLeft: 10, marginBottom: 10}}>Jak działa Level.UP?</Text>
                                 <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>1.	Gra składa się z 4 rund, a każda runda trwa tydzień</Text>
                                 <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>2.	W poniedziałek, wtorek i środę otrzymujesz Pigułkę Wiedzy, a każdej z nich towarzyszy jedno pytanie, odpowiedz na nie, by zdobyć punkty.</Text>
                                 <Text style={{fontSize: 14, color: '#0A3251', marginBottom: 5, paddingLeft: 10}}>3.	W piątek aktywuje się test z zagadnień poruszonych w rundzie, rozwiąż go, by zdobyć punkty.</Text>

@@ -239,7 +239,7 @@ export default class ResultsScreen extends  React.Component {
                     this.setState({
                         questions: responseJson.data.questions,
                         test: responseJson.data.test,
-                    }, () => console.log(JSON.stringify(responseJson.data)))
+                    })
                 } else {
                     this.setState({
                         error: responseJson.error,
@@ -254,7 +254,6 @@ export default class ResultsScreen extends  React.Component {
     createQuestionsList() {
         let questionSummaryList = [];
         for (let i in this.state.questions) {
-            console.log(this.state.questions[i]);
             questionSummaryList.push(<QuestionSummaryItem
                 key={i}
                 navigation={this.props.navigation}
@@ -273,8 +272,6 @@ export default class ResultsScreen extends  React.Component {
         let questionSummaryList = [];
         let number = 0;
         for (let i in this.state.test.questions) {
-            console.log(i + " PYTANIE " + JSON.stringify(this.state.test.questions[i]));
-            console.log(i);
             questionSummaryList.push(<QuestionSummaryItem
                 key={i}
                 navigation={this.props.navigation}
@@ -442,10 +439,6 @@ export default class ResultsScreen extends  React.Component {
                                 </View>
                             </View>
                         }
-                        {/*<View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
-                            <Text style={{fontSize: 11, color: '#0E395A', marginTop: 10, marginLeft: 10}}>OKRĄŻENIA:</Text>
-                            {this.createLapRows()}
-                        </View>*/}
                     </View>
                 </ScrollView>
                 <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="RESULTS"/>

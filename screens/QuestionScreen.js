@@ -85,6 +85,7 @@ export default class QuestionScreen extends React.Component {
                     } else {
                         this.setState({
                             error: responseJson.error,
+                            isLoading: false,
                         }, () => this.setModalErrorVisible(true))
                     }
                 })
@@ -118,33 +119,54 @@ export default class QuestionScreen extends React.Component {
     }
 
     sendPoll() {
-        let poll = this.createPoll();
+        let questionsAnswered = 0;
+        let checkPoll = this.state.question;
+        for (let i in checkPoll) {
+            for (let j in checkPoll[i].answers) {
+                if (checkPoll[i].answers[j].value === true) {
+                    questionsAnswered++;
+                    break;
+                }
+            }
+        }
+        if (questionsAnswered === this.state.questionNumber) {
+            let poll = this.createPoll();
 
-        const queryString = this.objToQueryString({
-            key: this.props.keyApp,
-            token: this.props.token,
-        });
-        let url = `https://levelup.verbum.com.pl/api/challenge/sendAction/${this.props.route.params.model}/${this.props.route.params.id}?${queryString}`;
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': "application/json",
-            },
-            body: JSON.stringify(poll)
-        })
-            .then(response => response.json())
-            .then(responseJson => {
-                this.props.navigation.navigate('TestSummary', {
-                    results: responseJson.data.result,
-                    sum: responseJson.data.sum,
-                    model: this.props.route.params.model,
-                    id: this.props.route.params.id,
-                });
-            })
-            .catch((error) => {
-                console.error(error);
+            const queryString = this.objToQueryString({
+                key: this.props.keyApp,
+                token: this.props.token,
             });
+            let url = `https://levelup.verbum.com.pl/api/challenge/sendAction/${this.props.route.params.model}/${this.props.route.params.id}?${queryString}`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+                body: JSON.stringify(poll)
+            })
+                .then(response => response.json())
+                .then(responseJson => {
+                    this.props.navigation.navigate('TestSummary', {
+                        results: responseJson.data.result,
+                        sum: responseJson.data.sum,
+                        model: this.props.route.params.model,
+                        id: this.props.route.params.id,
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        } else {
+            let error = {
+                message: "Zaznacz odpowiedź"
+            };
+            this.setState({
+                error: error,
+            }, () => this.setModalErrorVisible(true))
+        }
+
+
     }
 
     createPoll() {
@@ -171,6 +193,9 @@ export default class QuestionScreen extends React.Component {
                 poll: questions
             }
         };
+        this.setState({
+            poll: poll,
+        });
         return poll;
     }
 
@@ -195,6 +220,7 @@ export default class QuestionScreen extends React.Component {
 
     nextQuestion() {
         let questionsAnswered = 0;
+        let poll = this.state.question;
         for (let i in poll) {
             for (let j in poll[i].answers) {
                 if (poll[i].answers[j].value === true) {
@@ -207,7 +233,6 @@ export default class QuestionScreen extends React.Component {
             this.setState({
                 questionNumber: this.state.questionNumber + 1,
             });
-            console.log("NEXT QUESTION-" + this.state.questionNumber);
         } else {
             let error = {
                 message: "Zaznacz odpowiedź aby przejść dalej"
@@ -316,7 +341,7 @@ export default class QuestionScreen extends React.Component {
                             {this.state.questionNumber >= this.state.questionCount &&
                                 <TouchableOpacity onPress={() => this.sendPoll()}
                                                   style={[styles.buttonBase, styles.shadow, styles.buttonConsent, {backgroundColor: '#0E395A', alignSelf: 'center'}]}>
-                                    <Text style={styles.buttonText}>ZAKOŃCZ</Text>
+                                    <Text style={styles.buttonText}>ZAPISZ ODPOWIEDŹ</Text>
                                 </TouchableOpacity>
                             }
                         </View>
