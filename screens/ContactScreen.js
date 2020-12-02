@@ -29,22 +29,24 @@ export default class ContactScreen extends  React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderBurger navigation={this.props.navigation}/>
-                    <View style={[styles.mainView, {flex: 1}]}>
-                        <Text style={styles.levelText}>KONTAKT</Text>
-                        <View style={[styles.shadow, styles.contactView]}>
-                            <Text style={{fontSize: 16, fontWeight: 'bold'}}>Masz pytania?</Text>
-                            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 20}}>Napisz do nas lub zadzwoń!</Text>
-                            <Text style={{fontSize: 16, marginBottom: 10}}>E-mail: biuro@verbum.com.pl</Text>
-                            <Text style={{fontSize: 16}}>Infolinia: 61 8250 785</Text>
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderBurger navigation={this.props.navigation}/>
+                        <View style={[styles.mainView, {flex: 1}]}>
+                            <Text style={styles.levelText}>KONTAKT</Text>
+                            <View style={[styles.shadow, styles.contactView]}>
+                                <Text style={{fontSize: 16, fontWeight: 'bold'}}>Masz pytania?</Text>
+                                <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 20}}>Napisz do nas lub zadzwoń!</Text>
+                                <Text style={{fontSize: 16, marginBottom: 10}}>E-mail: biuro@verbum.com.pl</Text>
+                                <Text style={{fontSize: 16}}>Infolinia: 61 8250 785</Text>
+                            </View>
                         </View>
-                    </View>
-                </ScrollView>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
-            </SafeAreaView>
+                    </ScrollView>
+                    <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
+                </SafeAreaView>
+            </View>
         )
     }
 

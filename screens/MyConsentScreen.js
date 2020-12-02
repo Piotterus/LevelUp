@@ -83,28 +83,30 @@ export default class MyConsentScreen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderBurger navigation={this.props.navigation}/>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>MOJE ZGODY</Text>
-                        <View style={[styles.shadow, styles.myAccount]}>
-                            <View style={styles.consentRow}>
-                                <CheckBox
-                                    checked={this.state.agree1}
-                                    //onPress={() => this.setState({agree1: !this.state.agree1})}
-                                />
-                                <View style={{flex: 1}}>
-                                    <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy Regulaminu Konkursu „Gra Edukacyjna LevelUP”. </Text>
-                                    <Text style={styles.consentText}>Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderBurger navigation={this.props.navigation}/>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>MOJE ZGODY</Text>
+                            <View style={[styles.shadow, styles.myAccount]}>
+                                <View style={styles.consentRow}>
+                                    <CheckBox
+                                        checked={this.state.agree1}
+                                        //onPress={() => this.setState({agree1: !this.state.agree1})}
+                                    />
+                                    <View style={{flex: 1}}>
+                                        <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy Regulaminu Konkursu „Gra Edukacyjna LevelUP”. </Text>
+                                        <Text style={styles.consentText}>Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
+                                    </View>
                                 </View>
                             </View>
                         </View>
-                    </View>
-                </ScrollView>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
-            </SafeAreaView>
+                    </ScrollView>
+                    <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
+                </SafeAreaView>
+            </View>
         )
     }
 }

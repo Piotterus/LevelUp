@@ -78,28 +78,30 @@ export default class TestSummaryScreen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderBurger navigation={this.props.navigation}/>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>PODSUMOWANIE TESTU</Text>
-                        <View style={[styles.shadow, styles.summaryView]}>
-                            {this.createTestSummaryList()}
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderBurger navigation={this.props.navigation}/>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>PODSUMOWANIE TESTU</Text>
+                            <View style={[styles.shadow, styles.summaryView]}>
+                                {this.createTestSummaryList()}
+                            </View>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Results', {content: "ranking"})}
+                                              style={[styles.buttonBase, styles.shadow, styles.buttonConsent, {backgroundColor: '#0E395A'}]}>
+                                <Text style={styles.buttonText}>RANKING</Text>
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Results', {content: "ranking"})}
-                                          style={[styles.buttonBase, styles.shadow, styles.buttonConsent, {backgroundColor: '#0E395A'}]}>
-                            <Text style={styles.buttonText}>RANKING</Text>
-                        </TouchableOpacity>
+                    </ScrollView>
+                    <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="QUESTIONS"/>
+                    {this.state.isLoading &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' color='#0A3251'/>
                     </View>
-                </ScrollView>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="QUESTIONS"/>
-                {this.state.isLoading &&
-                <View style={styles.loading}>
-                    <ActivityIndicator size='large' color='#0A3251'/>
-                </View>
-                }
-            </SafeAreaView>
+                    }
+                </SafeAreaView>
+            </View>
         )
     }
 }

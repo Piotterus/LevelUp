@@ -92,60 +92,62 @@ export default class MyAccountScreen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderBurger navigation={this.props.navigation}/>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>MOJE KONTO</Text>
-                        <View style={[styles.shadow, styles.myAccount]}>
-                            <Text style={styles.headerText}>Dane Uczestnika</Text>
-                            <View style={styles.userDataView}>
-                                <View style={styles.userInfo}>
-                                    <Text style={styles.userInfoText}>IMIĘ</Text>
-                                    <Text style={styles.userInfoText}>NAZWISKO</Text>
-                                    <Text style={styles.userInfoText}>E-MAIL</Text>
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderBurger navigation={this.props.navigation}/>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>MOJE KONTO</Text>
+                            <View style={[styles.shadow, styles.myAccount]}>
+                                <Text style={styles.headerText}>Dane Uczestnika</Text>
+                                <View style={styles.userDataView}>
+                                    <View style={styles.userInfo}>
+                                        <Text style={styles.userInfoText}>IMIĘ</Text>
+                                        <Text style={styles.userInfoText}>NAZWISKO</Text>
+                                        <Text style={styles.userInfoText}>E-MAIL</Text>
+                                    </View>
+                                    <View style={{width: 10}}/>
+                                    <View style={styles.userData}>
+                                        <Text style={styles.userDataText}>{this.state.user.firstname}</Text>
+                                        <Text style={styles.userDataText}>{this.state.user.lastname}</Text>
+                                        <Text style={styles.userDataText}>{this.state.user.email}</Text>
+                                    </View>
                                 </View>
-                                <View style={{width: 10}}/>
-                                <View style={styles.userData}>
-                                    <Text style={styles.userDataText}>{this.state.user.firstname}</Text>
-                                    <Text style={styles.userDataText}>{this.state.user.lastname}</Text>
-                                    <Text style={styles.userDataText}>{this.state.user.email}</Text>
+                                <View style={styles.line}/>
+                                <Text style={styles.headerText}>Firma</Text>
+                                <View style={styles.userDataView}>
+                                    <View style={styles.userInfo}>
+                                        <Text style={styles.userInfoText}>NIP</Text>
+                                    </View>
+                                    <View style={{width: 10}}/>
+                                    <View style={styles.userData}>
+                                        <Text style={styles.userDataText}>{this.state.user.nip}</Text>
+                                    </View>
                                 </View>
-                            </View>
-                            <View style={styles.line}/>
-                            <Text style={styles.headerText}>Firma</Text>
-                            <View style={styles.userDataView}>
-                                <View style={styles.userInfo}>
-                                    <Text style={styles.userInfoText}>NIP</Text>
-                                </View>
-                                <View style={{width: 10}}/>
-                                <View style={styles.userData}>
-                                    <Text style={styles.userDataText}>{this.state.user.nip}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.line}/>
-                            <Text style={styles.headerText}>Zgoda</Text>
-                            <View style={styles.consentRow}>
-                                <CheckBox
-                                    checked={this.state.agree1}
-                                    //onPress={() => this.setState({agree1: !this.state.agree1})}
-                                    checkedColor={'#A3A3A3'}
-                                />
-                                <View style={{flex: 1}}>
-                                    <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Statute')}><Text style={[styles.consentText, {fontWeight: 'bold'}]}>Regulaminu Konkursu „Gra Edukacyjna LevelUP”.</Text></TouchableWithoutFeedback> Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
+                                <View style={styles.line}/>
+                                <Text style={styles.headerText}>Zgoda</Text>
+                                <View style={styles.consentRow}>
+                                    <CheckBox
+                                        checked={this.state.agree1}
+                                        //onPress={() => this.setState({agree1: !this.state.agree1})}
+                                        checkedColor={'#A3A3A3'}
+                                    />
+                                    <View style={{flex: 1}}>
+                                        <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Statute')}><Text style={[styles.consentText, {fontWeight: 'bold'}]}>Regulaminu Konkursu „Gra Edukacyjna LevelUP”.</Text></TouchableWithoutFeedback> Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
+                                    </View>
                                 </View>
                             </View>
                         </View>
+                    </ScrollView>
+                    <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
+                    {this.state.isLoading &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' color='#0A3251'/>
                     </View>
-                </ScrollView>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation}/>
-                {this.state.isLoading &&
-                <View style={styles.loading}>
-                    <ActivityIndicator size='large' color='#0A3251'/>
-                </View>
-                }
-            </SafeAreaView>
+                    }
+                </SafeAreaView>
+            </View>
         )
     }
 }

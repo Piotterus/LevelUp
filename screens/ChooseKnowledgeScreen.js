@@ -223,39 +223,41 @@ export default class ChooseKnowledgeScreen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderBurger navigation={this.props.navigation}/>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>WIEDZA</Text>
-                        <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginBottom: 15, alignItems: 'center'}}>
-                            {this.state.weekShow > 1 &&
-                            <Icon onPress={() => this.subtractWeek()} name="arrow-left" size={30} color="#5E6367"/>
-                            }
-                            {this.state.weekShow <= 1 &&
-                            <Icon onPress={() => this.subtractWeek()} name="arrow-left" size={30} color="#5E636700"/>
-                            }
-                            <Text style={{color: '#0A3251'}}>
-                                {this.state.weekShow} runda
-                            </Text>
-                            {this.state.weekShow < this.state.weekMax &&
-                            <Icon onPress={() => this.addWeek()} name="arrow-right" size={30} color="#5E6367"/>
-                            }
-                            {this.state.weekShow >= this.state.weekMax &&
-                            <Icon onPress={() => this.addWeek()} name="arrow-right" size={30} color="#5E636700"/>
-                            }
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderBurger navigation={this.props.navigation}/>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>WIEDZA</Text>
+                            <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginBottom: 15, alignItems: 'center'}}>
+                                {this.state.weekShow > 1 &&
+                                <Icon onPress={() => this.subtractWeek()} name="arrow-left" size={30} color="#5E6367"/>
+                                }
+                                {this.state.weekShow <= 1 &&
+                                <Icon onPress={() => this.subtractWeek()} name="arrow-left" size={30} color="#5E636700"/>
+                                }
+                                <Text style={{color: '#0A3251'}}>
+                                    {this.state.weekShow} runda
+                                </Text>
+                                {this.state.weekShow < this.state.weekMax &&
+                                <Icon onPress={() => this.addWeek()} name="arrow-right" size={30} color="#5E6367"/>
+                                }
+                                {this.state.weekShow >= this.state.weekMax &&
+                                <Icon onPress={() => this.addWeek()} name="arrow-right" size={30} color="#5E636700"/>
+                                }
+                            </View>
+                            {this.createKnowledgeList()}
                         </View>
-                        {this.createKnowledgeList()}
+                    </ScrollView>
+                    <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="KNOWLEDGE"/>
+                    {this.state.isLoading &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' color='#0A3251'/>
                     </View>
-                </ScrollView>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="KNOWLEDGE"/>
-                {this.state.isLoading &&
-                <View style={styles.loading}>
-                    <ActivityIndicator size='large' color='#0A3251'/>
-                </View>
-                }
-            </SafeAreaView>
+                    }
+                </SafeAreaView>
+            </View>
         )
     }
 }

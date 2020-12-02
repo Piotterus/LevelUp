@@ -22,56 +22,58 @@ export default class MainKnowledgeScreen extends React.Component {
 
     render() {
         return(
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{backgroundColor: '#FFFFFF'}}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <HeaderBurger/>
-                <View style={styles.knowledgeNavHeader}>
-                    <Text style={{color: '#0A3251', fontSize: 30, marginTop: 11, fontWeight: 'bold'}}>WIEDZA</Text>
-                    <View style={styles.knowledgeNav}>
-                        <Image source={require('../icons/back_back.png')}/>
-                        <Text style={{fontSize: 13, color: '#0A3251', fontWeight: 'bold'}}>2 tydzień</Text>
-                        <Image source={require('../icons/back_back-1.png')}/>
-                    </View>
-                </View>
-                <View style={[styles.knowledgeMain, {flex: 1}]}>
-                    <View style={[styles.shadow, {width: '90%', alignItems: 'center', borderRadius: 9, paddingBottom: 26, marginTop: 20}]}>
-                        <View style={[styles.knowledgeOne, styles.knowledgeRead]}>
-                            <Text style={[styles.knowledgeTextRead,{fontSize: 14}]}>PONIEDZIAŁEK - 30.06.2020</Text>
-                            <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', marginTop: 9, justifyContent: 'space-between'}}>
-                                <Text style={[styles.knowledgeTextRead,{fontSize: 20, width: '80%'}]}>TU BĘDZIE TYTUŁ WIEDZY Z DANEGO TYGODNIA</Text>
-                                <Image source={require('../icons/left_arrow_alt.png')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', width: '100%', marginTop: 12}}>
-                                <Image source={require('../icons/eye.png')}/>
-                                <Text style={[styles.knowledgeTextRead,{fontSize: 10, marginLeft: 7}]}>Przeczytane</Text>
-                            </View>
-                        </View>
-                        <View style={[styles.knowledgeOne, styles.knowledgeNotRead]}>
-                            <Text style={[styles.knowledgeTextNotRead,{fontSize: 14}]}>PONIEDZIAŁEK - 30.06.2020</Text>
-                            <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', marginTop: 9, justifyContent: 'space-between'}}>
-                                <Text style={[styles.knowledgeTextNotRead,{fontSize: 20, width: '80%'}]}>TU BĘDZIE TYTUŁ WIEDZY Z DANEGO TYGODNIA</Text>
-                                <Image source={require('../icons/left_arrow_alt-2.png')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', width: '100%', marginTop: 12}}>
-                                <Image source={require('../icons/eye_slash-1.png')}/>
-                                <Text style={[styles.knowledgeTextNotRead,{fontSize: 10, marginLeft: 7}]}>Przeczytane</Text>
-                            </View>
-                        </View>
-                        <View style={styles.knowledgeNextDay}>
-                            <Text style={{color: '#2699FB', fontSize: 12}}>ŚRODA</Text>
-                            <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', marginTop: 9, justifyContent: 'space-between'}}>
-                                <Text style={[styles.knowledgeTextRead,{fontSize: 26, width: '80%'}]}>1 LIPCA 2020</Text>
-                                <Image source={require('../icons/left_arrow_alt.png')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', width: '100%', marginTop: 12}}>
-                                <Image source={require('../icons/eye_slash.png')}/>
-                                <Text style={[styles.knowledgeTextRead,{fontSize: 10, marginLeft: 7}]}>Przeczytane</Text>
-                            </View>
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{backgroundColor: '#FFFFFF'}}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <HeaderBurger/>
+                    <View style={styles.knowledgeNavHeader}>
+                        <Text style={{color: '#0A3251', fontSize: 30, marginTop: 11, fontWeight: 'bold'}}>WIEDZA</Text>
+                        <View style={styles.knowledgeNav}>
+                            <Image source={require('../icons/back_back.png')}/>
+                            <Text style={{fontSize: 13, color: '#0A3251', fontWeight: 'bold'}}>2 tydzień</Text>
+                            <Image source={require('../icons/back_back-1.png')}/>
                         </View>
                     </View>
-                </View>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"KNOWLEDGE"}/>
-            </ScrollView>
+                    <View style={[styles.knowledgeMain, {flex: 1}]}>
+                        <View style={[styles.shadow, {width: '90%', alignItems: 'center', borderRadius: 9, paddingBottom: 26, marginTop: 20}]}>
+                            <View style={[styles.knowledgeOne, styles.knowledgeRead]}>
+                                <Text style={[styles.knowledgeTextRead,{fontSize: 14}]}>PONIEDZIAŁEK - 30.06.2020</Text>
+                                <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', marginTop: 9, justifyContent: 'space-between'}}>
+                                    <Text style={[styles.knowledgeTextRead,{fontSize: 20, width: '80%'}]}>TU BĘDZIE TYTUŁ WIEDZY Z DANEGO TYGODNIA</Text>
+                                    <Image source={require('../icons/left_arrow_alt.png')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', width: '100%', marginTop: 12}}>
+                                    <Image source={require('../icons/eye.png')}/>
+                                    <Text style={[styles.knowledgeTextRead,{fontSize: 10, marginLeft: 7}]}>Przeczytane</Text>
+                                </View>
+                            </View>
+                            <View style={[styles.knowledgeOne, styles.knowledgeNotRead]}>
+                                <Text style={[styles.knowledgeTextNotRead,{fontSize: 14}]}>PONIEDZIAŁEK - 30.06.2020</Text>
+                                <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', marginTop: 9, justifyContent: 'space-between'}}>
+                                    <Text style={[styles.knowledgeTextNotRead,{fontSize: 20, width: '80%'}]}>TU BĘDZIE TYTUŁ WIEDZY Z DANEGO TYGODNIA</Text>
+                                    <Image source={require('../icons/left_arrow_alt-2.png')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', width: '100%', marginTop: 12}}>
+                                    <Image source={require('../icons/eye_slash-1.png')}/>
+                                    <Text style={[styles.knowledgeTextNotRead,{fontSize: 10, marginLeft: 7}]}>Przeczytane</Text>
+                                </View>
+                            </View>
+                            <View style={styles.knowledgeNextDay}>
+                                <Text style={{color: '#2699FB', fontSize: 12}}>ŚRODA</Text>
+                                <View style={{flexDirection: 'row', alignItems: 'center', width: '100%', marginTop: 9, justifyContent: 'space-between'}}>
+                                    <Text style={[styles.knowledgeTextRead,{fontSize: 26, width: '80%'}]}>1 LIPCA 2020</Text>
+                                    <Image source={require('../icons/left_arrow_alt.png')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', width: '100%', marginTop: 12}}>
+                                    <Image source={require('../icons/eye_slash.png')}/>
+                                    <Text style={[styles.knowledgeTextRead,{fontSize: 10, marginLeft: 7}]}>Przeczytane</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active={"KNOWLEDGE"}/>
+                </ScrollView>
+            </View>
         )
     }
 }

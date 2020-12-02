@@ -82,35 +82,37 @@ export default class RemindPasswordScreen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderNoLogin/>
-                    <View style={styles.textView}>
-                        <Text style={styles.headerText}>Nie pamiętasz hasła? To nie problem.</Text>
-                        <Text style={styles.normalText}>Wpisz poniżej swój adres poczty elektronicznej podany podczas rejestracji i kliknij przycisk „Wyślij”. Otrzymasz wiadomość e-mail z przypomnieniem danych do logowania.</Text>
-                    </View>
-                    <View style={styles.emailView}>
-                        <TextInput
-                            placeholder="ADRES E-MAIL"
-                            placeholderTextColor="#FFFFFF33"
-                            textAlign='center'
-                            style={styles.textInput}
-                            onChangeText = {(text) => this.updateValue(text,'email')}
-                        />
-                    </View>
-                    <View style={styles.bottomView}>
-                        <TouchableOpacity onPress={() => this.remindPassword()} style={styles.nextButton}>
-                            <Text style={{color: '#FFFFFF', fontSize: 16}}>WYŚLIJ</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.bottomView}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style={[styles.goToLoginButton]}>
-                            <Text style={styles.goToLoginText}>WRÓĆ DO LOGOWANIA</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderNoLogin/>
+                        <View style={styles.textView}>
+                            <Text style={styles.headerText}>Nie pamiętasz hasła? To nie problem.</Text>
+                            <Text style={styles.normalText}>Wpisz poniżej swój adres poczty elektronicznej podany podczas rejestracji i kliknij przycisk „Wyślij”. Otrzymasz wiadomość e-mail z przypomnieniem danych do logowania.</Text>
+                        </View>
+                        <View style={styles.emailView}>
+                            <TextInput
+                                placeholder="ADRES E-MAIL"
+                                placeholderTextColor="#FFFFFF33"
+                                textAlign='center'
+                                style={styles.textInput}
+                                onChangeText = {(text) => this.updateValue(text,'email')}
+                            />
+                        </View>
+                        <View style={styles.bottomView}>
+                            <TouchableOpacity onPress={() => this.remindPassword()} style={styles.nextButton}>
+                                <Text style={{color: '#FFFFFF', fontSize: 16}}>WYŚLIJ</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.bottomView}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style={[styles.goToLoginButton]}>
+                                <Text style={styles.goToLoginText}>WRÓĆ DO LOGOWANIA</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
+            </View>
         )
     }
 }

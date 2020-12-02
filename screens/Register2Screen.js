@@ -57,37 +57,39 @@ export default class Register2Screen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderNoLogin/>
-                    <View style={styles.textView}>
-                        <Text style={styles.headerText}>Chcesz dołączyć do Level.UP?</Text>
-                        <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej Level.UP.</Text>
-                    </View>
-                    <View style={styles.registerView}>
-                        <Text style={styles.stepText}>Krok 2/3</Text>
-                        <Text style={styles.stepText}>Firma</Text>
-                        <TextInput
-                            placeholder="NIP"
-                            placeholderTextColor="#FFFFFF33"
-                            textAlign='center'
-                            style={styles.textInput}
-                            onChangeText = {(text) => this.updateValue(text,'firmNIP')}
-                        />
-                    </View>
-                    <View style={styles.bottomView}>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.backButton}>
-                            <View style={{flex: 1}}>
-                                <Icon name="chevron-left" size={50} color="#2592E6" />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.goToNextScreen()} style={styles.nextButton}>
-                            <Text style={{color: '#FFFFFF', fontSize: 16}}>DALEJ >>></Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderNoLogin/>
+                        <View style={styles.textView}>
+                            <Text style={styles.headerText}>Chcesz dołączyć do Level.UP?</Text>
+                            <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej Level.UP.</Text>
+                        </View>
+                        <View style={styles.registerView}>
+                            <Text style={styles.stepText}>Krok 2/3</Text>
+                            <Text style={styles.stepText}>Firma</Text>
+                            <TextInput
+                                placeholder="NIP"
+                                placeholderTextColor="#FFFFFF33"
+                                textAlign='center'
+                                style={styles.textInput}
+                                onChangeText = {(text) => this.updateValue(text,'firmNIP')}
+                            />
+                        </View>
+                        <View style={styles.bottomView}>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.backButton}>
+                                <View style={{flex: 1}}>
+                                    <Icon name="chevron-left" size={50} color="#2592E6" />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.goToNextScreen()} style={styles.nextButton}>
+                                <Text style={{color: '#FFFFFF', fontSize: 16}}>DALEJ >>></Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
+            </View>
         )
     }
 }

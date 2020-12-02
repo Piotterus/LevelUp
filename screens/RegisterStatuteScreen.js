@@ -92,34 +92,36 @@ export default class RegisterStatuteScreen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1, backgroundColor: '#0A3251'}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderNoLogin navigation={this.props.navigation}/>
-                    <View style={[styles.knowledgeMain,{flex: 1,  backgroundColor: '#0A3251'}]}>
-                        <Text style={styles.knowledgeHeaderText}>{this.state.title}</Text>
-                        <View style={[styles.shadow, styles.myAccount, {flex: 1}]}>
-                            {/*this.state.content !== '' &&
-                                <HTML html={this.state.content}/>
-                            */}
-                            <WebView
-                                originWhitelist={['*']}
-                                source={{ html: this.state.content }}
-                                style={{width: Dimensions.get('window').width*0.85}}
-                                scalesPageToFit={false}
-                            />
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1, backgroundColor: '#0A3251'}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderNoLogin navigation={this.props.navigation}/>
+                        <View style={[styles.knowledgeMain,{flex: 1,  backgroundColor: '#0A3251'}]}>
+                            <Text style={styles.knowledgeHeaderText}>{this.state.title}</Text>
+                            <View style={[styles.shadow, styles.myAccount, {flex: 1}]}>
+                                {/*this.state.content !== '' &&
+                                    <HTML html={this.state.content}/>
+                                */}
+                                <WebView
+                                    originWhitelist={['*']}
+                                    source={{ html: this.state.content }}
+                                    style={{width: Dimensions.get('window').width*0.85}}
+                                    scalesPageToFit={false}
+                                />
+                            </View>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={[styles.nextButton, {marginTop: 10}]}>
+                                <Text style={{color: '#FFFFFF', fontSize: 16}}>WRÓĆ</Text>
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={[styles.nextButton, {marginTop: 10}]}>
-                            <Text style={{color: '#FFFFFF', fontSize: 16}}>WRÓĆ</Text>
-                        </TouchableOpacity>
+                    </ScrollView>
+                    {this.state.isLoading &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' color='#0A3251'/>
                     </View>
-                </ScrollView>
-                {this.state.isLoading &&
-                <View style={styles.loading}>
-                    <ActivityIndicator size='large' color='#0A3251'/>
-                </View>
-                }
-            </SafeAreaView>
+                    }
+                </SafeAreaView>
+            </View>
         )
     }
 }

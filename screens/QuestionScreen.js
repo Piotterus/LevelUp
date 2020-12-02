@@ -327,33 +327,35 @@ export default class QuestionScreen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderBurger navigation={this.props.navigation}/>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>PYTANIA</Text>
-                        <View style={[styles.shadow, styles.questionView]}>
-                            {this.createQuestionList()}
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                {this.buttonsNavigate()}
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderBurger navigation={this.props.navigation}/>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>PYTANIA</Text>
+                            <View style={[styles.shadow, styles.questionView]}>
+                                {this.createQuestionList()}
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    {this.buttonsNavigate()}
+                                </View>
+                                {this.state.questionNumber >= this.state.questionCount &&
+                                    <TouchableOpacity onPress={() => this.sendPoll()}
+                                                      style={[styles.buttonBase, styles.shadow, styles.buttonConsent, {backgroundColor: '#0E395A', alignSelf: 'center'}]}>
+                                        <Text style={styles.buttonText}>ZAPISZ ODPOWIEDŹ</Text>
+                                    </TouchableOpacity>
+                                }
                             </View>
-                            {this.state.questionNumber >= this.state.questionCount &&
-                                <TouchableOpacity onPress={() => this.sendPoll()}
-                                                  style={[styles.buttonBase, styles.shadow, styles.buttonConsent, {backgroundColor: '#0E395A', alignSelf: 'center'}]}>
-                                    <Text style={styles.buttonText}>ZAPISZ ODPOWIEDŹ</Text>
-                                </TouchableOpacity>
-                            }
                         </View>
+                    </ScrollView>
+                    <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="QUESTIONS"/>
+                    {this.state.isLoading &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' color='#0A3251'/>
                     </View>
-                </ScrollView>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="QUESTIONS"/>
-                {this.state.isLoading &&
-                <View style={styles.loading}>
-                    <ActivityIndicator size='large' color='#0A3251'/>
-                </View>
-                }
-            </SafeAreaView>
+                    }
+                </SafeAreaView>
+            </View>
         )
     }
 }

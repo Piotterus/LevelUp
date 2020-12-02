@@ -173,33 +173,35 @@ export default class EnterQuestionsScreen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderBurger navigation={this.props.navigation}/>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.knowledgeNav}>
-                            <Image source={require('../icons/back_back.png')}/>
-                            <Text style={{fontSize: 13, color: '#5E6367', marginLeft: 15}}>WRÓĆ</Text>
-                        </TouchableOpacity>
-                        <View style={[styles.shadow, styles.questionMain]}>
-                            <Text style={styles.knowledgeHeaderText}>TESTUJ WIEDZĘ</Text>
-                            <Text style={styles.knowledgeText}>Przygotuj się i daj z siebie wszystko, by zadbać o doskonały wynik, bo na te pytania możesz odpowiedzieć tylko raz!</Text>
-                            {this.createQuestionList()}
-                            <View style={styles.additionalQuestions}>
-                                {this.createQuestionLifebuoy()}
-                                {this.createQuestionTurbo()}
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderBurger navigation={this.props.navigation}/>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.knowledgeNav}>
+                                <Image source={require('../icons/back_back.png')}/>
+                                <Text style={{fontSize: 13, color: '#5E6367', marginLeft: 15}}>WRÓĆ</Text>
+                            </TouchableOpacity>
+                            <View style={[styles.shadow, styles.questionMain]}>
+                                <Text style={styles.knowledgeHeaderText}>TESTUJ WIEDZĘ</Text>
+                                <Text style={styles.knowledgeText}>Przygotuj się i daj z siebie wszystko, by zadbać o doskonały wynik, bo na te pytania możesz odpowiedzieć tylko raz!</Text>
+                                {this.createQuestionList()}
+                                <View style={styles.additionalQuestions}>
+                                    {this.createQuestionLifebuoy()}
+                                    {this.createQuestionTurbo()}
+                                </View>
                             </View>
                         </View>
+                    </ScrollView>
+                    <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="QUESTIONS"/>
+                    {this.state.isLoading &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' color='#0A3251'/>
                     </View>
-                </ScrollView>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="QUESTIONS"/>
-                {this.state.isLoading &&
-                <View style={styles.loading}>
-                    <ActivityIndicator size='large' color='#0A3251'/>
-                </View>
-                }
-            </SafeAreaView>
+                    }
+                </SafeAreaView>
+            </View>
         )
     }
 }

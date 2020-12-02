@@ -116,49 +116,49 @@ export default class OneKnowledgeScreen extends React.Component {
     };
 
     render() {
-        console.log("longContent");
-        console.log(this.state.longContent);
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderBurger navigation={this.props.navigation}/>
-                    <View style={[styles.knowledgeMain, {flex: 1}]}>
-                        <Text style={styles.knowledgeHeaderText}>WIEDZA</Text>
-                        <View style={[styles.knowledgeOne, styles.shadow]}>
-                            <View style={styles.knowledgeDesc} onLayout={(event) => { this.findDimensionsView(event.nativeEvent.layout) }}>
-                                <Text style={[styles.knowledgeDescText, {fontSize: 18, marginTop: 5}]}>{this.state.title}</Text>
-                                {this.state.showContent === 'short' && this.state.shortContent !== '' &&
-                                    <HTML html={this.state.shortContent} imagesMaxWidth={this.state.htmlWidth}/>
-                                }
-                                {this.state.showContent === 'long' && this.state.knowledgeItem.longContent !== '' &&
-                                /*<Text style={[styles.knowledgeDescText, {fontSize: 16, marginTop: 24}]}>*/
-                                    <HTML html={this.state.longContent} imagesMaxWidth={this.state.htmlWidth}/>
-                                /*</Text>*/
-                                }
-                                {this.state.showContent === 'short' &&
-                                    <TouchableOpacity onPress={() => this.showContent('long')} style={[styles.buttonBase, styles.shadow, {
-                                        backgroundColor: '#2592E6',
-                                        marginTop: 5,
-                                        marginBottom: 5
-                                    }]}>
-                                        <Text style={{color: '#FFFFFF', fontSize: 13}}>POKAŻ WIĘCEJ</Text>
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderBurger navigation={this.props.navigation}/>
+                        <View style={[styles.knowledgeMain, {flex: 1}]}>
+                            <Text style={styles.knowledgeHeaderText}>WIEDZA</Text>
+                            <View style={[styles.knowledgeOne, styles.shadow]}>
+                                <View style={styles.knowledgeDesc} onLayout={(event) => { this.findDimensionsView(event.nativeEvent.layout) }}>
+                                    <Text style={[styles.knowledgeDescText, {fontSize: 18, marginTop: 5}]}>{this.state.title}</Text>
+                                    {this.state.showContent === 'short' && this.state.shortContent !== '' &&
+                                        <HTML html={this.state.shortContent} imagesMaxWidth={this.state.htmlWidth}/>
+                                    }
+                                    {this.state.showContent === 'long' && this.state.knowledgeItem.longContent !== '' &&
+                                    /*<Text style={[styles.knowledgeDescText, {fontSize: 16, marginTop: 24}]}>*/
+                                        <HTML html={this.state.longContent} imagesMaxWidth={this.state.htmlWidth}/>
+                                    /*</Text>*/
+                                    }
+                                    {this.state.showContent === 'short' &&
+                                        <TouchableOpacity onPress={() => this.showContent('long')} style={[styles.buttonBase, styles.shadow, {
+                                            backgroundColor: '#2592E6',
+                                            marginTop: 5,
+                                            marginBottom: 5
+                                        }]}>
+                                            <Text style={{color: '#FFFFFF', fontSize: 13}}>POKAŻ WIĘCEJ</Text>
+                                        </TouchableOpacity>
+                                    }
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6', marginTop: 30, marginBottom: 42}]}>
+                                        <Text style={{color: '#FFFFFF', fontSize: 13}}>PRZEJDŹ DO PYTAŃ</Text>
                                     </TouchableOpacity>
-                                }
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6', marginTop: 30, marginBottom: 42}]}>
-                                    <Text style={{color: '#FFFFFF', fontSize: 13}}>PRZEJDŹ DO PYTAŃ</Text>
-                                </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
+                    </ScrollView>
+                    <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="KNOWLEDGE"/>
+                    {this.state.isLoading &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' color='#0A3251'/>
                     </View>
-                </ScrollView>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="KNOWLEDGE"/>
-                {this.state.isLoading &&
-                <View style={styles.loading}>
-                    <ActivityIndicator size='large' color='#0A3251'/>
-                </View>
-                }
-            </SafeAreaView>
+                    }
+                </SafeAreaView>
+            </View>
         )
     }
 }

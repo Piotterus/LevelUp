@@ -128,49 +128,51 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={styles.view} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scrollView}>
-                    <ImageBackground source={require('../images/levelup_start_v2.png')} resizeMode='cover' style={styles.imageBackground}>
-                        <View style={[styles.insideView, {flex: 1}]}>
-                            <TextInput
-                                placeholder="LOGIN"
-                                placeholderTextColor="#FFFFFF33"
-                                textAlign='center'
-                                style={styles.textInput}
-                                onChangeText = {(text) => this.updateValue(text,'login')}
-                                autoCapitalize="none"
-                            />
-                            <TextInput
-                                placeholder="HASŁO"
-                                placeholderTextColor="#FFFFFF33"
-                                textAlign='center'
-                                style={styles.textInput}
-                                secureTextEntry={true}
-                                onChangeText = {(text) => this.updateValue(text,'password')}
-                                autoCapitalize="none"
-                            />
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("RemindPassword")} style={styles.remindMeView}>
-                                <Text style={styles.remindMeText}>Nie pamiętasz hasła?</Text>
-                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                    <Text style={styles.remindMeText}>Zapamiętaj mnie</Text>
-                                    <Switch
-                                        value={this.state.rememberEnabled}
-                                        onValueChange={() => this.setState({rememberEnabled: !this.state.rememberEnabled})}
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.login(this.state.login, this.state.password)} style={styles.loginButton}>
-                                <Text style={styles.loginText}>ZALOGUJ SIĘ</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("Register1")} style={styles.signinButton}>
-                                <Text style={styles.signinText}>DOŁĄCZ DO GRY </Text>
-                                <Image width="23" height="23" source={require('../icons/add.png')} />
-                            </TouchableOpacity>
-                        </View>
-                    </ImageBackground>
-                </ScrollView>
-            </SafeAreaView>
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={styles.view} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scrollView}>
+                        <ImageBackground source={require('../images/levelup_start_v2.png')} resizeMode='cover' style={styles.imageBackground}>
+                            <View style={[styles.insideView, {flex: 1}]}>
+                                <TextInput
+                                    placeholder="LOGIN"
+                                    placeholderTextColor="#FFFFFF33"
+                                    textAlign='center'
+                                    style={styles.textInput}
+                                    onChangeText = {(text) => this.updateValue(text,'login')}
+                                    autoCapitalize="none"
+                                />
+                                <TextInput
+                                    placeholder="HASŁO"
+                                    placeholderTextColor="#FFFFFF33"
+                                    textAlign='center'
+                                    style={styles.textInput}
+                                    secureTextEntry={true}
+                                    onChangeText = {(text) => this.updateValue(text,'password')}
+                                    autoCapitalize="none"
+                                />
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate("RemindPassword")} style={styles.remindMeView}>
+                                    <Text style={styles.remindMeText}>Nie pamiętasz hasła?</Text>
+                                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                        <Text style={styles.remindMeText}>Zapamiętaj mnie</Text>
+                                        <Switch
+                                            value={this.state.rememberEnabled}
+                                            onValueChange={() => this.setState({rememberEnabled: !this.state.rememberEnabled})}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.login(this.state.login, this.state.password)} style={styles.loginButton}>
+                                    <Text style={styles.loginText}>ZALOGUJ SIĘ</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate("Register1")} style={styles.signinButton}>
+                                    <Text style={styles.signinText}>DOŁĄCZ DO GRY </Text>
+                                    <Image width="23" height="23" source={require('../icons/add.png')} />
+                                </TouchableOpacity>
+                            </View>
+                        </ImageBackground>
+                    </ScrollView>
+                </SafeAreaView>
+            </View>
         )
 
     }

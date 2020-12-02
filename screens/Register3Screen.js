@@ -99,64 +99,66 @@ export default class Register3Screen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderNoLogin/>
-                    <View style={styles.textView}>
-                        <Text style={styles.headerText}>Chcesz dołączyć do Level.UP?</Text>
-                        <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej Level.UP.</Text>
-                    </View>
-                    <View style={styles.registerView}>
-                        <Text style={styles.stepText}>Krok 3/3</Text>
-                        <Text style={styles.stepText}>Zgody</Text>
-                        <View style={styles.consentRow}>
-                            <CheckBox
-                                checked={this.state.agree1}
-                                onPress={() => this.setState({agree1: !this.state.agree1})}
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                    <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={[styles.backgroundContent, {flexGrow: 1}]} style={styles.background}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderNoLogin/>
+                        <View style={styles.textView}>
+                            <Text style={styles.headerText}>Chcesz dołączyć do Level.UP?</Text>
+                            <Text style={styles.normalText}>Wypełnij poniższy formularz, a za moment otrzymasz mailem swoje dane dostępowe do gry treningowej Level.UP.</Text>
+                        </View>
+                        <View style={styles.registerView}>
+                            <Text style={styles.stepText}>Krok 3/3</Text>
+                            <Text style={styles.stepText}>Zgody</Text>
+                            <View style={styles.consentRow}>
+                                <CheckBox
+                                    checked={this.state.agree1}
+                                    onPress={() => this.setState({agree1: !this.state.agree1})}
                                 />
-                            <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('RegisterStatute')}><Text style={[styles.consentText, {fontWeight: 'bold'}]}>Regulaminu Konkursu „Gra Edukacyjna LevelUP”.</Text></TouchableWithoutFeedback>. Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
-                        </View>
-                        {/*<View style={styles.consentRow}>
-                            <Text style={styles.consentText}>Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z obowiązującymi przepisami prawa w celach komunikacji marketingowej, niezwiązanej z Konkursem następującymi kanałami:</Text>
-                        </View>
-                        <View style={styles.consentRow}>
-                            <CheckBox
-                                checked={this.state.agree2}
-                                onPress={() => this.setState({agree2: !this.state.agree2})}
-                            />
-                            <Text style={styles.consentText}>Telefon</Text>
-                        </View>
-                        <View style={styles.consentRow}>
-                            <CheckBox
-                                checked={this.state.agree3}
-                                onPress={() => this.setState({agree3: !this.state.agree3})}
-                            />
-                            <Text style={styles.consentText}>SMS</Text>
-                        </View>
-                        <View style={styles.consentRow}>
-                            <CheckBox
-                                checked={this.state.agree4}
-                                onPress={() => this.setState({agree4: !this.state.agree4})}
-                            />
-                            <Text style={styles.consentText}>Poczta elektroniczna</Text>
-                        </View>
-                        <View style={styles.consentRow}>
-                            <Text style={styles.consentText}>Wyrażenie tych zgód jest dobrowolne tzn. że nie stanowi warunku uczestnictwa w Konkursie. Zaznaczając którąkolwiek ze zgód potwierdza Pan/Pani swoje uprawnienie do reprezentowania firmy. Zgody mogą zostać wycofane w każdym czasie; wycofanie zgody numer 1 będzie jednak oznaczać zakończenie udziału firmy w Konkursie „Gra szkoleniowa GOOD GAME”. Szczegóły znajdziesz w Regulaminie Konkursu.</Text>
-                        </View>*/}
-                    </View>
-                    <View style={styles.bottomView}>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.backButton}>
-                            <View style={{flex: 1}}>
-                                <Icon name="chevron-left" size={50} color="#2592E6" />
+                                <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('RegisterStatute')}><Text style={[styles.consentText, {fontWeight: 'bold'}]}>Regulaminu Konkursu „Gra Edukacyjna LevelUP”.</Text></TouchableWithoutFeedback>. Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.registerUser()} style={styles.nextButton}>
-                            <Text style={{color: '#FFFFFF', fontSize: 16}}>ZAREJESTRUJ SIĘ</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
+                            {/*<View style={styles.consentRow}>
+                                    <Text style={styles.consentText}>Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z obowiązującymi przepisami prawa w celach komunikacji marketingowej, niezwiązanej z Konkursem następującymi kanałami:</Text>
+                                </View>
+                                <View style={styles.consentRow}>
+                                    <CheckBox
+                                        checked={this.state.agree2}
+                                        onPress={() => this.setState({agree2: !this.state.agree2})}
+                                    />
+                                    <Text style={styles.consentText}>Telefon</Text>
+                                </View>
+                                <View style={styles.consentRow}>
+                                    <CheckBox
+                                        checked={this.state.agree3}
+                                        onPress={() => this.setState({agree3: !this.state.agree3})}
+                                    />
+                                    <Text style={styles.consentText}>SMS</Text>
+                                </View>
+                                <View style={styles.consentRow}>
+                                    <CheckBox
+                                        checked={this.state.agree4}
+                                        onPress={() => this.setState({agree4: !this.state.agree4})}
+                                    />
+                                    <Text style={styles.consentText}>Poczta elektroniczna</Text>
+                                </View>
+                                <View style={styles.consentRow}>
+                                    <Text style={styles.consentText}>Wyrażenie tych zgód jest dobrowolne tzn. że nie stanowi warunku uczestnictwa w Konkursie. Zaznaczając którąkolwiek ze zgód potwierdza Pan/Pani swoje uprawnienie do reprezentowania firmy. Zgody mogą zostać wycofane w każdym czasie; wycofanie zgody numer 1 będzie jednak oznaczać zakończenie udziału firmy w Konkursie „Gra szkoleniowa GOOD GAME”. Szczegóły znajdziesz w Regulaminie Konkursu.</Text>
+                                </View>*/}
+                        </View>
+                        <View style={styles.bottomView}>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.backButton}>
+                                <View style={{flex: 1}}>
+                                    <Icon name="chevron-left" size={50} color="#2592E6" />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.registerUser()} style={styles.nextButton}>
+                                <Text style={{color: '#FFFFFF', fontSize: 16}}>ZAREJESTRUJ SIĘ</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
+            </View>
         )
     }
 }

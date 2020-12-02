@@ -23,28 +23,30 @@ export default class EnterKnowledgeScreen extends React.Component {
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75, backgroundColor: '#FFFFFF'}}>
-                    <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
-                    <HeaderBurger navigation={this.props.navigation}/>
-                    <View style={[styles.knowledgeView, {flex: 1}]}>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.knowledgeNav}>
-                            <Image source={require('../icons/back_back.png')}/>
-                            <Text style={{fontSize: 13, color: '#5E6367', marginLeft: 15}}>WRÓĆ</Text>
-                        </TouchableOpacity>
-                        <View style={[styles.knowledgeMain, styles.shadow]}>
-                            <Text style={{fontSize: 36, color: '#0A3251', marginTop: 34}}>WIEDZA</Text>
-                            <Image source={require('../icons/wiedza.png')}/>
-                            <Text style={{fontSize: 17, color: '#0E395A', textAlign: 'center', marginBottom: 20}}>Tu dowiesz się wszystkiego co niezbędne, by wziąć udział w teście i osiągnąć znakomity wynik.</Text>
-                            <Text style={{fontSize: 17, color: '#0E395A', textAlign: 'center'}}>Widzisz czerwony przycisk? W takim razie kolejna porcja wiedzy czeka na Ciebie, nie zwlekaj i ruszaj!</Text>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("ChooseKnowledge")} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6', marginTop: 41, marginBottom: 42}]}>
-                                <Text style={{color: '#FFFFFF', fontSize: 13}}>WEJDŹ</Text>
+            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+                <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75, backgroundColor: '#FFFFFF'}}>
+                        <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <HeaderBurger navigation={this.props.navigation}/>
+                        <View style={[styles.knowledgeView, {flex: 1}]}>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.knowledgeNav}>
+                                <Image source={require('../icons/back_back.png')}/>
+                                <Text style={{fontSize: 13, color: '#5E6367', marginLeft: 15}}>WRÓĆ</Text>
                             </TouchableOpacity>
+                            <View style={[styles.knowledgeMain, styles.shadow]}>
+                                <Text style={{fontSize: 36, color: '#0A3251', marginTop: 34}}>WIEDZA</Text>
+                                <Image source={require('../icons/wiedza.png')}/>
+                                <Text style={{fontSize: 17, color: '#0E395A', textAlign: 'center', marginBottom: 20}}>Tu dowiesz się wszystkiego co niezbędne, by wziąć udział w teście i osiągnąć znakomity wynik.</Text>
+                                <Text style={{fontSize: 17, color: '#0E395A', textAlign: 'center'}}>Widzisz czerwony przycisk? W takim razie kolejna porcja wiedzy czeka na Ciebie, nie zwlekaj i ruszaj!</Text>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate("ChooseKnowledge")} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6', marginTop: 41, marginBottom: 42}]}>
+                                    <Text style={{color: '#FFFFFF', fontSize: 13}}>WEJDŹ</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
-                </ScrollView>
-                <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="KNOWLEDGE"/>
-            </SafeAreaView>
+                    </ScrollView>
+                    <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="KNOWLEDGE"/>
+                </SafeAreaView>
+            </View>
         )
     }
 }
