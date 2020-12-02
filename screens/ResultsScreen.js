@@ -319,7 +319,7 @@ export default class ResultsScreen extends  React.Component {
     render() {
         return(
             <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75, backgroundColor: 'red'}}>
                     <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                     <HeaderBurger navigation={this.props.navigation}/>
                     <Modal isVisible={this.state.modalVisible}>
@@ -368,7 +368,7 @@ export default class ResultsScreen extends  React.Component {
                             </View>
                         </TouchableWithoutFeedback>
                     </Modal>
-                    <View style={[styles.mainView, {flex: 1}]}>
+                    <View style={[styles.mainView, {flex: 1, backgroundColor: 'blue'}]}>
                         <Text style={styles.levelText}>MOJE WYNIKI</Text>
                         <View style={[styles.chooseContentView]}>
                             <TouchableOpacity onPress={() => this.changeContent('ogolne')}>
@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         marginTop: -5,
-        //paddingBottom: 10,
+        paddingBottom: 10,
         zIndex: 1,
     },
     levelText: {
