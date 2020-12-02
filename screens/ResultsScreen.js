@@ -6,7 +6,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     ScrollView,
-    TouchableWithoutFeedback, ActivityIndicator, SafeAreaView,
+    TouchableWithoutFeedback, ActivityIndicator,
 } from 'react-native';
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
@@ -22,6 +22,7 @@ import QuestionLifebuoy from '../components/QuestionLifebuoy';
 import QuestionTurbo from '../components/QuestionTurbo';
 import Ranking from '../components/resultsScreen/Ranking';
 import MyRanking from '../components/resultsScreen/MyRanking';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default class ResultsScreen extends  React.Component {
 
