@@ -128,7 +128,7 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return(
-            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+            <View style={{flex: 1, backgroundColor: '#0E3959'}}>
                 <SafeAreaView style={styles.view} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
                     <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
                     <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scrollView}>
