@@ -119,10 +119,14 @@ export default class EnterQuestionsScreen extends React.Component {
             }
         }
         if (questionLifebuoy.length === 0) {
-            questionLifebuoy.push(<QuestionLifebuoy key={i}
+            let status = {
+                id: 4
+            };
+            questionLifebuoy.push(<QuestionLifebuoy key={0}
                                                     navigation={this.props.navigation}
                                                     id={4}
                                                     active={false}
+                                                    status={status}
             />)
         }
         return questionLifebuoy;
@@ -132,7 +136,7 @@ export default class EnterQuestionsScreen extends React.Component {
         let questionTurbo = [];
         for (let i in this.state.questionList) {
             if (this.state.questionList[i].modelId === 2 ) {
-                questionTurbo.push(<QuestionTurbo key={i}
+                questionTurbo.push(<QuestionTurbo   key={i}
                                                     navigation={this.props.navigation}
                                                     id={this.state.questionList[i].id}
                                                     active={this.state.questionList[i].isActive}
@@ -143,10 +147,14 @@ export default class EnterQuestionsScreen extends React.Component {
             }
         }
         if (questionTurbo.length === 0) {
-            questionTurbo.push(<QuestionLifebuoy key={i}
+            let status = {
+                id: 4
+            };
+            questionTurbo.push(<QuestionTurbo    key={0}
                                                     navigation={this.props.navigation}
                                                     id={4}
                                                     active={false}
+                                                    status={status}
             />)
         }
         return questionTurbo;
