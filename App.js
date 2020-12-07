@@ -66,8 +66,7 @@ export default class App extends  React.Component {
     }
 
     componentDidMount() {
-        setTimeout(this.setup.bind(this), 1000);
-        console.log("MOUNT");
+        setTimeout(this.setup.bind(this), 500);
     }
 
     componentWillUnmount() {
@@ -105,8 +104,6 @@ export default class App extends  React.Component {
     setup = async() => {
         const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
         const token = await AsyncStorage.getItem('token');
-        console.log(token);
-        console.log(isLoggedIn);
         if (isLoggedIn !== '1') {
             this.setState({
                 isSettingUp: false
@@ -119,12 +116,6 @@ export default class App extends  React.Component {
             })
         }
     };
-
-    /*setup() {
-        this.setState( {
-            isSettingUp: false
-        }, this.logout.bind(this) )
-    }*/
 
     login(token) {
         this.setState( {
