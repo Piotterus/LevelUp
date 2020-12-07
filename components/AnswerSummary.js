@@ -8,10 +8,7 @@ import Icon from 'react-native-vector-icons/Feather';
 export default class AnswerSummary extends React.Component {
 
     render() {
-        console.log("CORRECT " + this.props.correct);
-        console.log("VALUE " + this.props.value);
         if (this.props.correct === "1") {
-            console.log("CORRECT 1");
             return(
                 <View style={[styles.shadow, styles.answerView, {borderColor: '#24A100', borderWidth: 3}]}>
                     <CheckBox
@@ -28,7 +25,6 @@ export default class AnswerSummary extends React.Component {
                 </View>
             )
         } else if (this.props.value === true) {
-            console.log("VALUE TRUE");
             return(
                 <View style={[styles.shadow, styles.answerView, {borderColor: '#E20000', borderWidth: 3}]}>
                     <CheckBox

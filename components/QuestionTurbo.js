@@ -5,7 +5,7 @@ import {StyleSheet, TouchableOpacity, Image} from "react-native";
 export default class QuestionTurbo extends React.Component {
 
     render() {
-        if (this.props.active) {
+        if (this.props.active && this.props.status.id === 3) {
             return (
                 <TouchableOpacity style={{flex: 1}} onPress={() => this.props.navigation.navigate('Question', {id: this.props.id, model: this.props.model})}>
                     <Image resizeMode='contain' style={{width: '100%'}} source={require('../images/Group_176.png')}/>

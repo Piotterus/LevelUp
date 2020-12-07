@@ -43,12 +43,12 @@ export default class LoginScreen extends React.Component {
 
     login(login,password) {
 
-        if (login === "") {
-            login = "PL22"//"PL42"//"PL22"
+        /*if (login === "") {
+            login = "PL22"//"PL45"//"PL42"//"PL22"
         }
         if (password === "") {
-            password = "9LB92F3D"//"3DG61B7L"//"9LB92F3D"
-        }
+            password = "9LB92F3D"//"7FD73G7G"//"3DG61B7L"//"9LB92F3D"
+        }*/
 
         const queryString = this.objToQueryString({
             key: this.props.keyApp,
@@ -56,7 +56,6 @@ export default class LoginScreen extends React.Component {
         let body = {
             login: login,
             password: password,
-            device: 'testdevice1234',
             from: 'app',
         };
 
@@ -84,7 +83,13 @@ export default class LoginScreen extends React.Component {
                 }
             })
             .catch((error) => {
-                console.error(error);
+                this.setState({
+                    isLoading: false,
+                    error: {
+                        code: "BŁĄD",
+                        message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                    }
+                }, () => this.setModalErrorVisible(true));
             });
     }
 
@@ -152,7 +157,7 @@ export default class LoginScreen extends React.Component {
                                     autoCapitalize="none"
                                 />
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate("RemindPassword")} style={styles.remindMeView}>
-                                    <Text style={styles.remindMeText}>Nie pamiętasz hasła?</Text>
+                                    <Text style={styles.remindMeText}>Przypomnij hasło</Text>
                                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                         <Text style={styles.remindMeText}>Zapamiętaj mnie</Text>
                                         <Switch

@@ -27,7 +27,6 @@ export default class Register3Screen extends React.Component {
             agree1: false,
             error: '',
         };
-        console.log(this.state)
     }
 
     objToQueryString(obj) {
@@ -88,7 +87,13 @@ export default class Register3Screen extends React.Component {
                     }
                 })
                 .catch((error) => {
-                    console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
         }
     }

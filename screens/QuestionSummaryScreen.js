@@ -93,12 +93,17 @@ export default class QuestionSummaryScreen extends React.Component {
                         this.setState({
                             isLoading: false,
                             error: responseJson.error,
-                        })
+                        }, () => this.setModalErrorVisible(true))
                     }
                 })
                 .catch((error) => {
-                    this.setState({isLoading: false});
-                    console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {
@@ -177,7 +182,7 @@ export default class QuestionSummaryScreen extends React.Component {
 
     render() {
         return(
-            <View style={{flex: 1, backgroundColor: '#0A3251'}}>
+            <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
                     <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
                     <ScrollView style={{backgroundColor: '#FFFFFF'}} contentContainerStyle={{ flexGrow: 1 }}>
                         <View style={{marginBottom: 55}}>

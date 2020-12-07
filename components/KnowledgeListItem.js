@@ -13,7 +13,7 @@ export default class KnowledgeListItem extends React.Component {
             if (this.props.status.id === 1) {
                 return (
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('OneKnowledge', {id: this.props.id})}
+                        onPress={() => this.props.navigation.navigate('OneKnowledge', {id: this.props.id, goToQuestion: this.props.goToQuestion})}
                         style={[styles.knowledgeOne, styles.shadow, {borderColor: '#2592E6', borderWidth: 1, borderRadius: 9}]}>
                         <View style={styles.knowledgeDesc}>
                             <Text style={[styles.knowledgeDescText, styles.knowledgeTextRead, {fontSize: 12, fontWeight: 'normal'}]}>{this.props.day.toUpperCase()} - {date.format('DD-M-Y')}</Text>
@@ -37,7 +37,7 @@ export default class KnowledgeListItem extends React.Component {
             } else if (this.props.status.id === 2) {
                 return (
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('OneKnowledge', {id: this.props.id})}
+                        onPress={() => this.props.navigation.navigate('OneKnowledge', {id: this.props.id, goToQuestion: this.props.goToQuestion})}
                         style={[styles.knowledgeOne, styles.shadow, {backgroundColor: '#E20000'}]}>
                         <View style={[styles.knowledgeDesc]}>
                             <Text style={[styles.knowledgeDescText, styles.knowledgeTextNotRead, {fontSize: 12, fontWeight: 'normal'}]}>{this.props.day.toUpperCase()} - {date.format('DD-M-Y')}</Text>

@@ -9,7 +9,6 @@ export default class Question extends React.Component {
 
     createAnswersList() {
         let answersList = [];
-        //console.log("ANSWERS LIST: " + JSON.stringify(this.props.answers))
         for (let i in this.props.answers) {
             answersList.push(<Answer key={i}
                                      navigation={this.props.navigation}
@@ -24,8 +23,6 @@ export default class Question extends React.Component {
     }
 
     render() {
-        //console.log("SHOW-" + this.props.showQuestion);
-        //console.log("NUMBER-" + this.props.number);
         if  (this.props.showQuestion === this.props.number) {
             return (
                 <View>

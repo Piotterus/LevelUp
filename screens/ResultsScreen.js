@@ -117,8 +117,13 @@ export default class ResultsScreen extends  React.Component {
                             level: responseJson.userData.rank.level,
                             rounds: responseJson.userData.rounds,
                             points2level: responseJson.userData.rank.points2level,
-                            activeRound: responseJson.userData.round,
-                        }, () => this.getActiveRound())
+
+                        });
+                        if (this.state.activeRound === '') {
+                            this.setState({
+                                activeRound: responseJson.userData.round,
+                            }, () => this.getActiveRound())
+                        }
                     } else {
                         this.setState({
                             error: responseJson.error,
@@ -126,7 +131,13 @@ export default class ResultsScreen extends  React.Component {
                     }
                 })
                 .catch((error) => {
-                    console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
 
             url = `https://levelup.verbum.com.pl/api/user/ranking?${queryString}`;
@@ -152,8 +163,13 @@ export default class ResultsScreen extends  React.Component {
                     }
                 })
                 .catch((error) => {
-                    this.setState({isLoading: false});
-                    console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {
@@ -248,7 +264,13 @@ export default class ResultsScreen extends  React.Component {
                 }
             })
             .catch((error) => {
-                console.error(error);
+                this.setState({
+                    isLoading: false,
+                    error: {
+                        code: "BŁĄD",
+                        message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                    }
+                }, () => this.setModalErrorVisible(true));
             });
     }
 
@@ -411,9 +433,7 @@ export default class ResultsScreen extends  React.Component {
                             {this.state.content === 'ranking' &&
                                 <Ranking rankingList={this.state.rankingList}/>
                             }
-                            {this.state.content === 'ranking' &&
-                                <MyRanking ranking={this.state.ranking} points={this.state.points} name={this.state.name} surname={this.state.surname}/>
-                            }
+
                             {this.state.content === 'rundy' &&
                                 <Laps createLapRows={this.createLapRows()}/>
                             }
@@ -443,6 +463,9 @@ export default class ResultsScreen extends  React.Component {
                             }
                         </View>
                     </ScrollView>
+                    {this.state.content === 'ranking' &&
+                    <MyRanking ranking={this.state.ranking} points={this.state.points} name={this.state.name} surname={this.state.surname}/>
+                    }
                     <Footer knowledgeCount={this.props.knowledgeCount} testCount={this.props.testCount} navigation={this.props.navigation} active="RESULTS"/>
                     {this.state.isLoading &&
                     <View style={styles.loading}>

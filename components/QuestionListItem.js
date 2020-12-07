@@ -10,7 +10,7 @@ export default class QuestionListItem extends React.Component {
 
     render() {
         if (this.props.model === 1) {
-            if (this.props.active) {
+            if (this.props.active && this.props.status.id === 3) {
                 return (
                     <View style={styles.questionOne}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Question', {id: this.props.id, model: this.props.model})}
@@ -23,7 +23,7 @@ export default class QuestionListItem extends React.Component {
                 return (
                     <View style={styles.questionOne}>
                         <TouchableOpacity style={[styles.buttonBase, styles.buttonPending]}>
-                            <Text style={styles.questionTextPending}>PYTANIE {this.props.number}</Text>
+                            <Text style={styles.questionTextPending}>NIEAKTYWNE</Text>
                         </TouchableOpacity>
                     </View>
                 )
@@ -42,7 +42,7 @@ export default class QuestionListItem extends React.Component {
                 )
             }
         } else if (this.props.model === 4) {
-            if (this.props.active) {
+            if (this.props.active && this.props.status.id === 3) {
                 return (
                     <View style={styles.questionOne}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Question', {id: this.props.id, model: this.props.model})}

@@ -122,8 +122,13 @@ export default class HomeScreen extends  React.Component {
                     }
                 })
                 .catch((error) => {
-                    this.setState({isLoading: false});
-                    //console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
 
             url = `https://levelup.verbum.com.pl/api/user/userData?${queryString}`;
@@ -139,7 +144,13 @@ export default class HomeScreen extends  React.Component {
                     this.props.updateDrawer(responseJson.user.firstname, responseJson.user.lastname)
                 })
                 .catch((error) => {
-                    //console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {
@@ -158,7 +169,7 @@ export default class HomeScreen extends  React.Component {
     }
 
     updateApp(knowledgeCount,testCount,week) {
-        this.props.updateFooter(knowledgeCount,testCount)
+        this.props.updateFooter(knowledgeCount,testCount);
         this.props.updateWeek(week)
     }
 

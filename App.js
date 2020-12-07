@@ -15,7 +15,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import MainScreen from "./screens/MainScreen";
 import LoginScreen from "./screens/LoginScreen";
-import OtherScreen from "./screens/OtherScreen";
 import SplashScreen from './screens/SplashScreen';
 import HomeScreen from './screens/HomeScreen';
 import EnterKnowledgeScreen from './screens/EnterKnowledgeScreen';
@@ -227,6 +226,7 @@ export default class App extends  React.Component {
                                         knowledgeCount={this.state.knowledgeCount}
                                         testCount={this.state.testCount}
                                         week={this.state.week}
+                                        updateFooter={this.updateFooter.bind(this)}
                                     />}
                                 </Drawer.Screen>
                                 <Drawer.Screen name="OneKnowledge">
@@ -236,6 +236,7 @@ export default class App extends  React.Component {
                                         keyApp={this.state.key}
                                         knowledgeCount={this.state.knowledgeCount}
                                         testCount={this.state.testCount}
+                                        updateFooter={this.updateFooter.bind(this)}
                                     />}
                                 </Drawer.Screen>
                                 <Drawer.Screen name="EnterQuestions">
@@ -246,6 +247,7 @@ export default class App extends  React.Component {
                                         knowledgeCount={this.state.knowledgeCount}
                                         testCount={this.state.testCount}
                                         week={this.state.week}
+                                        updateFooter={this.updateFooter.bind(this)}
                                     />}
                                 </Drawer.Screen>
                                 <Drawer.Screen name="Ranking">
@@ -327,6 +329,7 @@ export default class App extends  React.Component {
                                         keyApp={this.state.key}
                                         knowledgeCount={this.state.knowledgeCount}
                                         testCount={this.state.testCount}
+                                        updateFooter={this.updateFooter.bind(this)}
                                     />}
                                 </Drawer.Screen>
                                 <Drawer.Screen name="Results">

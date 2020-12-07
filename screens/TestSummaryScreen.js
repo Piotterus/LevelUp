@@ -38,7 +38,7 @@ export default class TestSummaryScreen extends React.Component {
                 sum: this.props.route.params.sum,
                 model: this.props.route.params.model,
                 id: this.props.route.params.id,
-            },() => this.setState({isLoading: false}))
+            },() => {this.setState({isLoading: false}); this.props.updateFooter(this.props.knowledgeCount,this.props.testCount-1)})
 
         });
 

@@ -46,8 +46,7 @@ export default class StatuteScreen extends React.Component {
             });
 
             let url = `https://levelup.verbum.com.pl/api/page/statute/pl_PL/?${queryString}`;
-            console.log("URL")
-            console.log(url);
+
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -69,8 +68,13 @@ export default class StatuteScreen extends React.Component {
                     }
                 })
                 .catch((error) => {
-                    this.setState({isLoading: false});
-                    console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {

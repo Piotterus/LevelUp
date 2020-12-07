@@ -64,12 +64,17 @@ export default class RegisterStatuteScreen extends React.Component {
                         this.setState({
                             error: responseJson.error,
                             isLoading: false,
-                        })
+                        }, () => this.setModalErrorVisible(true))
                     }
                 })
                 .catch((error) => {
-                    this.setState({isLoading: false});
-                    console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {
@@ -77,6 +82,7 @@ export default class RegisterStatuteScreen extends React.Component {
                 title: '',
                 content: '',
                 isLoading: true,
+                error: '',
             })
         });
     }

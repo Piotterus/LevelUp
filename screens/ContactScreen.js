@@ -5,6 +5,7 @@ import {
     StyleSheet,
     Text,
     View,
+    Linking, TouchableWithoutFeedback,
 } from 'react-native';
 import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
@@ -39,8 +40,10 @@ export default class ContactScreen extends  React.Component {
                             <View style={[styles.shadow, styles.contactView]}>
                                 <Text style={{fontSize: 16, fontWeight: 'bold'}}>Masz pytania?</Text>
                                 <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 20}}>Napisz do nas lub zadzwoń!</Text>
-                                <Text style={{fontSize: 16, marginBottom: 10}}>E-mail: biuro@verbum.com.pl</Text>
-                                <Text style={{fontSize: 16}}>Infolinia: 61 8250 785</Text>
+                                <TouchableWithoutFeedback onPress={() => Linking.openURL('mailto:biuro@verbum.com.pl?subject=Level.UP') }
+                                                          title="biuro@verbum.com.pl" ><Text style={{fontSize: 16, marginBottom: 10}}>E-mail: <Text style={{color: '#0A3251', textDecorationLine: 'underline'}}>biuro@verbum.com.pl</Text></Text></TouchableWithoutFeedback>
+                                <TouchableWithoutFeedback onPress={() => Linking.openURL('tel:618250785') }
+                                                          title="biuro@verbum.com.pl" ><Text style={{fontSize: 16}}>Infolinia: <Text style={{color: '#0A3251', textDecorationLine: 'underline'}}>61 8250 785</Text></Text></TouchableWithoutFeedback>
                             </View>
                         </View>
                     </ScrollView>

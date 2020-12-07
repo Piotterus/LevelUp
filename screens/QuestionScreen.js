@@ -137,7 +137,8 @@ export default class QuestionScreen extends React.Component {
                 token: this.props.token,
             });
             let url = `https://levelup.verbum.com.pl/api/challenge/sendAction/${this.props.route.params.model}/${this.props.route.params.id}?${queryString}`;
-
+            console.log(url);
+            console.log(JSON.stringify(poll));
             fetch(url, {
                 method: 'POST',
                 headers: {
@@ -147,15 +148,27 @@ export default class QuestionScreen extends React.Component {
             })
                 .then(response => response.json())
                 .then(responseJson => {
-                    this.props.navigation.navigate('TestSummary', {
-                        results: responseJson.data.result,
-                        sum: responseJson.data.sum,
-                        model: this.props.route.params.model,
-                        id: this.props.route.params.id,
-                    });
+                    if (responseJson.error.code === 0) {
+                        this.props.navigation.navigate('TestSummary', {
+                            results: responseJson.data.result,
+                            sum: responseJson.data.sum,
+                            model: this.props.route.params.model,
+                            id: this.props.route.params.id,
+                        });
+                    } else {
+                        this.setState({
+                            error: responseJson.error,
+                        }, () => this.setModalErrorVisible(true))
+                    }
                 })
                 .catch((error) => {
-                    console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
         } else {
             let error = {
@@ -173,6 +186,7 @@ export default class QuestionScreen extends React.Component {
         let questions = [];
         let answers = [];
         for (let i in this.state.question) {
+            answers = [];
             for (let j in this.state.question[i].answers) {
                 answers.push({
                     id: this.state.question[i].answers[j].id,

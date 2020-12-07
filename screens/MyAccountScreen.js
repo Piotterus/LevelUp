@@ -47,7 +47,7 @@ export default class MyAccountScreen extends React.Component {
         });
 
         let url = `https://levelup.verbum.com.pl/api/user/userData/?${queryString}`;
-        console.log(url);
+
         fetch(url, {
             method: 'GET',
             headers: {
@@ -70,8 +70,13 @@ export default class MyAccountScreen extends React.Component {
                 }
             })
             .catch((error) => {
-                this.setState({isLoading: false});
-                console.error(error);
+                this.setState({
+                    isLoading: false,
+                    error: {
+                        code: "BŁĄD",
+                        message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                    }
+                }, () => this.setModalErrorVisible(true));
             });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {

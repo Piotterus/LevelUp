@@ -54,7 +54,7 @@ export default class OneKnowledgeScreen extends React.Component {
 
         this.listenerFocus = this.props.navigation.addListener('focus', () => {
             let url = `https://levelup.verbum.com.pl/api/challenge/learningId/${this.props.route.params.id}?${queryString}`;
-            console.log(url);
+
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -69,16 +69,22 @@ export default class OneKnowledgeScreen extends React.Component {
                             longContent: responseJson.page.longContent,
                             title: responseJson.page.title,
                             shortContent: responseJson.page.shortContent,
-                        },() => this.setState({isLoading: false,}))
+                        },() => {this.setState({isLoading: false,}); this.props.updateFooter(this.props.knowledgeCount-1,this.props.testCount)})
                     } else {
                         this.setState({
-                            error: responseJson.error
-                        },() => this.setState({isLoading: false,}))
+                            error: responseJson.error,
+                            isLoading: false,
+                        },() => this.setModalErrorVisible(true))
                     }
                 })
                 .catch((error) => {
-                    this.setState({isLoading: false});
-                    console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {
@@ -132,7 +138,7 @@ export default class OneKnowledgeScreen extends React.Component {
                                     }
                                     {this.state.showContent === 'long' && this.state.knowledgeItem.longContent !== '' &&
                                     /*<Text style={[styles.knowledgeDescText, {fontSize: 16, marginTop: 24}]}>*/
-                                        <HTML html={this.state.longContent} imagesMaxWidth={this.state.htmlWidth}/>
+                                        <HTML html={this.state.longContent} imagesMaxWidth={this.state.htmlWidth} />
                                     /*</Text>*/
                                     }
                                     {this.state.showContent === 'short' &&
@@ -144,9 +150,16 @@ export default class OneKnowledgeScreen extends React.Component {
                                             <Text style={{color: '#FFFFFF', fontSize: 13}}>POKAŻ WIĘCEJ</Text>
                                         </TouchableOpacity>
                                     }
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')} style={[styles.buttonBase, styles.shadow, {backgroundColor: '#2592E6', marginTop: 30, marginBottom: 42}]}>
+                                    {this.props.goToQuestion === true &&
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')}
+                                                      style={[styles.buttonBase, styles.shadow, {
+                                                          backgroundColor: '#2592E6',
+                                                          marginTop: 30,
+                                                          marginBottom: 42
+                                                      }]}>
                                         <Text style={{color: '#FFFFFF', fontSize: 13}}>PRZEJDŹ DO PYTAŃ</Text>
                                     </TouchableOpacity>
+                                    }
                                 </View>
                             </View>
                         </View>

@@ -26,8 +26,6 @@ export default class QuestionSummary extends React.Component {
     }
 
     render() {
-        //console.log("SHOW-" + this.props.showQuestion);
-        //console.log("NUMBER-" + this.props.number);
         return (
             <View>
                 {this.props.questionCount > 1 &&

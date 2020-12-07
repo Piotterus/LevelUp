@@ -15,7 +15,7 @@ export default class MyRanking extends React.Component {
                     <View style={styles.rankingRow}>
                         <Text style={[styles.rankingText, {flex: 1}]}>{this.props.ranking}</Text>
                         <Text style={[styles.rankingText, {flex: 5}]}>{this.props.name} {this.props.surname}</Text>
-                        <Text style={[styles.rankingText, {flex: 1}]}>{this.props.points}</Text>
+                        <Text style={[styles.rankingText, {flex: 1, textAlign: 'right'}]}>{this.props.points}</Text>
                     </View>
                 </View>
             </View>
@@ -26,7 +26,7 @@ export default class MyRanking extends React.Component {
 const styles = StyleSheet.create({
     myRankingView: {
         position: 'absolute',
-        bottom: 0,
+        bottom: 75,
         left: 0,
         width: '100%',
         backgroundColor: '#F3F3F3',
@@ -37,13 +37,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        elevation: 10
+
     },
     rankingRow: {
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingRight: 20,
-        paddingLeft: 20,
+        paddingRight: 5,
+        paddingLeft: 5,
     },
     rankingText: {
         fontSize: 16,

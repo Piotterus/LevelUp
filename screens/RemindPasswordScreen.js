@@ -55,8 +55,6 @@ export default class RemindPasswordScreen extends React.Component {
                     this.setState({
                         error: error,
                     }, () => this.setModalErrorVisible(true))
-
-                    //this.props.navigation.navigate('Login');
                 } else {
                     this.setState({
                         error: responseJson.error,
@@ -64,7 +62,13 @@ export default class RemindPasswordScreen extends React.Component {
                 }
             })
             .catch((error) => {
-                console.error(error);
+                this.setState({
+                    isLoading: false,
+                    error: {
+                        code: "BŁĄD",
+                        message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                    }
+                }, () => this.setModalErrorVisible(true));
             });
     }
 

@@ -20,9 +20,6 @@ export default class Register2Screen extends React.Component {
             modalErrorVisible: false,
             error: '',
         };
-        console.log(this.state);
-        //console.log(this.props.navigation.state.params);
-        console.log(this.props.route.params)
     }
 
     updateValue(text,field) {

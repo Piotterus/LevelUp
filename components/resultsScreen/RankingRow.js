@@ -15,7 +15,7 @@ export default class RankingRow extends React.Component {
             <View style={styles.rankingRow}>
                 <Text style={[styles.rankingText, {flex: 1}]}>{rank}</Text>
                 <Text style={[styles.rankingText, {flex: 5}]}>{this.props.firstName} {this.props.lastName}</Text>
-                <Text style={[styles.rankingText, {flex: 1}]}>{this.props.points}</Text>
+                <Text style={[styles.rankingText, {flex: 1, textAlign: 'right'}]}>{this.props.points}</Text>
             </View>
         )
     }
@@ -214,13 +214,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        paddingRight: 20,
-        paddingLeft: 20,
+        paddingRight: 5,
+        paddingLeft: 5,
         paddingBottom: 20,
     },
     rankingText: {
         fontSize: 16,
         color: '#0A3251',
+
     },
 });
 

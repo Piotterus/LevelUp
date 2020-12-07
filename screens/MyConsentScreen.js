@@ -39,7 +39,7 @@ export default class MyConsentScreen extends React.Component {
         });
 
         let url = `https://levelup.verbum.com.pl/api/user/userData/?${queryString}`;
-        console.log(url);
+
         fetch(url, {
             method: 'GET',
             headers: {
@@ -58,11 +58,17 @@ export default class MyConsentScreen extends React.Component {
                 } else {
                     this.setState({
                         error: responseJson.error
-                    })
+                    }, () => this.setModalErrorVisible(true))
                 }
             })
             .catch((error) => {
-                console.error(error);
+                this.setState({
+                    isLoading: false,
+                    error: {
+                        code: "BŁĄD",
+                        message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                    }
+                }, () => this.setModalErrorVisible(true));
             });
     }
 

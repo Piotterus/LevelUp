@@ -4,6 +4,7 @@ import {
     Text,
     View,
     StyleSheet,
+    ScrollView
 } from 'react-native';
 
 import RankingRow from './RankingRow';
@@ -13,7 +14,6 @@ export default class Ranking extends React.Component {
     createRankingList() {
         let rankingList = [];
         for (let i in this.props.rankingList) {
-            console.log(this.props.rankingList[i]);
             rankingList.push(<RankingRow
                 key={i}
                 position={i}
@@ -27,14 +27,16 @@ export default class Ranking extends React.Component {
 
     render() {
         return(
-            <View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 10}]}>
+            <View style={[styles.nextInfoView, styles.shadow, {paddingBottom: 0, marginBottom: 54}]}>
                 <View style={[styles.rankingView]}>
                     <View style={styles.rankingRow}>
                         <Text style={[styles.rankingText, {flex: 1}]}>Poz.</Text>
                         <Text style={[styles.rankingText, {flex: 5}]}>Zawodnik</Text>
-                        <Text style={[styles.rankingText, {flex: 1}]}>Punkty</Text>
+                        <Text style={[styles.rankingText, {flex: 1, textAlign: 'right'}]}>Punkty</Text>
                     </View>
-                    {this.createRankingList()}
+                    <ScrollView>
+                        {this.createRankingList()}
+                    </ScrollView>
                 </View>
             </View>
         )
@@ -109,6 +111,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: '90%',
         borderRadius: 9,
+        zIndex: 1,
+        flex: 1,
     },
     shadow: {
         shadowColor: '#00000029',//'#00000080',
@@ -232,8 +236,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        paddingRight: 20,
-        paddingLeft: 20,
+        paddingRight: 5,
+        paddingLeft: 5,
         paddingBottom: 10
     },
     rankingText: {

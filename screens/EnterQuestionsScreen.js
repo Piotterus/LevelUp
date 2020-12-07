@@ -87,7 +87,7 @@ export default class EnterQuestionsScreen extends React.Component {
     }
 
     createQuestionList() {
-        let questionList = []
+        let questionList = [];
         for (let i in this.state.questionList) {
             if (this.state.questionList[i].modelId === 1 || this.state.questionList[i].modelId === 4) {
                 questionList.push(<QuestionListItem key={i}
@@ -105,7 +105,7 @@ export default class EnterQuestionsScreen extends React.Component {
     }
 
     createQuestionLifebuoy() {
-        let questionLifebuoy = []
+        let questionLifebuoy = [];
         for (let i in this.state.questionList) {
             if (this.state.questionList[i].modelId === 3) {
                 questionLifebuoy.push(<QuestionLifebuoy key={i}
@@ -118,11 +118,18 @@ export default class EnterQuestionsScreen extends React.Component {
                                                     status={this.state.questionList[i].status}/>)
             }
         }
+        if (questionLifebuoy.length === 0) {
+            questionLifebuoy.push(<QuestionLifebuoy key={i}
+                                                    navigation={this.props.navigation}
+                                                    id={4}
+                                                    active={false}
+            />)
+        }
         return questionLifebuoy;
     }
 
     createQuestionTurbo() {
-        let questionTurbo = []
+        let questionTurbo = [];
         for (let i in this.state.questionList) {
             if (this.state.questionList[i].modelId === 2 ) {
                 questionTurbo.push(<QuestionTurbo key={i}
@@ -134,6 +141,13 @@ export default class EnterQuestionsScreen extends React.Component {
                                                     model={this.state.questionList[i].modelId}
                                                     status={this.state.questionList[i].status}/>)
             }
+        }
+        if (questionTurbo.length === 0) {
+            questionTurbo.push(<QuestionLifebuoy key={i}
+                                                    navigation={this.props.navigation}
+                                                    id={4}
+                                                    active={false}
+            />)
         }
         return questionTurbo;
     }

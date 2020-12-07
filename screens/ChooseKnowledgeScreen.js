@@ -119,10 +119,8 @@ export default class ChooseKnowledgeScreen extends React.Component {
 
     createKnowledgeList() {
         let knowledgeList = [];
-        console.log("WeekShow " + this.state.weekShow);
-        console.log("Week " + this.state.week);
         if (parseInt(this.state.weekShow) === parseInt(this.state.week)) {
-            console.log("TEN WEEK");
+            //TEN WEEK
             for (let i in this.state.knowledgeList) {
                 knowledgeList.push(<KnowledgeListItem
                     key={i}
@@ -135,10 +133,11 @@ export default class ChooseKnowledgeScreen extends React.Component {
                     status={this.state.knowledgeList[i].status}
                     day={this.state.knowledgeList[i].day}
                     date={this.state.knowledgeList[i].dateFrom}
+                    goToQuestion={true}
                 />)
             }
         } else {
-            console.log("INNY WEEK");
+            //INNY WEEK
             let knowledgeListIndex = 0;
             const status = {
                 id: 1,
@@ -168,21 +167,10 @@ export default class ChooseKnowledgeScreen extends React.Component {
                         status={status}
                         day={day}
                         date={date}
-                    />)
+                        goToQuestion={false}
+                    />);
                     knowledgeListIndex++;
                 }
-                /*knowledgeList.push(<KnowledgeListItem
-                    key={i}
-                    navigation={this.props.navigation}
-                    id={this.state.knowledgeList[i].id}
-                    active={this.state.knowledgeList[i].isActive}
-                    knowledgeTitle={this.state.knowledgeList[i].title}
-                    activeText={this.state.knowledgeList[i].status.title}
-                    shortContent={this.state.knowledgeList[i].shortContent}
-                    status={this.state.knowledgeList[i].status}
-                    day={this.state.knowledgeList[i].day}
-                    date={this.state.knowledgeList[i].dateFrom}
-                />)*/
             }
         }
         return knowledgeList;
