@@ -25,7 +25,7 @@ export default class Footer extends React.Component {
                     <Text
                         style={{color: '#FFFFFF', fontSize: 11}}>WIEDZA</Text>
                     }
-                    {this.props.knowledgeCount === 0 &&
+                    {this.props.knowledgeCount <= 0 &&
                     <Text
                         style={{color: '#FFFFFF', fontSize: 11}}>WIEDZA</Text>
                     }
@@ -45,7 +45,7 @@ export default class Footer extends React.Component {
                     <Text
                         style={{color: '#FFFFFF', fontSize: 11}}>TEST</Text>
                     }
-                    {this.props.testCount === 0 &&
+                    {this.props.testCount <= 0 &&
                     <Text
                         style={{color: '#FFFFFF', fontSize: 11}}>TEST</Text>
                     }

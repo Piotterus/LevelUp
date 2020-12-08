@@ -14,6 +14,7 @@ import HeaderBurger from '../components/HeaderBurger';
 import Footer from '../components/Footer';
 import ErrorModal from '../components/ErrorModal';
 import SafeAreaView from 'react-native-safe-area-view';
+import ImageModal from '../components/ImageModal';
 
 export default class OneKnowledgeScreen extends React.Component {
 
@@ -33,6 +34,13 @@ export default class OneKnowledgeScreen extends React.Component {
             modalErrorVisible: false,
             error: '',
             isLoading: true,
+            imageModal: {
+                visible: false,
+                url: '',
+                width: '',
+                height: '',
+            },
+            images: [],
         }
     }
 
@@ -121,12 +129,69 @@ export default class OneKnowledgeScreen extends React.Component {
         this.setState({ modalErrorVisible: visible });
     };
 
+    createChildrenList(children) {
+        let childrenList = [];
+        let child = children[0];
+        for (let i in child) {
+            console.log(child[i]);
+            childrenList.push(child[i])
+        }
+        return childrenList;
+    }
+
+    setImageModal(visible, url) {
+        if (visible === true) {
+            let images = this.state.images;
+            for (let i in images) {
+                if (images[i].url === url) {
+                    this.setState({
+                        imageModal: {
+                            visible: visible,
+                            url: url,
+                            width: images[i].width,
+                            height: images[i].height,
+                        }
+                    })
+                }
+            }
+        } else {
+            this.setState({
+                imageModal: {
+                    visible: visible,
+                }
+            })
+        }
+    }
+
+    addImageToModal(layout, url){
+        const {x, y, width, height} = layout;
+        let images = this.state.images;
+        images.push({
+            url: url,
+            width: width,
+            height: height,
+        });
+        this.setState({
+            images: images,
+        })
+    }
+
     render() {
+        const renderer = {
+            imagelink: (htmlAttribs, children, passProps, convertedCSSStyles) => {
+                let imageUrl = children[0][0].props.source.uri;
+                return (
+                    <TouchableOpacity onLayout={(event) => this.addImageToModal(event.nativeEvent.layout, imageUrl)} onPress={() => this.setImageModal(true, imageUrl)}>
+                        {this.createChildrenList(children)}
+                    </TouchableOpacity>)
+            },
+        };
         return(
             <View style={{flex: 1, backgroundColor: '#0A3251'}}>
                 <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always', bottom: 0, right: 0, left: 0 }}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{marginBottom: 75}}>
                         <ErrorModal visible={this.state.modalErrorVisible} error={this.state.error} setModalErrorVisible={this.setModalErrorVisible.bind(this)}/>
+                        <ImageModal imageModal={this.state.imageModal} setImageModal={this.setImageModal.bind(this)}/>
                         <HeaderBurger navigation={this.props.navigation}/>
                         <View style={[styles.knowledgeMain, {flex: 1}]}>
                             <Text style={styles.knowledgeHeaderText}>WIEDZA</Text>
@@ -138,7 +203,7 @@ export default class OneKnowledgeScreen extends React.Component {
                                     }
                                     {this.state.showContent === 'long' && this.state.knowledgeItem.longContent !== '' &&
                                     /*<Text style={[styles.knowledgeDescText, {fontSize: 16, marginTop: 24}]}>*/
-                                        <HTML html={this.state.longContent} imagesMaxWidth={this.state.htmlWidth} />
+                                        <HTML html={this.state.longContent} imagesMaxWidth={this.state.htmlWidth} renderers={renderer}/>
                                     /*</Text>*/
                                     }
                                     {this.state.showContent === 'short' &&
