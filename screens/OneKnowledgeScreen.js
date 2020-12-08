@@ -130,13 +130,15 @@ export default class OneKnowledgeScreen extends React.Component {
     };
 
     createChildrenList(children) {
-        let childrenList = [];
-        let child = children[0];
-        for (let i in child) {
-            console.log(child[i]);
-            childrenList.push(child[i])
+
+        let childrenList = children[0];
+        let child;
+        for (let i in childrenList) {
+            console.log(childrenList[i]);
+            child = childrenList[i];
+
         }
-        return childrenList;
+        return child;
     }
 
     setImageModal(visible, url) {
@@ -181,7 +183,7 @@ export default class OneKnowledgeScreen extends React.Component {
             imagelink: (htmlAttribs, children, passProps, convertedCSSStyles) => {
                 let imageUrl = children[0][0].props.source.uri;
                 return (
-                    <TouchableOpacity onLayout={(event) => this.addImageToModal(event.nativeEvent.layout, imageUrl)} onPress={() => this.setImageModal(true, imageUrl)}>
+                    <TouchableOpacity key={htmlAttribs.key} onLayout={(event) => this.addImageToModal(event.nativeEvent.layout, imageUrl)} onPress={() => this.setImageModal(true, imageUrl)}>
                         {this.createChildrenList(children)}
                     </TouchableOpacity>)
             },
@@ -215,7 +217,7 @@ export default class OneKnowledgeScreen extends React.Component {
                                             <Text style={{color: '#FFFFFF', fontSize: 13}}>POKAŻ WIĘCEJ</Text>
                                         </TouchableOpacity>
                                     }
-                                    {this.props.goToQuestion === true &&
+                                    {this.props.route.params.goToQuestion === true &&
                                     <TouchableOpacity onPress={() => this.props.navigation.navigate('EnterQuestions')}
                                                       style={[styles.buttonBase, styles.shadow, {
                                                           backgroundColor: '#2592E6',

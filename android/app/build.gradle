@@ -132,8 +132,8 @@ android {
         applicationId "pl.com.verbum.levelup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10
-        versionName "1.9"
+        versionCode 12
+        versionName "1.11"
     }
     splits {
         abi {

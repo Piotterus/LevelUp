@@ -137,8 +137,7 @@ export default class QuestionScreen extends React.Component {
                 token: this.props.token,
             });
             let url = `https://levelup.verbum.com.pl/api/challenge/sendAction/${this.props.route.params.model}/${this.props.route.params.id}?${queryString}`;
-            console.log(url);
-            console.log(JSON.stringify(poll));
+
             fetch(url, {
                 method: 'POST',
                 headers: {
