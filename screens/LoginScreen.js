@@ -56,7 +56,7 @@ export default class LoginScreen extends React.Component {
         let body = {
             login: login,
             password: password,
-            device: 'testdevice123',
+            device: 'device123',
             from: 'app',
         };
 
