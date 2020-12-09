@@ -220,7 +220,8 @@ export default class QuestionScreen extends React.Component {
             questionList.push(<Question key={i}
                                         navigation={this.props.navigation}
                                         id={this.state.question[i].id}
-                                        number={number} text={this.state.question[i].text}
+                                        number={number}
+                                        text={this.state.question[i].text}
                                         type={this.state.question[i].type}
                                         image={this.state.question[i].image}
                                         questionCount={this.state.question.length}

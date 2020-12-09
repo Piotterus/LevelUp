@@ -136,7 +136,7 @@ export default class QuestionSummaryScreen extends React.Component {
         let number = 0;
         let questionList = [];
         for (let i in this.state.question) {
-            number = parseInt(this.state.pollId) + 1;
+            number = parseInt(this.state.pollId);
             questionList.push(<QuestionSummary
                 key={i}
                 navigation={this.props.navigation}
