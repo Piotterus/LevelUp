@@ -121,7 +121,7 @@ export default class Register3Screen extends React.Component {
                                     checked={this.state.agree1}
                                     onPress={() => this.setState({agree1: !this.state.agree1})}
                                 />
-                                <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('RegisterStatute')}><Text style={[styles.consentText, {fontWeight: 'bold'}]}>Regulaminu Konkursu „Gra Edukacyjna LevelUP”.</Text></TouchableWithoutFeedback>. Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
+                                <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('RegisterStatute')}><Text style={[styles.consentText, {fontWeight: 'bold'}]}>Regulaminu Konkursu „Gra Edukacyjna Level.UP”.</Text></TouchableWithoutFeedback>. Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
                             </View>
                             {/*<View style={styles.consentRow}>
                                     <Text style={styles.consentText}>Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z obowiązującymi przepisami prawa w celach komunikacji marketingowej, niezwiązanej z Konkursem następującymi kanałami:</Text>

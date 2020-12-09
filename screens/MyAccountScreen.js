@@ -139,7 +139,7 @@ export default class MyAccountScreen extends React.Component {
                                         checkedColor={'#A3A3A3'}
                                     />
                                     <View style={{flex: 1}}>
-                                        <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Statute')}><Text style={[styles.consentText, {fontWeight: 'bold'}]}>Regulaminu Konkursu „Gra Edukacyjna LevelUP”.</Text></TouchableWithoutFeedback> Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
+                                        <Text style={styles.consentText}>Zapoznałem/am się i akceptuję zapisy <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Statute')}><Text style={[styles.consentText, {fontWeight: 'bold'}]}>Regulaminu Konkursu „Gra Edukacyjna Level.UP”.</Text></TouchableWithoutFeedback> Wyrażenie tej zgody jest dobrowolne, ale jej brak uniemożliwia rejestrację w Konkursie.</Text>
                                     </View>
                                 </View>
                             </View>
