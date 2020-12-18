@@ -215,15 +215,15 @@ export default class AboutLapsScreen extends React.Component {
                                             <Text style={{fontSize: 13, color: '#0E395A', fontWeight: 'bold'}}>CHAMPION</Text>
                                             <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
                                                 <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź POPRAWNA</Text>
-                                                <Text style={{fontSize: 12, color: '#0E395A'}}>8 pkt</Text>
+                                                <Text style={{fontSize: 12, color: '#0E395A'}}>6 pkt</Text>
                                             </View>
                                             <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
                                                 <Text style={{fontSize: 12, color: '#0E395A'}}>Odpowiedź NIEPOPRAWNA</Text>
-                                                <Text style={{fontSize: 12, color: '#0E395A'}}>4 pkt</Text>
+                                                <Text style={{fontSize: 12, color: '#0E395A'}}>3 pkt</Text>
                                             </View>
                                             <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
                                                 <Text style={{fontSize: 12, color: '#0E395A'}}>Brak odpowiedzi</Text>
-                                                <Text style={{fontSize: 12, color: '#0E395A'}}>-4 pkt</Text>
+                                                <Text style={{fontSize: 12, color: '#0E395A'}}>-3 pkt</Text>
                                             </View>
                                             <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, marginTop: 3, marginBottom: 3}}>
                                                 <Text style={{fontSize: 12, color: '#0E395A'}}>Maksymalna ilość pkt</Text>

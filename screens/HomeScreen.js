@@ -249,26 +249,29 @@ export default class HomeScreen extends  React.Component {
                             <Text style={styles.levelText}>AKTUALNY POZIOM</Text>
                             <View style={styles.levelView}>
                                 <View style={styles.onelevelView}>
-                                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                        <Text onPress={() => {
-                                            this.setModalVisible(true);
-                                            this.setModalHeader("STARTER");
-                                            this.setModalAnswerOK("2");
-                                            this.setModalAnswerWrong("1");
-                                            this.setModalAnswerNO("-1");
-                                            this.setModalMaxPoints("26");
-                                        }} style={{color: '#0E395A'}}>STARTER</Text>
-                                        <TouchableHighlight
-                                                            onPress={() => {
-                                                                this.setModalVisible(true);
-                                                                this.setModalHeader("STARTER");
-                                                                this.setModalAnswerOK("2");
-                                                                this.setModalAnswerWrong("1");
-                                                                this.setModalAnswerNO("-1");
-                                                                this.setModalMaxPoints("26");
-                                                            }}>
-                                            <Image source={require('../icons/info.png')}/>
-                                        </TouchableHighlight>
+                                    <View style={{alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                                            <Text onPress={() => {
+                                                this.setModalVisible(true);
+                                                this.setModalHeader("STARTER");
+                                                this.setModalAnswerOK("2");
+                                                this.setModalAnswerWrong("1");
+                                                this.setModalAnswerNO("-1");
+                                                this.setModalMaxPoints("26");
+                                            }} style={{color: '#0E395A'}}>STARTER</Text>
+                                            <TouchableHighlight
+                                                                onPress={() => {
+                                                                    this.setModalVisible(true);
+                                                                    this.setModalHeader("STARTER");
+                                                                    this.setModalAnswerOK("2");
+                                                                    this.setModalAnswerWrong("1");
+                                                                    this.setModalAnswerNO("-1");
+                                                                    this.setModalMaxPoints("26");
+                                                                }}>
+                                                <Image source={require('../icons/info.png')}/>
+                                            </TouchableHighlight>
+                                        </View>
+                                        <Text style={{color: '#0E395A', fontSize: 10}}>Poniżej 23 pkt</Text>
                                     </View>
                                     {this.state.level === "starter" &&
                                     <TouchableHighlight style={{flex: 1, justifyContent: 'flex-end'}}
@@ -288,26 +291,29 @@ export default class HomeScreen extends  React.Component {
                                 <View style={styles.lineView}>
                                 </View>
                                 <View style={styles.onelevelView}>
-                                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                        <Text onPress={() => {
-                                            this.setModalVisible(true);
-                                            this.setModalHeader("EXPERT");
-                                            this.setModalAnswerOK("4");
-                                            this.setModalAnswerWrong("2");
-                                            this.setModalAnswerNO("-2");
-                                            this.setModalMaxPoints("52");
-                                        }} style={{color: '#0E395A'}}>EXPERT </Text>
-                                        <TouchableHighlight
-                                                            onPress={() => {
-                                                                this.setModalVisible(true);
-                                                                this.setModalHeader("EXPERT");
-                                                                this.setModalAnswerOK("4");
-                                                                this.setModalAnswerWrong("2");
-                                                                this.setModalAnswerNO("-2");
-                                                                this.setModalMaxPoints("52");
-                                                            }}>
-                                            <Image source={require('../icons/info.png')}/>
-                                        </TouchableHighlight>
+                                    <View style={{alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                                            <Text onPress={() => {
+                                                this.setModalVisible(true);
+                                                this.setModalHeader("EXPERT");
+                                                this.setModalAnswerOK("4");
+                                                this.setModalAnswerWrong("2");
+                                                this.setModalAnswerNO("-2");
+                                                this.setModalMaxPoints("52");
+                                            }} style={{color: '#0E395A'}}>EXPERT </Text>
+                                            <TouchableHighlight
+                                                                onPress={() => {
+                                                                    this.setModalVisible(true);
+                                                                    this.setModalHeader("EXPERT");
+                                                                    this.setModalAnswerOK("4");
+                                                                    this.setModalAnswerWrong("2");
+                                                                    this.setModalAnswerNO("-2");
+                                                                    this.setModalMaxPoints("52");
+                                                                }}>
+                                                <Image source={require('../icons/info.png')}/>
+                                            </TouchableHighlight>
+                                        </View>
+                                        <Text style={{color: '#0E395A', fontSize: 10}}>Od 24 do 71 pkt</Text>
                                     </View>
                                     {this.state.level === "expert" &&
                                     <TouchableHighlight style={{flex: 1, justifyContent: 'flex-end'}}
@@ -327,35 +333,38 @@ export default class HomeScreen extends  React.Component {
                                 <View style={styles.lineView}>
                                 </View>
                                 <View style={styles.onelevelView}>
-                                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                        <Text onPress={() => {
-                                            this.setModalVisible(true);
-                                            this.setModalHeader("CHAMPION");
-                                            this.setModalAnswerOK("8");
-                                            this.setModalAnswerWrong("4");
-                                            this.setModalAnswerNO("-4");
-                                            this.setModalMaxPoints("78");
-                                        }} style={{color: '#0E395A'}}>CHAMPION </Text>
-                                        <TouchableHighlight
-                                            onPress={() => {
+                                    <View style={{alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                                            <Text onPress={() => {
                                                 this.setModalVisible(true);
                                                 this.setModalHeader("CHAMPION");
-                                                this.setModalAnswerOK("8");
-                                                this.setModalAnswerWrong("4");
-                                                this.setModalAnswerNO("-4");
+                                                this.setModalAnswerOK("6");
+                                                this.setModalAnswerWrong("3");
+                                                this.setModalAnswerNO("-3");
                                                 this.setModalMaxPoints("78");
-                                            }}>
-                                            <Image source={require('../icons/info.png')}/>
-                                        </TouchableHighlight>
+                                            }} style={{color: '#0E395A'}}>CHAMPION </Text>
+                                            <TouchableHighlight
+                                                onPress={() => {
+                                                    this.setModalVisible(true);
+                                                    this.setModalHeader("CHAMPION");
+                                                    this.setModalAnswerOK("6");
+                                                    this.setModalAnswerWrong("3");
+                                                    this.setModalAnswerNO("-3");
+                                                    this.setModalMaxPoints("78");
+                                                }}>
+                                                <Image source={require('../icons/info.png')}/>
+                                            </TouchableHighlight>
+                                        </View>
+                                        <Text style={{color: '#0E395A', fontSize: 10}}>Od 72 pkt</Text>
                                     </View>
                                     {this.state.level === "champion" &&
                                     <TouchableHighlight style={{flex: 1, justifyContent: 'flex-end'}}
                                                         onPress={() => {
                                                             this.setModalVisible(true);
                                                             this.setModalHeader("CHAMPION");
-                                                            this.setModalAnswerOK("8");
-                                                            this.setModalAnswerWrong("4");
-                                                            this.setModalAnswerNO("-4");
+                                                            this.setModalAnswerOK("6");
+                                                            this.setModalAnswerWrong("3");
+                                                            this.setModalAnswerNO("-3");
                                                             this.setModalMaxPoints("78");
                                                         }}>
                                         <View style={styles.rectangleView}>

@@ -90,8 +90,13 @@ export default class QuestionScreen extends React.Component {
                     }
                 })
                 .catch((error) => {
-                    this.setState({isLoading: false});
-                    console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
         });
         this.listenerBlur = this.props.navigation.addListener('blur', () => {

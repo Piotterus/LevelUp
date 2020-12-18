@@ -158,8 +158,9 @@ export default class ResultsScreen extends  React.Component {
                         },() => this.setState({isLoading: false}))
                     } else {
                         this.setState({
+                            isLoading: false,
                             error: responseJson.error,
-                        }, () => this.setModalErrorVisible(true), this.setState({isLoading: false}))
+                        }, () => this.setModalErrorVisible(true))
                     }
                 })
                 .catch((error) => {

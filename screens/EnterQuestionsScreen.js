@@ -65,12 +65,17 @@ export default class EnterQuestionsScreen extends React.Component {
                         this.setState({
                             isLoading: false,
                             error: responseJson.error
-                        })
+                        }, () => this.setModalErrorVisible(true));
                     }
                 })
                 .catch((error) => {
-                    this.setState({isLoading: false});
-                    console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
 
         });
@@ -188,7 +193,13 @@ export default class EnterQuestionsScreen extends React.Component {
                 }
             })
             .catch((error) => {
-                console.error(error);
+                this.setState({
+                    isLoading: false,
+                    error: {
+                        code: "BŁĄD",
+                        message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                    }
+                }, () => this.setModalErrorVisible(true));
             });
 
     }

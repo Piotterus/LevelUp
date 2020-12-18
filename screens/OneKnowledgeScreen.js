@@ -134,9 +134,7 @@ export default class OneKnowledgeScreen extends React.Component {
         let childrenList = children[0];
         let child;
         for (let i in childrenList) {
-            console.log(childrenList[i]);
             child = childrenList[i];
-
         }
         return child;
     }

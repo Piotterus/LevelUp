@@ -96,12 +96,17 @@ export default class ChooseKnowledgeScreen extends React.Component {
                         this.setState({
                             isLoading: false,
                             error: responseJson.error
-                        })
+                        }, () => this.setModalErrorVisible(true));
                     }
                 })
                 .catch((error) => {
-                    this.setState({isLoading: false});
-                    console.error(error);
+                    this.setState({
+                        isLoading: false,
+                        error: {
+                            code: "BŁĄD",
+                            message: "WYSTĄPIŁ NIESPODZIEWANY BŁĄD"
+                        }
+                    }, () => this.setModalErrorVisible(true));
                 });
         });
 
